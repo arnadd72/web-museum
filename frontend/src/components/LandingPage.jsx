@@ -17,53 +17,53 @@ const LandingPage = ({ onStart, onTimeline }) => {
   // DATA
   const dinoImageLink = "https://i0.wp.com/genemil.com/wp-content/uploads/2020/07/zaman-paleozoikum.jpg?fit=800%2C600&ssl=1";
 
-  const featuredFossils = [
-    {
-      id: 1,
-      title: "TYRANNOSAURUS",
-      desc: "Predator puncak era Mesozoikum.",
-      type: "VERTEBRATA",
-      era: "MESOZOIKUM",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQ53hI5D7wMRZ4jkuZBqC-AXLvzDL39rnNQ&s",
-      accentColor: "#E63946", 
-    },
-    {
-      id: 2,
-      title: "TRILOBITE",
-      desc: "Invertebrata laut ikonik awal.",
-      type: "INVERTEBRATA",
-      era: "PALEOZOIKUM",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljOpkz5Or31nutRIesJGJQ2ZB2uTjIOogDg&s",
-      accentColor: "#0284C7", 
-    },
-    {
-      id: 3,
-      title: "WOOLLY MAMMOTH",
-      desc: "Mamalia raksasa era Kenozoikum.",
-      type: "MAMALIA",
-      era: "KENOZOIKUM",
-      image: "https://media.sketchfab.com/models/58376e170c8b4507a636b5e45bcce999/thumbnails/ce3b02fdd7194d55b7afb8908312ad98/92491c00087e4d21aa7fb453582a759f.jpeg",
-      accentColor: "#475569",
-    },
-    {
-      id: 4,
-      title: "AMMONITE",
-      desc: "Moluska purba cangkang spiral.",
-      type: "INVERTEBRATA",
-      era: "MESOZOIKUM",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpdaTwKETvJtqM8A-jfuCswx-cs-Z4QXx84w&s",
-      accentColor: "#D97706",
-    },
-    {
-      id: 5,
-      title: "VELOCIRAPTOR",
-      desc: "Berburu dalam kelompok.",
-      type: "VERTEBRATA",
-      era: "MESOZOIKUM",
-      image: "https://media.sketchfab.com/models/6de8fb7fb8ed4f26844a3556a491cd9c/thumbnails/ef2080f4692342d3aa0f7ef6d7cefd26/14354e2a4cb74e07b312891a5b66375c.jpeg",
-      accentColor: "#10B981",
-    },
-  ];
+  const [featuredFossils, setFeaturedFossils] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/encyclopedia')
+      .then(res => res.json())
+      .then(data => {
+        if (!data || Object.keys(data).length === 0 || data.error) {
+          setFeaturedFossils([
+            { id: 1, title: "DATA KOSONG", desc: "Silakan tambahkan data di phpMyAdmin.", type: "SYSTEM", era: "MUSEUM", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQ53hI5D7wMRZ4jkuZBqC-AXLvzDL39rnNQ&s", accentColor: "#E63946" }
+          ]);
+          return;
+        }
+        
+        // Ekstrak 5 Item dari Database untuk diletakkan di Carousel Beranda
+        let extractedItems = [];
+        let itemIndex = 1;
+
+        // Ambil beberapa item acak atau spesifik untuk slider
+        Object.values(data).forEach(mainGroup => {
+            if (mainGroup.subCategories) {
+                mainGroup.subCategories.forEach(sub => {
+                    if (sub.items) {
+                        sub.items.forEach(item => {
+                            if (extractedItems.length < 10) { // Limit ke 10 foto unggulan
+                                extractedItems.push({
+                                    id: itemIndex++,
+                                    title: item.name.toUpperCase(),
+                                    desc: item.description?.short || "Tidak ada deskripsi.",
+                                    type: mainGroup.title.toUpperCase(),
+                                    era: item.period || "KOLEKSI MUSEUM",
+                                    image: item.image || "",
+                                    accentColor: mainGroup.color || "#FFF",
+                                    modelPath: item.modelPath
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        
+        setFeaturedFossils(extractedItems);
+      })
+      .catch(err => {
+        console.error("Gagal terhubung ke database:", err);
+      });
+  }, []);
 
   // LOGIC PRELOADER
   useEffect(() => {

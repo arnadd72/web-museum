@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
 import "./GalleryMain.css";
-import { encyclopediaData } from "../data/encyclopediaData";
 
 const GalleryMain = () => {
+  const [encyclopediaData, setEncyclopediaData] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
@@ -13,8 +13,16 @@ const GalleryMain = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetch('http://localhost:5000/api/encyclopedia')
+      .then(res => res.json())
+      .then(data => setEncyclopediaData(data))
+      .catch(console.error);
+  }, []);
+
   // === PERBAIKAN 1: LOGIC PEMULIHAN STATUS ===
   useEffect(() => {
+    if (!encyclopediaData) return;
     if (location.state) {
       const { targetCategory, targetSubCategory, targetItem } = location.state;
 
@@ -49,7 +57,7 @@ const GalleryMain = () => {
       // Opsional: Bersihkan state agar tidak stuck saat refresh (hapus jika ingin persistent)
       // window.history.replaceState({}, document.title);
     }
-  }, [location]);
+  }, [location, encyclopediaData]);
 
   const handleSelect = (key) => {
     setIsExiting(true);
@@ -116,6 +124,12 @@ const GalleryMain = () => {
     <div className="gallery-container">
       <div className="grid-bg"></div>
       <div className="vignette"></div>
+      
+      {!encyclopediaData && (
+        <div style={{color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', position: 'absolute', width: '100%', zIndex: 999}}>
+           <h2>SINKRONISASI DATABASE...</h2>
+        </div>
+      )}
 
       <nav className="gallery-nav">
         <Link to="/" className="nav-back">
@@ -128,7 +142,7 @@ const GalleryMain = () => {
 
       <main className="gallery-content">
         {/* VIEW 1: KATEGORI */}
-        {!selectedCategory && (
+        {encyclopediaData && !selectedCategory && (
           <div
             className={`selection-grid ${isExiting ? "fade-out-down" : "fade-in-up"}`}
           >
