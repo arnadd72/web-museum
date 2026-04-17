@@ -1,19 +1,28 @@
-import React, { Suspense, Component, useState, useRef, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Canvas, useFrame } from "@react-three/fiber";
 import {
-  OrbitControls,
-  useGLTF,
-  Html,
-  Float,
-  Sparkles,
   Center,
+  Float,
+  Html,
+  OrbitControls,
   Resize,
+  Sparkles,
+  useGLTF,
 } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { AnimatePresence, motion } from "framer-motion";
+import React, {
+  Component,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
+import { encyclopediaData } from "../data/encyclopediaData";
 import "./ModelViewer.css";
 
-// ERROR BOUNDARY
+// --- ERROR BOUNDARY ---
 class ModelErrorBoundary extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +42,7 @@ class ModelErrorBoundary extends Component {
   }
 }
 
-// PLACEHOLDER
+// --- PLACEHOLDER ---
 const PlaceholderModel = ({ color }) => {
   const meshRef = useRef();
   useFrame((state, delta) => {
@@ -57,107 +66,124 @@ const PlaceholderModel = ({ color }) => {
   );
 };
 
-// MODEL LOADER
+// --- MODEL LOADER ---
 const Model3D = ({ path }) => {
   const { scene } = useGLTF(path);
-  const clonedScene = useMemo(() => scene.clone(), [scene]);
+  const clonedScene = useMemo(() => scene.clone(), [scene, path]);
   return <primitive object={clonedScene} />;
 };
 
-// LOADING
-const Loader = () => {
-  return (
-    <Html center>
-      <div className="loader-text">MEMUAT ASET...</div>
-    </Html>
-  );
-};
+const Loader = () => (
+  <Html center>
+    <div className="loader-text-hud">
+      <div className="spinner"></div>
+      <span>MEMUAT 3D MESH...</span>
+    </div>
+  </Html>
+);
 
 // --- MAIN COMPONENT ---
 const ModelViewer = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("OVERVIEW");
 
-  // === 1. AMBIL DATA & NAVIGASI ===
+  // === 1. AMBIL DATA ===
   const { itemData, returnContext, returnPath } = location.state || {};
-  const data = itemData;
 
-  // === 2. LOGIC TOMBOL KEMBALI CERDAS ===
+  const [activeItem, setActiveItem] = useState(itemData);
+  const [siblingItems, setSiblingItems] = useState([]);
+  const [activeTab, setActiveTab] = useState("ANATOMY");
+
+  // === 2. SIBLING ITEMS UNTUK CAROUSEL BAWAH ===
+  useEffect(() => {
+    if (
+      returnContext &&
+      returnContext.targetCategory &&
+      returnContext.targetSubCategory
+    ) {
+      const cat = encyclopediaData[returnContext.targetCategory];
+      if (cat) {
+        const sub = cat.subCategories.find(
+          (s) => s.title === returnContext.targetSubCategory,
+        );
+        if (sub && sub.items) {
+          setSiblingItems(sub.items);
+        }
+      }
+    } else if (itemData) {
+      setSiblingItems([itemData]);
+    }
+  }, [returnContext, itemData]);
+
+  // === 3. LOGIC NAVIGASI ===
   const handleBack = () => {
-    // Skenario 1: Jika ada returnPath (dari Visual3DHub)
     if (returnPath) {
       navigate(returnPath);
       return;
     }
-
-    // Skenario 2: Jika ada returnContext (dari GalleryMain)
     if (returnContext) {
-      navigate("/gallery", {
-        state: {
-          targetCategory: returnContext.targetCategory,
-          targetSubCategory: returnContext.targetSubCategory,
-          targetItem: returnContext.targetItem,
-        },
-      });
+      navigate("/gallery", { state: { ...returnContext } });
       return;
     }
-
-    // Skenario 3: Default (Langsung akses URL / Refresh)
     navigate("/gallery");
   };
 
-  // --- 3. EXTENDED DATA & CAMERA LOGIC ---
+  // === 4. EXTENDED DATA LOGIC ===
   const extendedData = useMemo(() => {
-    if (!data) return null;
-    const dbDesc = data.description || {};
-    const customInfo = data.details || {};
+    if (!activeItem) return null;
+    const dbDesc = activeItem.description || {};
+    const customInfo = activeItem.details || {};
 
     return {
       scientificName:
         customInfo.scientificName ||
-        data.name.charAt(0) + data.name.slice(1).toLowerCase() + " sp.",
-      category: data.category || "Unknown Class",
+        activeItem.name.charAt(0) +
+          activeItem.name.slice(1).toLowerCase() +
+          " sp.",
+      category: activeItem.category || "Unknown Class",
       taxonomy: customInfo.taxonomy || "Kingdom Animalia",
-      location: customInfo.location || "Global / Tersebar Luas",
-
-      // PERBAIKAN DI SINI: Mengambil data status dari encyclopedia.js, default ke "PUNAH" jika kosong
-      status: data.status || "PUNAH",
-
+      location: customInfo.location || "Global",
+      status: activeItem.status || "PUNAH",
       diet: customInfo.diet || "Tidak Diketahui",
       size: customInfo.size || "Bervariasi",
       weight: customInfo.weight || "Tidak Diketahui",
       lifespan: customInfo.lifespan || "Tidak Diketahui",
-      period: data.period || customInfo.period || "Zaman Prasejarah",
+      period:
+        activeItem.period ||
+        customInfo.period ||
+        activeItem.era ||
+        "Prasejarah",
       funFact:
-        dbDesc.key || "Spesies ini memiliki peran unik dalam ekosistem purba.",
+        dbDesc.key ||
+        "Spesies ini memiliki peran penting dalam rantai makanan purba.",
       discoveryYear: customInfo.discoveryYear || "Abad ke-19",
-      stats: customInfo.stats || { completeness: 50, rarity: 50, value: 50 },
+      stats: customInfo.stats || { completeness: 85, rarity: 70, value: 90 },
+      desc: activeItem.description
+        ? activeItem.description.full || activeItem.description.short
+        : activeItem.desc,
     };
-  }, [data]);
+  }, [activeItem]);
 
   const { cameraPosition, maxZoomDistance, modelScale } = useMemo(() => {
-    if (!data)
+    if (!activeItem)
       return { cameraPosition: [0, 2, 8], maxZoomDistance: 15, modelScale: 3 };
-    const name = data.name.toUpperCase();
-    if (name.includes("BRACHIOSAURUS") || name.includes("SAUROPOD")) {
+    const name = activeItem.name.toUpperCase();
+    if (name.includes("BRACHIOSAURUS") || name.includes("SAUROPOD"))
       return {
-        cameraPosition: [0, 5, 20],
+        cameraPosition: [0, 4, 18],
         maxZoomDistance: 40,
         modelScale: 1.5,
       };
-    }
-    if (name.includes("REX") || name.includes("SPINOSAURUS")) {
+    if (name.includes("REX") || name.includes("SPINOSAURUS"))
       return {
         cameraPosition: [0, 2, 12],
         maxZoomDistance: 25,
         modelScale: 2.2,
       };
-    }
     return { cameraPosition: [0, 1, 8], maxZoomDistance: 15, modelScale: 3 };
-  }, [data]);
+  }, [activeItem]);
 
-  if (!data) {
+  if (!activeItem) {
     return (
       <div className="viewer-error">
         <h1>AKSES DITOLAK</h1>
@@ -166,57 +192,54 @@ const ModelViewer = () => {
     );
   }
 
-  const themeColor = data.color || "#00ff88";
-  const hologramCyan = "#00d2ff";
+  const themeColor = activeItem.accentColor || activeItem.color || "#00d2ff";
 
   return (
-    <div className="viewer-container">
-      <div className="canvas-wrapper">
-        <div className="hologram-overlay"></div>
+    <div className="hud-viewer-container">
+      {/* === 1. 3D CANVAS FULLSCREEN === */}
+      <div className="hud-canvas-wrapper">
         <Canvas
           shadows
           dpr={[1, 2]}
           camera={{ position: cameraPosition, fov: 45 }}
         >
-          <fog attach="fog" args={["#000000", 5, 40]} />
+          <fog attach="fog" args={["#030508", 5, 45]} />
           <Sparkles
             count={100}
-            scale={10}
+            scale={15}
             size={2}
-            speed={0.5}
-            color={hologramCyan}
-            position={[0, 0, 0]}
+            speed={0.2}
+            color={themeColor}
+            opacity={0.3}
           />
-          <ambientLight intensity={2.0} color="#ffffff" />
+          <ambientLight intensity={1.2} color="#ffffff" />
           <directionalLight
             position={[10, 10, 5]}
-            intensity={3.0}
+            intensity={2.5}
             color="#ffffff"
             castShadow
           />
           <directionalLight
-            position={[-10, 5, -10]}
-            intensity={1.5}
-            color="#b0e0ff"
+            position={[-10, -5, -10]}
+            intensity={1}
+            color={themeColor}
           />
-          <pointLight
-            position={[0, -2, 0]}
-            intensity={1.0}
-            color="#ffffff"
-            distance={10}
-          />
+
           <Suspense fallback={<Loader />}>
             <Float
               speed={1.5}
-              rotationIntensity={0.2}
-              floatIntensity={0.5}
+              rotationIntensity={0.1}
+              floatIntensity={0.2}
               position={[0, -0.5, 0]}
             >
-              <group scale={1.5}>
+              <group scale={1.2}>
                 <ModelErrorBoundary color={themeColor}>
                   <Center top>
                     <Resize scale={modelScale}>
-                      <Model3D path={data.modelPath} />
+                      <Model3D
+                        key={activeItem.modelPath}
+                        path={activeItem.modelPath}
+                      />
                     </Resize>
                   </Center>
                 </ModelErrorBoundary>
@@ -225,7 +248,7 @@ const ModelViewer = () => {
           </Suspense>
           <OrbitControls
             autoRotate
-            autoRotateSpeed={0.5}
+            autoRotateSpeed={1}
             makeDefault
             minDistance={2}
             maxDistance={maxZoomDistance}
@@ -234,325 +257,254 @@ const ModelViewer = () => {
         </Canvas>
       </div>
 
-      {/* BUTTON KEMBALI */}
-      <div className="ui-top-left">
-        <button onClick={handleBack} className="back-btn">
-          ← KEMBALI
+      {/* === 2. TOP NAVBAR === */}
+      <header className="hud-top-nav">
+        <button onClick={handleBack} className="btn-hud-back">
+          <span className="arr">←</span> TERMINATE LINK
         </button>
-      </div>
-
-      <div className="ui-bottom-left">
-        <div className="item-id" style={{ color: themeColor }}>
-          ID: {data.name.substring(0, 3)}-{Math.floor(Math.random() * 9999)}
+        <div className="hud-nav-status">
+          <div className="blink-dot"></div>
+          <span>LIVE TELEMETRY // 3D RENDER</span>
         </div>
-        <h1
-          className="main-title"
-          style={{ WebkitTextStroke: `1px ${themeColor}` }}
-        >
-          {data.name}
+      </header>
+
+      {/* === 3. LEFT PANEL (IDENTITAS & TAKSONOMI) === */}
+      <motion.aside
+        key={`left-${activeItem.name}`}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+        className="hud-panel left-panel"
+      >
+        <div className="panel-corner tl"></div>
+        <div className="panel-corner tr"></div>
+        <div className="panel-corner bl"></div>
+        <div className="panel-corner br"></div>
+
+        <div className="hud-tag">
+          ID SPESIMEN: 00{activeItem.id || Math.floor(Math.random() * 99)}
+        </div>
+        <h1 className="hud-main-title" style={{ color: themeColor }}>
+          {activeItem.name}
         </h1>
-        <div
-          style={{
-            color: "#aaa",
-            letterSpacing: "2px",
-            marginTop: "10px",
-            fontStyle: "italic",
-            fontSize: "1.1rem",
-          }}
-        >
-          {extendedData.scientificName}
-        </div>
-      </div>
+        <h3 className="hud-sub-title">{extendedData.scientificName}</h3>
 
-      <div className="ui-right-panel">
-        <div className="panel-tabs">
+        <div className="hud-divider"></div>
+
+        <div className="hud-data-list">
+          <div className="hud-data-row">
+            <span className="lbl">KLASIFIKASI</span>
+            <span className="val">{extendedData.category}</span>
+          </div>
+          <div className="hud-data-row">
+            <span className="lbl">TAKSONOMI</span>
+            <span className="val">{extendedData.taxonomy}</span>
+          </div>
+          <div className="hud-data-row">
+            <span className="lbl">LOKASI DATA</span>
+            <span className="val">{extendedData.location}</span>
+          </div>
+          <div className="hud-data-row">
+            <span className="lbl">ERA GEOLOGI</span>
+            <span className="val">{extendedData.period}</span>
+          </div>
+          <div className="hud-data-row mt-3">
+            <span className="lbl">STATUS</span>
+            <span
+              className="val status-glow"
+              style={{
+                color:
+                  extendedData.status === "MASIH HIDUP" ? "#00ff88" : "#ff4d4d",
+                textShadow:
+                  extendedData.status === "MASIH HIDUP"
+                    ? "0 0 10px #00ff88"
+                    : "0 0 10px #ff4d4d",
+              }}
+            >
+              [{extendedData.status}]
+            </span>
+          </div>
+        </div>
+
+        <div className="hud-desc-box">
+          <p>{extendedData.desc}</p>
+        </div>
+      </motion.aside>
+
+      {/* === 4. RIGHT PANEL (ANATOMI, METRIK, WAWASAN) === */}
+      <motion.aside
+        key={`right-${activeItem.name}`}
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="hud-panel right-panel"
+      >
+        <div className="panel-corner tl"></div>
+        <div className="panel-corner tr"></div>
+        <div className="panel-corner bl"></div>
+        <div className="panel-corner br"></div>
+
+        <div className="hud-tabs">
           <button
-            className={activeTab === "OVERVIEW" ? "tab active" : "tab"}
-            onClick={() => setActiveTab("OVERVIEW")}
-            style={
-              activeTab === "OVERVIEW"
-                ? { borderBottom: `2px solid ${themeColor}`, color: themeColor }
-                : {}
-            }
-          >
-            RINGKASAN
-          </button>
-          <button
-            className={activeTab === "ANATOMY" ? "tab active" : "tab"}
+            className={activeTab === "ANATOMY" ? "active" : ""}
             onClick={() => setActiveTab("ANATOMY")}
-            style={
-              activeTab === "ANATOMY"
-                ? { borderBottom: `2px solid ${themeColor}`, color: themeColor }
-                : {}
-            }
+            style={{
+              color: activeTab === "ANATOMY" ? themeColor : "#888",
+              borderBottomColor:
+                activeTab === "ANATOMY" ? themeColor : "transparent",
+            }}
           >
-            DATA FISIK
+            ANATOMI
           </button>
           <button
-            className={activeTab === "FUNFACT" ? "tab active" : "tab"}
-            onClick={() => setActiveTab("FUNFACT")}
-            style={
-              activeTab === "FUNFACT"
-                ? { borderBottom: `2px solid ${themeColor}`, color: themeColor }
-                : {}
-            }
+            className={activeTab === "METRICS" ? "active" : ""}
+            onClick={() => setActiveTab("METRICS")}
+            style={{
+              color: activeTab === "METRICS" ? themeColor : "#888",
+              borderBottomColor:
+                activeTab === "METRICS" ? themeColor : "transparent",
+            }}
           >
-            EDUKASI
+            METRIK
+          </button>
+          <button
+            className={activeTab === "LORE" ? "active" : ""}
+            onClick={() => setActiveTab("LORE")}
+            style={{
+              color: activeTab === "LORE" ? themeColor : "#888",
+              borderBottomColor:
+                activeTab === "LORE" ? themeColor : "transparent",
+            }}
+          >
+            WAWASAN
           </button>
         </div>
 
-        <div className="panel-content">
-          {activeTab === "OVERVIEW" && (
-            <>
-              <h3 className="panel-heading">KLASIFIKASI & ASAL</h3>
-              <p className="panel-desc">
-                {data.description ? data.description.short : data.desc}
-              </p>
-              <div className="info-grid">
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>KELOMPOK</label>
-                  <span>{extendedData.category}</span>
-                </div>
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>TAKSONOMI</label>
-                  <span style={{ fontSize: "0.8rem" }}>
-                    {extendedData.taxonomy}
-                  </span>
-                </div>
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>LOKASI TEMUAN</label>
-                  <span style={{ fontSize: "0.9rem" }}>
-                    {extendedData.location}
-                  </span>
-                </div>
-
-                {/* PERBAIKAN LOGIKA UI: Warna berubah sesuai status */}
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>STATUS</label>
-                  <span
-                    style={{
-                      color:
-                        extendedData.status === "MASIH HIDUP"
-                          ? "#00ff88"
-                          : "#ff3333", // Hijau jika hidup, Merah jika punah
-                      fontWeight: "bold",
-                      textShadow:
-                        extendedData.status === "MASIH HIDUP"
-                          ? "0 0 10px rgba(0,255,136,0.3)"
-                          : "none",
-                    }}
-                  >
-                    {extendedData.status}
-                  </span>
-                </div>
-              </div>
-            </>
-          )}
-
-          {activeTab === "ANATOMY" && (
-            <>
-              <h3 className="panel-heading">KARAKTERISTIK FISIK</h3>
-              <div className="info-grid">
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>DIET (MAKANAN)</label>
-                  <span>{extendedData.diet}</span>
-                </div>
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>ESTIMASI UMUR</label>
-                  <span>{extendedData.lifespan}</span>
-                </div>
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>UKURAN TUBUH</label>
-                  <span style={{ fontSize: "0.9rem" }}>
-                    {extendedData.size}
-                  </span>
-                </div>
-                <div className="info-item">
-                  <label style={{ color: themeColor }}>BERAT (PERKIRAAN)</label>
-                  <span>{extendedData.weight}</span>
-                </div>
-              </div>
-              <div
-                style={{
-                  marginTop: "25px",
-                  borderTop: "1px solid rgba(255,255,255,0.1)",
-                  paddingTop: "20px",
-                }}
+        <div className="hud-tab-content">
+          <AnimatePresence mode="wait">
+            {activeTab === "ANATOMY" && (
+              <motion.div
+                key="t1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="hud-data-list"
               >
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    color: themeColor,
-                    fontWeight: "bold",
-                    marginBottom: "15px",
-                    letterSpacing: "1px",
-                  }}
-                >
-                  DATA KOLEKSI (SPECIMEN STATS)
+                <div className="hud-data-row">
+                  <span className="lbl">DIET</span>
+                  <span className="val">{extendedData.diet}</span>
+                </div>
+                <div className="hud-data-row">
+                  <span className="lbl">ESTIMASI UMUR</span>
+                  <span className="val">{extendedData.lifespan}</span>
+                </div>
+                <div className="hud-data-row">
+                  <span className="lbl">UKURAN</span>
+                  <span className="val">{extendedData.size}</span>
+                </div>
+                <div className="hud-data-row">
+                  <span className="lbl">BERAT</span>
+                  <span className="val">{extendedData.weight}</span>
                 </div>
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
-                  }}
+                  className="hud-wireframe-decor"
+                  style={{ borderColor: themeColor }}
                 >
-                  {[
-                    { label: "KEUTUHAN", val: extendedData.stats.completeness },
-                    { label: "KELANGKAAN", val: extendedData.stats.rarity },
-                    { label: "NILAI SAINS", val: extendedData.stats.value },
-                  ].map((stat, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "80px",
-                          fontSize: "0.7rem",
-                          color: "#888",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {stat.label}
-                      </div>
-                      <div
-                        style={{
-                          flex: 1,
-                          height: "6px",
-                          background: "#333",
-                          borderRadius: "3px",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: `${stat.val}%`,
-                            height: "100%",
-                            background: themeColor,
-                            boxShadow: `0 0 10px ${themeColor}`,
-                            transition: "width 1s ease-out",
-                          }}
-                        ></div>
-                      </div>
-                      <div
-                        style={{
-                          width: "35px",
-                          fontSize: "0.8rem",
-                          color: "#fff",
-                          textAlign: "right",
-                        }}
-                      >
-                        {stat.val}%
-                      </div>
+                  <div className="wf-line"></div>
+                  <div className="wf-line"></div>
+                  <div className="wf-line"></div>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === "METRICS" && (
+              <motion.div
+                key="t2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="hud-metrics-container"
+              >
+                <div className="hud-tag mb-2" style={{ color: themeColor }}>
+                  KUALITAS SPESIMEN 3D
+                </div>
+                {[
+                  {
+                    label: "KEUTUHAN FOSIL",
+                    val: extendedData.stats.completeness,
+                  },
+                  {
+                    label: "TINGKAT KELANGKAAN",
+                    val: extendedData.stats.rarity,
+                  },
+                  { label: "NILAI EDUKASI", val: extendedData.stats.value },
+                ].map((stat, i) => (
+                  <div className="metric-bar-group" key={i}>
+                    <div className="metric-info">
+                      <span>{stat.label}</span>
+                      <span>{stat.val}%</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
+                    <div className="metric-track">
+                      <div
+                        className="metric-fill"
+                        style={{
+                          width: `${stat.val}%`,
+                          backgroundColor: themeColor,
+                          boxShadow: `0 0 10px ${themeColor}`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            )}
 
-          {activeTab === "FUNFACT" && (
-            <>
-              <h3 className="panel-heading">WAWASAN & SEJARAH</h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px",
-                }}
+            {activeTab === "LORE" && (
+              <motion.div
+                key="t3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
               >
-                <div>
-                  <div
-                    style={{
-                      fontSize: "0.8rem",
-                      color: themeColor,
-                      fontWeight: "bold",
-                      marginBottom: "5px",
-                    }}
-                  >
-                    PERIODE HIDUP
-                  </div>
-                  <div
-                    style={{
-                      background: "rgba(255,255,255,0.1)",
-                      padding: "10px",
-                      borderRadius: "4px",
-                      textAlign: "center",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      border: `1px solid ${themeColor}`,
-                    }}
-                  >
-                    {extendedData.period}
-                  </div>
-                </div>
-                <div>
-                  <div
-                    style={{
-                      fontSize: "0.8rem",
-                      color: themeColor,
-                      fontWeight: "bold",
-                      marginBottom: "5px",
-                    }}
-                  >
-                    SEJARAH PENEMUAN
-                  </div>
-                  <div style={{ color: "#ccc", fontSize: "0.9rem" }}>
-                    Pertama kali diidentifikasi atau dipelajari secara luas
-                    pada:{" "}
-                    <strong style={{ color: "#fff" }}>
-                      {extendedData.discoveryYear}
-                    </strong>
-                  </div>
+                <div className="hud-data-row mb-3">
+                  <span className="lbl">TAHUN PENEMUAN</span>
+                  <span className="val">{extendedData.discoveryYear}</span>
                 </div>
                 <div
-                  style={{
-                    background: "rgba(255,255,255,0.05)",
-                    padding: "15px",
-                    borderLeft: `3px solid ${themeColor}`,
-                    marginTop: "5px",
-                  }}
+                  className="hud-lore-box"
+                  style={{ borderLeftColor: themeColor }}
                 >
-                  <div
-                    style={{
-                      fontSize: "0.9rem",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      marginBottom: "5px",
-                    }}
-                  >
-                    TAHUKAH KAMU?
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.95rem",
-                      color: "#ccc",
-                      fontStyle: "italic",
-                      lineHeight: "1.6",
-                    }}
-                  >
-                    "{extendedData.funFact}"
-                  </div>
+                  <div className="lore-title">CATATAN PALEONTOLOGI</div>
+                  <p>"{extendedData.funFact}"</p>
                 </div>
-                <div
-                  style={{
-                    marginTop: "10px",
-                    fontSize: "0.7rem",
-                    color: "#555",
-                  }}
-                >
-                  Database v3.0 // Asset Path: {data.modelPath}
-                </div>
-              </div>
-            </>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </div>
+      </motion.aside>
+
+      {/* === 5. BOTTOM CAROUSEL (SIBLING THUMBNAILS) === */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="hud-bottom-carousel"
+      >
+        <div className="carousel-track">
+          {siblingItems.map((item, idx) => (
+            <div
+              key={idx}
+              className={`carousel-thumb ${item.name === activeItem.name ? "active" : ""}`}
+              onClick={() => setActiveItem(item)}
+              style={{ "--accent": themeColor }}
+            >
+              <img src={item.image} alt={item.name} />
+              <div className="thumb-overlay"></div>
+              <span className="thumb-name">{item.name}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 };
