@@ -1,617 +1,704 @@
-/* --- GLOBAL LAYOUT --- */
+/* ==========================================================================
+   GLOBAL & BACKGROUNDS
+   ========================================================================== */
+:root {
+  --neon-blue: #00d2ff;
+  --neon-green: #00ff88;
+  --neon-red: #ff4d4d;
+  --bg-dark: #030508;
+  --panel-bg: rgba(10, 15, 25, 0.8);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+}
+
 .gallery-container {
   width: 100vw;
   height: 100vh;
-  background-color: #050505;
+  background-color: var(--bg-dark);
   color: #fff;
   font-family: "Rajdhani", sans-serif;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.grid-bg {
+.gallery-bg-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 210, 255, 0.05) 0%,
+    transparent 60%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gallery-grid-pattern {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    ),
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
-  z-index: 0;
 }
 
-.vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, transparent 40%, #000 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* --- NAVBAR --- */
-.gallery-nav {
+/* ==========================================================================
+   TOP NAVIGATION
+   ========================================================================== */
+.gallery-top-nav {
   position: relative;
   z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 3rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
 }
 
-.nav-back {
+.btn-sys-back {
+  color: #a0aab5;
   text-decoration: none;
-  color: #888;
-  font-weight: 700;
+  font-family: monospace;
+  font-size: 0.9rem;
   letter-spacing: 2px;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
 }
-.nav-back:hover {
+.btn-sys-back:hover {
   color: #fff;
   text-shadow: 0 0 10px #fff;
 }
-
-.nav-title {
-  font-size: 1.2rem;
-  letter-spacing: 4px;
-  font-weight: 800;
-  color: #fff;
+.arr {
+  color: var(--neon-blue);
 }
 
-/* --- CONTENT AREA --- */
-.gallery-content {
+.nav-sys-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: monospace;
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 1rem;
+  color: var(--neon-blue);
+}
+.sys-blink {
+  width: 8px;
+  height: 8px;
+  background: var(--neon-green);
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* ==========================================================================
+   MAIN AREA & HEADERS
+   ========================================================================== */
+.gallery-main-area {
+  flex: 1;
   position: relative;
-  z-index: 5;
-  height: calc(100vh - 80px);
+  z-index: 10;
+  padding: 2rem 5%;
+  box-sizing: border-box;
   overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+.gallery-main-area::-webkit-scrollbar {
+  display: none;
+}
+
+.view-layer {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+.text-center {
+  text-align: center;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.cyber-heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+.cyber-subheading {
+  color: #a0aab5;
+  font-size: 1.1rem;
+  margin-top: 15px;
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+.accent {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--neon-blue);
+}
+.sys-status {
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.btn-text-back {
+  background: transparent;
+  border: none;
+  color: #a0aab5;
+  font-family: monospace;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  transition: 0.3s;
+}
+.btn-text-back:hover {
+  color: #fff;
+}
+.mb-4 {
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   VIEW 1 & 2: MUSEUM ASYMMETRIC GRID (KARTU BESAR KECIL)
+   ========================================================================== */
+.museum-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 280px; /* Tinggi dasar kartu */
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+/* Pola Grid Asimetris Otomatis (Besar, Sedang, Kecil) */
+.exhibit-card:nth-child(4n + 1) {
+  grid-column: span 2;
+  grid-row: span 2;
+} /* Super Besar (Kiri Atas) */
+.exhibit-card:nth-child(4n + 2) {
+  grid-column: span 2;
+  grid-row: span 1;
+} /* Lebar Horizontal (Kanan Atas) */
+.exhibit-card:nth-child(4n + 3) {
+  grid-column: span 1;
+  grid-row: span 1;
+} /* Kotak Kecil */
+.exhibit-card:nth-child(4n + 4) {
+  grid-column: span 1;
+  grid-row: span 1;
+} /* Kotak Kecil */
+
+.exhibit-card {
+  position: relative;
+  background: var(--panel-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-subtle);
+}
+
+.exhibit-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--card-color);
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(var(--card-color), 0.2);
+}
+
+.card-image-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(80%) brightness(0.6);
+  transition:
+    filter 0.6s ease,
+    transform 0.8s ease;
+}
+.exhibit-card:hover .card-image-bg {
+  filter: grayscale(0%) brightness(0.9);
+  transform: scale(1.05);
+}
+
+.card-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.card-border-frame {
+  position: absolute;
+  inset: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  transition: 0.5s;
+}
+.exhibit-card:hover .card-border-frame {
+  inset: 10px;
+  border-color: var(--card-color);
+}
+
+.card-content {
+  position: absolute;
+  inset: 0;
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-/* --- VIEW 1: KATEGORI UTAMA --- */
-.selection-grid {
-  text-align: center;
-  width: 100%;
-  max-width: 1200px;
-  animation: fadeInUp 0.5s ease-out;
-}
-.main-heading {
-  font-size: 3rem;
-  letter-spacing: 10px;
-  margin-bottom: 3rem;
-}
-.blink {
-  animation: blink 1s infinite;
-}
-
-.cards-wrapper {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.compact-card {
-  width: 300px;
-  height: 400px;
-  background: rgba(20, 20, 20, 0.6);
-  border: 1px solid #333;
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  transition: 0.4s;
-}
-
-.compact-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--card-color);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.card-image-box {
-  width: 100%;
-  height: 60%;
-  position: relative;
-}
-.card-image-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(100%);
-  transition: 0.5s;
-}
-.compact-card:hover img {
-  filter: grayscale(0%);
-  transform: scale(1.1);
-}
-
-.card-text {
-  padding: 1.5rem;
-  text-align: left;
-}
-.card-text h2 {
-  margin: 0;
-  font-size: 1.8rem;
-  letter-spacing: 2px;
-  color: #fff;
-}
-.card-text p {
-  color: #888;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
-
-.hover-border {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 4px;
-  background: var(--card-color);
-  transition: 0.4s;
-}
-.compact-card:hover .hover-border {
-  width: 100%;
-}
-
-/* --- VIEW 2: SUB-KATEGORI (LAYOUT VERTIKAL) --- */
-.sub-selection-view {
-  width: 100%;
-  max-width: 1000px;
-  animation: fadeInUp 0.5s ease-out;
-}
-
-.sub-header {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #333;
-  padding-bottom: 1rem;
-}
-.back-arrow-btn {
-  background: none;
-  border: 1px solid #444;
-  color: #888;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-  font-family: "Rajdhani";
-}
-.back-arrow-btn:hover {
-  color: #fff;
-  border-color: #fff;
-}
-
-.sub-cards-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-  padding-bottom: 50px;
-}
-
-.sub-card-visual {
-  display: flex;
-  flex-direction: row;
-  height: 200px;
-  width: 100%;
-  background: rgba(10, 10, 10, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 4px solid var(--item-color);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  opacity: 0;
-  animation: slideInList 0.6s forwards;
-}
-
-.sub-card-visual:hover {
-  transform: translateX(10px);
-  background: rgba(20, 20, 20, 0.95);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.sub-visual-box {
-  width: 35%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-}
-.sub-visual-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: 0.5s;
-}
-.sub-card-visual:hover img {
-  transform: scale(1.1);
-}
-
-.index-badge {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: var(--item-color);
-  color: #000;
-  font-weight: bold;
-  padding: 5px 15px;
-  font-size: 1.2rem;
   z-index: 2;
 }
 
-.sub-content-box {
-  flex: 1;
-  padding: 20px 40px;
+.card-top-info {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
 }
-.sub-content-box h3 {
+.card-idx {
+  font-family: monospace;
   font-size: 2rem;
-  margin: 0 0 10px 0;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  font-weight: 800;
+  color: var(--card-color);
+  line-height: 1;
 }
-.sub-content-box p {
-  color: #aaa;
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
-  max-width: 90%;
-}
-
-.mini-inspect-btn {
-  background: transparent;
-  border: 1px solid var(--item-color);
-  color: var(--item-color);
-  padding: 10px 25px;
-  font-family: "Rajdhani";
-  font-weight: bold;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.mini-inspect-btn:hover {
-  background: var(--item-color);
-  color: #000;
-  box-shadow: 0 0 15px var(--item-color);
-}
-
-/* --- VIEW 3: SPLIT VIEW LAYOUT --- */
-.split-view-container {
-  display: grid;
-  grid-template-columns: 350px 1fr; /* Kiri tetap, Kanan fleksibel */
-  width: 100%;
-  max-width: 1400px;
-  min-height: 80vh;
-  height: calc(100vh - 100px);
-  gap: 2rem;
-  animation: fadeInUp 0.5s ease-out;
-}
-
-/* PANEL KIRI (LIST) */
-.left-panel-list {
+.card-tag {
+  font-family: monospace;
+  font-size: 0.75rem;
   background: rgba(0, 0, 0, 0.6);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border: 1px solid var(--border-subtle);
+  letter-spacing: 2px;
+}
+
+.card-bottom-info h2,
+.card-bottom-info h3 {
+  font-size: 2.2rem;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+/* Penyesuaian font untuk kartu yg lebih kecil */
+.exhibit-card:nth-child(4n + 3) h2,
+.exhibit-card:nth-child(4n + 4) h2 {
+  font-size: 1.5rem;
+}
+
+.card-bottom-info p {
+  color: #a0aab5;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.exhibit-card:nth-child(4n + 1) p {
+  -webkit-line-clamp: 4;
+  font-size: 1.05rem;
+} /* Paragraf lebih panjang di kartu besar */
+
+.hover-action {
+  font-family: monospace;
+  font-weight: bold;
+  color: var(--card-color);
+  margin-top: 15px;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.4s;
+}
+.exhibit-card:hover .hover-action {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Penyesuaian Sub-Kategori Grid (Ukurannya dibuat sedikit beda) */
+.sub-museum-grid {
+  grid-auto-rows: 240px;
+}
+.sub-exhibit-card:nth-child(n) {
+  grid-column: span 2;
+  grid-row: span 1;
+} /* Sub-kategori semua sama ukurannya (Horizontal) */
+
+/* ==========================================================================
+   VIEW 3: DOSSIER DETAIL (SPLIT SCREEN)
+   ========================================================================== */
+.dossier-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 3rem;
+  align-items: stretch;
+  min-height: calc(100vh - 180px);
+}
+
+/* SIDEBAR KIRI (LIST SPESIMEN) */
+.dossier-sidebar {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-subtle);
   padding: 2rem;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(10px);
   height: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
-.list-heading {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  letter-spacing: 2px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.sidebar-title {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem 0;
   padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
 }
-.list-scroll-area {
+
+.dossier-list {
   flex: 1;
   overflow-y: auto;
-  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 5px;
 }
-.list-scroll-area::-webkit-scrollbar {
+.dossier-list::-webkit-scrollbar {
   width: 4px;
 }
-.list-scroll-area::-webkit-scrollbar-thumb {
+.dossier-list::-webkit-scrollbar-thumb {
   background: #444;
   border-radius: 2px;
 }
 
-.list-item-btn {
-  width: 100%;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1rem;
-  margin-bottom: 0.8rem;
+.dossier-list-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  color: #888;
+  gap: 15px;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.3s;
-  text-align: left;
-  font-family: "Rajdhani";
+  transition: 0.3s;
+  border-radius: 4px;
+  position: relative;
 }
-.list-item-btn:hover {
+.dossier-list-item:hover {
   background: rgba(255, 255, 255, 0.05);
-  padding-left: 1.5rem;
-  color: #fff;
+  transform: translateX(5px);
+  border-color: rgba(255, 255, 255, 0.1);
 }
-.list-item-btn.active {
+.dossier-list-item.active {
   background: rgba(255, 255, 255, 0.1);
-  border-color: var(--accent);
-  color: #fff;
-  border-left: 4px solid var(--accent);
+  border-color: var(--node-color);
 }
-.item-idx {
+
+.item-num {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #666;
   font-weight: bold;
-  opacity: 0.5;
+}
+.dossier-list-item.active .item-num {
+  color: var(--node-color);
 }
 .item-name {
   font-size: 1.1rem;
-  letter-spacing: 1px;
+  color: #a0aab5;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.dossier-list-item.active .item-name {
+  color: #fff;
+}
+.item-status {
+  position: absolute;
+  right: 1rem;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--node-color);
+  animation: blink 2s infinite;
 }
 
-/* PANEL KANAN (DETAIL) */
-.right-panel-detail {
+/* KANAN (DOSSIER CONTENT) */
+.dossier-content {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-/* IMAGE WRAPPER */
-.detail-image-wrapper {
-  width: 100%;
-  min-height: 300px;
-  max-height: 55vh;
-  position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.dossier-card {
+  flex: 1;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
   overflow: hidden;
-  background: #000;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.detail-img {
+.dossier-hero-img {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: 350px;
+  position: relative;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 2px solid;
 }
-
-.scan-overlay {
+.dossier-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.5) 50%);
-  background-size: 100% 4px;
-  opacity: 0.2;
-  pointer-events: none;
-}
-.img-caption {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), transparent);
 }
 
-.detail-info-box {
-  padding: 2rem;
+/* Efek HUD di Pojok Gambar */
+.hud-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  z-index: 2;
+}
+.top-left {
+  top: 20px;
+  left: 20px;
+  border-right: none;
+  border-bottom: none;
+}
+.top-right {
+  top: 20px;
+  right: 20px;
+  border-left: none;
+  border-bottom: none;
+}
+.bottom-left {
+  bottom: 20px;
+  left: 20px;
+  border-right: none;
+  border-top: none;
+}
+.bottom-right {
+  bottom: 20px;
+  right: 20px;
+  border-left: none;
+  border-top: none;
+}
+
+.dossier-data-panel {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
   flex: 1;
 }
-.detail-info-box h1 {
-  font-size: 2.5rem;
-  margin: 0 0 1rem 0;
-  letter-spacing: 3px;
+.data-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: 1.5rem;
+}
+.data-header h1 {
+  font-size: 3rem;
+  margin: 0;
+  line-height: 1;
   text-transform: uppercase;
 }
-.detail-info-box p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #ccc;
-  margin-bottom: 2rem;
-  max-width: 900px;
-}
-
-.data-metrics {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1rem;
-}
-.metric span {
-  color: #666;
+.status-badge {
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 5px 15px;
+  border: 1px solid;
+  border-radius: 20px;
   font-weight: bold;
-  margin-right: 0.5rem;
-}
-
-.view-3d-btn {
-  background: var(--btn-color);
-  color: #000;
-  border: none;
-  padding: 1rem 2rem;
-  font-family: "Rajdhani";
-  font-weight: bold;
-  font-size: 1.1rem;
   letter-spacing: 2px;
+}
+
+.dossier-desc {
+  font-size: 1.1rem;
+  color: #ccc;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.dossier-metrics {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.d-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.d-metric span {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #666;
+  letter-spacing: 2px;
+}
+.d-metric strong {
+  font-size: 1.1rem;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.btn-render-3d {
+  align-self: flex-start;
+  padding: 15px 35px;
+  font-family: "Rajdhani";
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 10px;
+  border-radius: 4px;
   transition: 0.3s;
+  margin-top: auto;
 }
-.view-3d-btn:hover {
+.btn-render-3d:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 30px var(--btn-color);
+  filter: brightness(1.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+.icon-cube {
+  font-size: 1.3rem;
 }
 
-/* ANIMASI */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes slideInList {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ==========================================================================
+   MOBILE RESPONSIVE
+   ========================================================================== */
+@media screen and (max-width: 1024px) {
+  .museum-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .exhibit-card:nth-child(n) {
+    grid-column: span 1;
+    grid-row: span 1;
+  } /* Reset asimetris ke grid seragam */
+  .exhibit-card:nth-child(1) {
+    grid-column: span 2;
+  } /* Card pertama tetap lebar */
+
+  .sub-exhibit-card:nth-child(n) {
+    grid-column: span 2;
+  }
+
+  .dossier-layout {
+    grid-template-columns: 1fr;
+  }
+  .dossier-sidebar {
+    height: auto;
+  }
+  .dossier-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  .dossier-list-item {
+    min-width: 250px;
+  }
 }
 
-.fade-in-up {
-  animation: fadeInUp 0.5s ease-out;
-}
-
-/* =========================================
-   MOBILE RESPONSIVE FIX (REVISED)
-   Copy bagian ini dan timpa bagian paling bawah CSS Anda
-   ========================================= */
 @media screen and (max-width: 768px) {
-  
-  /* --- 1. GLOBAL CONTAINER FIX --- */
-  .gallery-container {
-    height: auto;           /* Biarkan tinggi mengikuti konten */
-    min-height: 100vh;      /* Minimal setinggi layar */
-    overflow-y: auto;       /* Izinkan scroll vertikal */
-    overflow-x: hidden;     /* Cegah scroll samping */
-  }
-
-  .gallery-content {
-    height: auto;           /* Reset tinggi agar tidak dipotong */
-    overflow: visible;      /* Konten boleh melebihi container */
-    padding: 1rem;
-    padding-bottom: 80px;   /* Jarak aman di bawah */
-  }
-
-  /* --- 2. NAVBAR (VERTIKAL) --- */
-  .gallery-nav {
+  .gallery-top-nav {
     flex-direction: column;
-    gap: 1rem;
+    gap: 15px;
     padding: 1rem;
     text-align: center;
   }
-
-  /* --- 3. VIEW 1: KATEGORI (GRID) --- */
-  .cards-wrapper {
-    gap: 2rem;
-  }
-  
-  .compact-card {
-    width: 100%;            /* Kartu memenuhi lebar HP */
-    max-width: 100%;
-    height: 350px;
-  }
-
-  .main-heading {
-    font-size: 2rem;        /* Kecilkan font judul */
-    letter-spacing: 5px;
-    margin-bottom: 2rem;
-  }
-
-  /* --- 4. VIEW 2: SUB-KATEGORI (LIST VISUAL) --- */
-  .sub-header {
-    flex-direction: column-reverse; /* Tombol back di atas judul */
-    gap: 1rem;
+  .gallery-main-area {
+    padding: 1rem;
+    padding-bottom: 80px;
     align-items: flex-start;
   }
 
-  .sub-card-visual {
-    flex-direction: column; /* Gambar di atas, teks di bawah */
-    height: auto;
-    border-left: none;
-    border-top: 4px solid var(--item-color); /* Pindah warna ke atas */
+  .cyber-heading {
+    font-size: 2.2rem;
   }
-
-  .sub-visual-box {
-    width: 100%;
-    height: 200px;
-    clip-path: none;        /* Hapus potongan miring */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .sub-content-box {
-    width: 100%;
-    padding: 1.5rem;
-  }
-
-  /* --- 5. VIEW 3: SPLIT VIEW (INI YANG ANDA MINTA) --- */
-  
-  /* Container Utama: Ubah jadi kolom (Atas ke Bawah) */
-  .split-view-container {
-    display: flex;
+  .view-header.flex-between {
     flex-direction: column;
-    height: auto;
-    gap: 0; 
-    margin-bottom: 50px;
+    align-items: flex-start;
+    gap: 10px;
   }
 
-  /* PANEL ATAS: LIST FOSIL (DIPERBESAR) */
-  .left-panel-list {
-    width: 100%;
-    /* KUNCI PERBAIKAN: */
-    height: 40vh;           /* Mengambil 40% tinggi layar HP */
-    min-height: 350px;      /* Minimal 350px agar muat 3-4 item */
-    
-    border-right: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.3); /* Batas tegas */
-    background: rgba(10, 10, 10, 0.9); /* Latar lebih gelap */
-    padding: 1rem;
-    box-sizing: border-box;
+  .museum-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 300px;
+    margin-top: 2rem;
+  }
+  .exhibit-card:nth-child(n) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .card-bottom-info h2 {
+    font-size: 1.8rem;
   }
 
-  /* Agar user lebih sadar ini list */
-  .list-heading {
-    text-align: center;
-    color: #fff;
-    border-bottom: 1px solid var(--accent);
-    margin-bottom: 1rem;
+  .dossier-hero-img {
+    height: 250px;
   }
-
-  /* PANEL BAWAH: DETAIL & FOTO (TERDORONG KE BAWAH) */
-  .right-panel-detail {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    border: none;
-    background: transparent;
+  .data-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
   }
-
-  /* Foto Preview */
-  .detail-image-wrapper {
-    width: 100%;
-    height: 300px;          /* Tinggi tetap untuk foto */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Teks Detail */
-  .detail-info-box {
-    padding: 1.5rem;
-  }
-
-  .detail-info-box h1 {
+  .data-header h1 {
     font-size: 2rem;
   }
-
-  .data-metrics {
+  .dossier-metrics {
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 1.5rem;
+  }
+  .btn-render-3d {
+    width: 100%;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  .item-status {
+    display: none;
   }
 }

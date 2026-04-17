@@ -1,91 +1,179 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { motion, useScroll, useTransform } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
 import "./LandingPage.css";
 
-const LandingPage = ({ onStart, onTimeline }) => {
-  const observerRef = useRef(null);
-  const scrollRef = useRef(null);
-  const audioRef = useRef(null);
+/* ======================================================== */
+/* KOMPONEN JAM KRONOLOGIS                                  */
+/* ======================================================== */
+const ChronologicalClock = () => {
+  const [years, setYears] = useState(4500000000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setYears((prev) => (prev > 0 ? prev - 1234567 : 0));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
-  // STATE
+  return (
+    <div className="chrono-clock">
+      <div className="chrono-label">TIMELINE MUNDUR (TAHUN)</div>
+      <div className="chrono-value">{years.toLocaleString("id-ID")}</div>
+      <div className="chrono-bar">
+        <div className="chrono-progress"></div>
+      </div>
+    </div>
+  );
+};
+
+/* ======================================================== */
+/* DATA KUIS INTERAKTIF                                     */
+/* ======================================================== */
+const quizQuestions = [
+  {
+    question: "Era geologi manakah yang dikenal sebagai 'Zaman Dinosaurus'?",
+    options: ["Paleozoikum", "Mesozoikum", "Kenozoikum", "Arkeozoikum"],
+    answer: 1,
+  },
+  {
+    question:
+      "Fosil apakah yang menjadi indeks penting untuk kehidupan laut di Era Paleozoikum?",
+    options: ["Ammonite", "Megalodon", "Trilobite", "Velociraptor"],
+    answer: 2,
+  },
+  {
+    question:
+      "Apa singkatan dari AI Asisten (ARCA) pada sistem Jejak Purba ini?",
+    options: [
+      "Artificial Reconnaissance & Communication Assistant",
+      "Advanced Robotic Cybernetic Android",
+      "Automated Research & Calculation AI",
+      "Artificial Reality Control Access",
+    ],
+    answer: 0,
+  },
+];
+
+/* ======================================================== */
+/* MAIN COMPONENT: LANDING PAGE                             */
+/* ======================================================== */
+const LandingPage = ({ onStart, onTimeline }) => {
+  const audioRef = useRef(null);
+  const observerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  // DATA
-  const dinoImageLink = "https://i0.wp.com/genemil.com/wp-content/uploads/2020/07/zaman-paleozoikum.jpg?fit=800%2C600&ssl=1";
+  // DATA FOSIL
+  const dinoImageLink =
+    "https://i0.wp.com/genemil.com/wp-content/uploads/2020/07/zaman-paleozoikum.jpg?fit=800%2C600&ssl=1";
+  const featuredFossils = [
+    {
+      id: 1,
+      title: "TYRANNOSAURUS REX",
+      desc: "Predator puncak era Mesozoikum.",
+      type: "VERTEBRATA",
+      era: "MESOZOIKUM",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQ53hI5D7wMRZ4jkuZBqC-AXLvzDL39rnNQ&s",
+      accentColor: "#ff4d4d",
+      radarPos: { top: "30%", left: "60%" },
+    },
+    {
+      id: 2,
+      title: "TRILOBITE",
+      desc: "Kehidupan kompleks paling awal.",
+      type: "INVERTEBRATA",
+      era: "PALEOZOIKUM",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljOpkz5Or31nutRIesJGJQ2ZB2uTjIOogDg&s",
+      accentColor: "#00d2ff",
+      radarPos: { top: "70%", left: "30%" },
+    },
+    {
+      id: 3,
+      title: "WOOLLY MAMMOTH",
+      desc: "Mamalia raksasa era Kenozoikum.",
+      type: "MAMALIA",
+      era: "KENOZOIKUM",
+      image:
+        "https://media.sketchfab.com/models/58376e170c8b4507a636b5e45bcce999/thumbnails/ce3b02fdd7194d55b7afb8908312ad98/92491c00087e4d21aa7fb453582a759f.jpeg",
+      accentColor: "#ffffff",
+      radarPos: { top: "20%", left: "40%" },
+    },
+    {
+      id: 4,
+      title: "AMMONITE",
+      desc: "Fosil indeks penting laut purba.",
+      type: "INVERTEBRATA",
+      era: "MESOZOIKUM",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpdaTwKETvJtqM8A-jfuCswx-cs-Z4QXx84w&s",
+      accentColor: "#FF8C00",
+      radarPos: { top: "60%", left: "80%" },
+    },
+  ];
 
-  const [featuredFossils, setFeaturedFossils] = useState([]);
+  // RADAR & BIOMETRIK STATE
+  const [activeFossil, setActiveFossil] = useState(featuredFossils[0]);
+
+  // KUIS STATE
+  const [currentQ, setCurrentQ] = useState(0);
+  const [score, setScore] = useState(0);
+  const [quizFinished, setQuizFinished] = useState(false);
+  const [selectedOpt, setSelectedOpt] = useState(null);
+
+  const handleAnswer = (idx) => {
+    if (selectedOpt !== null) return;
+    setSelectedOpt(idx);
+    setTimeout(() => {
+      if (idx === quizQuestions[currentQ].answer) setScore(score + 1);
+      if (currentQ < quizQuestions.length - 1) {
+        setCurrentQ(currentQ + 1);
+        setSelectedOpt(null);
+      } else {
+        setQuizFinished(true);
+      }
+    }, 1000);
+  };
+
+  const resetQuiz = () => {
+    setCurrentQ(0);
+    setScore(0);
+    setQuizFinished(false);
+    setSelectedOpt(null);
+  };
+
+  // ANIMASI SCROLL
+  const { scrollYProgress } = useScroll();
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 100]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
+    },
+  };
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0, scale: 0.95 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: { type: "spring", stiffness: 100, damping: 20 },
+    },
+  };
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/encyclopedia')
-      .then(res => res.json())
-      .then(data => {
-        if (!data || Object.keys(data).length === 0 || data.error) {
-          setFeaturedFossils([
-            { id: 1, title: "DATA KOSONG", desc: "Silakan tambahkan data di phpMyAdmin.", type: "SYSTEM", era: "MUSEUM", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQ53hI5D7wMRZ4jkuZBqC-AXLvzDL39rnNQ&s", accentColor: "#E63946" }
-          ]);
-          return;
-        }
-        
-        // Ekstrak 5 Item dari Database untuk diletakkan di Carousel Beranda
-        let extractedItems = [];
-        let itemIndex = 1;
-
-        // Ambil beberapa item acak atau spesifik untuk slider
-        Object.values(data).forEach(mainGroup => {
-            if (mainGroup.subCategories) {
-                mainGroup.subCategories.forEach(sub => {
-                    if (sub.items) {
-                        sub.items.forEach(item => {
-                            if (extractedItems.length < 10) { // Limit ke 10 foto unggulan
-                                extractedItems.push({
-                                    id: itemIndex++,
-                                    title: item.name.toUpperCase(),
-                                    desc: item.description?.short || "Tidak ada deskripsi.",
-                                    type: mainGroup.title.toUpperCase(),
-                                    era: item.period || "KOLEKSI MUSEUM",
-                                    image: item.image || "",
-                                    accentColor: mainGroup.color || "#FFF",
-                                    modelPath: item.modelPath
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        });
-        
-        setFeaturedFossils(extractedItems);
-      })
-      .catch(err => {
-        console.error("Gagal terhubung ke database:", err);
-      });
-  }, []);
-
-  // LOGIC PRELOADER
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 600);
+    const timer = setTimeout(() => setIsLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
-  // LOGIC AUDIO
-  const toggleAudio = () => {
-    if (audioRef.current) {
-      if (isMuted) {
-        audioRef.current.play().catch((e) => console.log("Audio play failed", e));
-        audioRef.current.muted = false;
-        setIsMuted(false);
-      } else {
-        audioRef.current.pause();
-        setIsMuted(true);
-      }
-    }
-  };
-
-  // LOGIC MOBILE CHECK
   useEffect(() => {
     const checkScreenSize = () => setIsMobile(window.innerWidth <= 768);
     checkScreenSize();
@@ -93,91 +181,48 @@ const LandingPage = ({ onStart, onTimeline }) => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // LOGIC AUTO SCROLL PERMANEN (JALAN TERUS)
-  useEffect(() => {
-    if (isMobile || isLoading) return;
-    const speed = 1;
-    let animationId;
-    const runScroll = () => {
-      const el = scrollRef.current;
-      if (el) {
-        const oneSetWidth = el.scrollWidth / 3;
-        if (el.scrollLeft >= oneSetWidth * 2) {
-          el.scrollLeft = oneSetWidth;
-        } else if (el.scrollLeft <= 0) {
-          el.scrollLeft = oneSetWidth;
-        } else {
-          el.scrollLeft += speed;
-        }
-      }
-      animationId = requestAnimationFrame(runScroll);
-    };
-    animationId = requestAnimationFrame(runScroll);
-    return () => cancelAnimationFrame(animationId);
-  }, [isMobile, isLoading]);
-
-  // LOGIC ANIMASI ELEMENT MUNCUL
-  useEffect(() => {
-    if (isLoading) return;
-    observerRef.current = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add("animate-active");
-      });
-    }, { threshold: 0.1 });
-
-    const hiddenElements = document.querySelectorAll(".animate-hidden");
-    hiddenElements.forEach((el) => observerRef.current.observe(el));
-    return () => { if (observerRef.current) observerRef.current.disconnect(); };
-  }, [isLoading]);
-
-  // ICONS (SVG replacements for Emojis)
-  const SearchIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
-      <circle cx="11" cy="11" r="8"></circle>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-    </svg>
-  );
-
-  const BoneIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
-      <path d="M17 10c.8 0 1.5-.7 1.5-1.5S17.8 7 17 7c-.6 0-1.2.4-1.4 1-.2-.6-.8-1-1.4-1-.8 0-1.5.7-1.5 1.5 0 .4.2.8.5 1.1L8.1 14.8c-.3-.2-.7-.4-1.1-.4C6.2 14.4 5.5 15 5.5 16S6.2 17.5 7 17.5c.6 0 1.2-.4 1.4-1 .2.6.8 1 1.4 1 .8 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1l5-5c.3.2.7.3 1.1.3z"></path>
-    </svg>
-  );
-
-  const GlobeIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="2" y1="12" x2="22" y2="12"></line>
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-    </svg>
-  );
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+    if (isMuted) {
+      audioRef.current.play().catch(() => console.log("Audio play failed"));
+      audioRef.current.muted = false;
+      setIsMuted(false);
+    } else {
+      audioRef.current.pause();
+      setIsMuted(true);
+    }
+  };
 
   if (isLoading) {
     return (
       <div className="preloader-container">
         <div className="loader-content">
-          <div className="loader-ring"></div>
-          <div className="loader-text">Museum Sedang Disiapkan</div>
+          <div className="loader-circle"></div>
+          <div className="loader-text">MEMUAT SISTEM EKSKAVASI...</div>
+          <div className="loader-bar">
+            <div className="loader-progress"></div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="page-wrapper">
-      <audio ref={audioRef} loop><source src="/ambience.mp3" type="audio/mp3" /></audio>
-
-      {/* FLOAT AUDIO */}
+    <div className="landing-page-wrapper">
+      <audio ref={audioRef} loop>
+        <source src="/ambience.mp3" type="audio/mp3" />
+      </audio>
       <div className="audio-control" onClick={toggleAudio}>
         {isMuted ? (
-          <span className="sound-muted">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-            Suara Mati
-          </span>
+          <span className="blink-text">🔇 AUDIO OFF</span>
         ) : (
           <span className="sound-active">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-            Suara Aktif
+            🔊 SYS AUDIO ON
+            <div className="equalizer">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </span>
         )}
       </div>
@@ -185,137 +230,490 @@ const LandingPage = ({ onStart, onTimeline }) => {
       <CyberChatbot dataFosil={featuredFossils} />
 
       {/* NAVBAR */}
-      <nav className="navbar animate-fade-down">
+      <nav className="navbar hud-nav animate-fade-down">
         <div className="logo-section">
-          <span className="logo-text">Jejak Purba</span>
+          <div className="logo-symbol">JP</div>
+          <span className="logo-text">OS.JEJAKPURBA</span>
         </div>
         <div className="nav-links">
-          <a href="#home" className="nav-link active">Beranda</a>
-          <Link to="/era-geologi" className="nav-link">Pengetahuan Era</Link>
-          <Link to="/gallery" className="nav-link">Koleksi Fosil</Link>
-          <Link to="/visual-3d" className="nav-link">Pameran 3D</Link>
+          <a href="#home" className="nav-link active">
+            DASHBOARD
+          </a>
+          <Link to="/era-geologi" className="nav-link">
+            TIMELINE
+          </Link>
+          <Link to="/gallery" className="nav-link">
+            DATABASE
+          </Link>
+          <Link to="/visual-3d" className="nav-link">
+            RENDER 3D
+          </Link>
         </div>
       </nav>
 
-      {/* RADICAL SPLIT HERO SECTION */}
-      <main id="home" className="hero-split-section">
-        <div className="hero-text-content animate-hidden slide-right">
-          <div className="badge-outline">Tur Edukasi Digital</div>
-          <h1 className="hero-title">
-            Ekskavasi <br /> Ruang dan Waktu
-          </h1>
-          <p className="hero-desc">
-            Melangkah menembus perbatasan ribuan milenium. Temukan sejarah kehidupan pra-manusia melalui kurasi arsip paleontologi yang otentik dan interaktif di museum kami.
-          </p>
-          <div className="cta-container">
-            <button className="primary-btn-solid" onClick={onStart}>
-              Mulai Tur Sekarang
-            </button>
-            <button className="secondary-btn-outline" onClick={onTimeline}>
-              <span className="play-icon-svg">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-              </span>
-              Linimasa
-            </button>
-          </div>
-
-          <div className="stats-integrated">
-            <div className="stat"><strong>50+</strong> <span>Spesimen</span></div>
-            <div className="stat"><strong>3</strong> <span>Era Geologi</span></div>
-            <div className="stat"><strong>3D</strong> <span>Interaktif</span></div>
-          </div>
+      {/* SECTION 1: HERO CENTERED */}
+      <main id="home" className="hero-section">
+        <div className="video-wrapper">
+          <video autoPlay loop muted playsInline className="hero-video">
+            <source src="/background-kedua.mp4" type="video/mp4" />
+          </video>
+          <div className="video-overlay"></div>
+          <div className="scan-line-overlay"></div>
         </div>
 
-        <div className="hero-visual-content animate-hidden slide-left">
-          <div className="video-arch-mask">
-            <video autoPlay loop muted playsInline className="hero-video">
-              <source src="/background-kedua.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div className="decoration-circle"></div>
-        </div>
+        <motion.div
+          className="hero-grid centered-hero"
+          style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
+        >
+          <motion.div
+            className="hero-content-main"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="floating-tag flicker justify-center">
+              <span className="live-dot"></span> CONNECTION ESTABLISHED
+            </div>
+            <h1 className="hero-title">
+              DATA <br />
+              <span className="outline-text">EKSKAVASI</span>
+            </h1>
+            <p className="hero-desc text-center">
+              Sistem operasi museum digital. Akses eksklusif ke arsip evolusi
+              bumi. Memproses rekonstruksi makhluk purba dari Era Paleozoikum
+              hingga Kenozoikum melalui analisis Neural Network.
+            </p>
+            <div className="cta-container justify-center">
+              <button className="explore-btn" onClick={onStart}>
+                AKSES DATABASE
+              </button>
+              <div className="play-btn-wrapper" onClick={onTimeline}>
+                <div className="play-icon">▶</div>
+                <span>TIMELINE BUMI</span>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+        <div className="decorative-line"></div>
       </main>
 
-      {/* RADICAL BENTO BOX FEATURES / ABOUT */}
-      <section id="about" className="bento-section">
-        <div className="bento-container">
-          
-          <div className="bento-header animate-hidden slide-up">
-            <h2 className="section-title">Klasifikasi Koleksi Spesimen</h2>
-            <p className="section-desc">Setiap penemuan dikurasi berdasar ilmu paleontologi yang akurat. Jelajahi berdasarkan tiga pilar utama penelusuran sejarah bumi.</p>
+      {/* TELEMETRY BANNER */}
+      <section className="telemetry-banner">
+        <div className="telemetry-inner">
+          <div className="telemetry-item">
+            <span className="telemetry-value">3</span>
+            <span className="telemetry-label">ERA AKTIF</span>
           </div>
-
-          <div className="bento-grid">
-            
-            <div className="bento-card card-large animate-hidden slide-up">
-              <div className="bento-content">
-                <div className="icon-wrapper"><GlobeIcon /></div>
-                <h3>Penelusuran Era Geologi</h3>
-                <p>Meski kehidupan modern terasa sangat tua, sejarah bumi telah melalui beberapa eon, mulai dari Paleozoikum (Zaman kehidupan purba) hingga Kenozoikum (Mamalia dan burung modern).</p>
-                <Link to="/era-geologi" className="bento-link">Lihat Era Geologi →</Link>
-              </div>
-              <div className="bento-image" style={{backgroundImage: `url(${dinoImageLink})`}}></div>
-            </div>
-
-            <div className="bento-card card-small animate-hidden slide-up" style={{ animationDelay: "0.1s" }}>
-              <div className="bento-content">
-                <div className="icon-wrapper"><SearchIcon /></div>
-                <h3>Kelompok Hewan Utama</h3>
-                <p>Vertebrata & Invertebrata.</p>
-                <Link to="/gallery" state={{ targetCategory: "BIO" }} className="bento-link">Filter Koleksi →</Link>
-              </div>
-            </div>
-
-            <div className="bento-card card-small animate-hidden slide-up" style={{ animationDelay: "0.2s" }}>
-              <div className="bento-content">
-                <div className="icon-wrapper"><BoneIcon /></div>
-                <h3>Jenis Peninggalan Fosil</h3>
-                <p>Fosil Tubuh, Jejak, atau cetakan.</p>
-                <Link to="/gallery" state={{ targetCategory: "FOSSIL" }} className="bento-link">Filter Fosil →</Link>
-              </div>
-            </div>
-
+          <div className="telemetry-divider"></div>
+          <div className="telemetry-item">
+            <span className="telemetry-value">50+</span>
+            <span className="telemetry-label">ENTITAS FOSIL</span>
+          </div>
+          <div className="telemetry-divider"></div>
+          <div className="telemetry-item">
+            <span className="telemetry-value">100%</span>
+            <span className="telemetry-label">INTEGRITAS DATA</span>
+          </div>
+          <div className="telemetry-divider"></div>
+          <div className="telemetry-item">
+            <span className="telemetry-value text-glow">ON</span>
+            <span className="telemetry-label">ARCA AI</span>
           </div>
         </div>
       </section>
 
-      {/* HORIZONTAL CAROUSEL PREVIEW */}
-      <section className="horizontal-gallery-section animate-hidden slide-up">
-        <div className="gallery-header">
-          <h2>Koleksi Unggulan Pameran</h2>
+      {/* SECTION 2: BENTO GRID */}
+      <section id="features" className="bento-section">
+        <motion.div
+          className="section-header"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="section-title">
+            Modul <span className="accent">Sistem</span>
+          </h2>
+          <div className="section-line"></div>
+          <p className="section-desc">
+            Platform ini menyajikan pemetaan kehidupan purba berdasarkan
+            taksonomi ilmiah multi-dimensi.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="bento-grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <motion.div
+            variants={itemVariants}
+            className="bento-item bento-large"
+            whileHover={{ scale: 1.02, rotateX: 2, rotateY: -2 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <div className="system-status-bar">STATUS: OPTIMAL</div>
+            <div
+              className="bento-bg"
+              style={{ backgroundImage: `url(${dinoImageLink})` }}
+            ></div>
+            <div className="bento-overlay"></div>
+            <div className="bento-content">
+              <span className="bento-tag">DATA BIOLOGIS</span>
+              <h3>Klasifikasi Makhluk Purba</h3>
+              <p>
+                Pelajari ekosistem yang hilang. Platform ini membagi fosil
+                berdasarkan kelompok biologis dan jejak terawetkan.
+              </p>
+              <Link to="/gallery" className="bento-btn">
+                BUKA MODUL
+              </Link>
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="bento-item bento-ai"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="system-status-bar blink">AI: LISTENING</div>
+            <div className="bento-content">
+              <div className="ai-icon">🤖</div>
+              <h3>ARCA Neural Net</h3>
+              <p>Asisten AI aktif. Analisis data fosil real-time.</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="bento-item bento-3d"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="system-status-bar">CHRONOS: ACTIVE</div>
+            <div className="bento-content">
+              <ChronologicalClock />
+            </div>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="bento-item bento-era">
+            <div className="system-status-bar">TIMELINE: SYNCED</div>
+            <div className="bento-content era-flex">
+              <div className="era-list">
+                <span>PALEOZOIKUM</span>
+                <div className="era-line"></div>
+                <span>MESOZOIKUM</span>
+                <div className="era-line"></div>
+                <span>KENOZOIKUM</span>
+              </div>
+              <Link
+                to="/era-geologi"
+                className="bento-btn mt-auto"
+                style={{
+                  background: "transparent",
+                  border: "1px solid #00d2ff",
+                  color: "#00d2ff",
+                }}
+              >
+                RENDER PETA WAKTU
+              </Link>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* SECTION 3: RADAR & 3D FLIP CARD (ULTIMATE FEATURE) */}
+      <section className="radar-section">
+        <motion.div
+          className="preview-header text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="section-title">
+            Pemindai <span className="accent">Geologis</span>
+          </h2>
+          <div className="section-line mx-auto"></div>
+          <p className="preview-desc mx-auto">
+            Sistem Sonar aktif mendeteksi anomali fosil. Klik titik pada radar
+            untuk memuat kartu biometrik, arahkan kursor ke kartu untuk
+            mengekstrak visual X-Ray 3D.
+          </p>
+        </motion.div>
+
+        <div className="radar-layout">
+          {/* RADAR KIRI */}
+          <motion.div
+            className="radar-container-wrapper"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="radar-screen">
+              <div className="radar-sweep"></div>
+              <div className="radar-grid-lines"></div>
+              <div className="radar-crosshair"></div>
+
+              {/* Radar Blips (Titik Fosil) */}
+              {featuredFossils.map((fossil) => (
+                <div
+                  key={fossil.id}
+                  className={`radar-blip ${activeFossil.id === fossil.id ? "blip-active" : ""}`}
+                  style={{
+                    top: fossil.radarPos.top,
+                    left: fossil.radarPos.left,
+                  }}
+                  onClick={() => setActiveFossil(fossil)}
+                >
+                  <span className="blip-ping"></span>
+                  <div className="blip-tooltip">{fossil.title}</div>
+                </div>
+              ))}
+            </div>
+            <div className="radar-status blink">
+              SONAR: SCANNING SECTOR 7...
+            </div>
+          </motion.div>
+
+          {/* KARTU 3D KANAN */}
+          <motion.div
+            className="flip-card-wrapper"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            {/* Wrapper luar mengatur prespektif 3D */}
+            <div className="fossil-flip-container" key={activeFossil.id}>
+              <div className="fossil-flip-inner">
+                {/* Sisi Depan Kartu (Visual Normal) */}
+                <div className="flip-card-front elegant-card">
+                  <div
+                    className="system-status-bar"
+                    style={{
+                      color: activeFossil.accentColor,
+                      borderColor: activeFossil.accentColor,
+                    }}
+                  >
+                    ID: 00{activeFossil.id} // {activeFossil.era}
+                  </div>
+                  <div
+                    className="visual-bg"
+                    style={{ backgroundImage: `url(${activeFossil.image})` }}
+                  ></div>
+                  <div className="flip-overlay"></div>
+                  <div className="preview-info">
+                    <h4>{activeFossil.title}</h4>
+                    <small
+                      style={{
+                        color: activeFossil.accentColor,
+                        letterSpacing: "1px",
+                      }}
+                    >
+                      {activeFossil.type}
+                    </small>
+                    <p className="mt-auto flip-instruction blink">
+                      HOVER UNTUK X-RAY MESH ⟳
+                    </p>
+                  </div>
+                </div>
+
+                {/* Sisi Belakang Kartu (X-Ray & Ekstrak Data) */}
+                <div
+                  className="flip-card-back elegant-card"
+                  style={{ borderColor: activeFossil.accentColor }}
+                >
+                  <div
+                    className="xray-bg"
+                    style={{ backgroundImage: `url(${activeFossil.image})` }}
+                  ></div>
+                  <div className="scanner-line"></div>
+                  <div className="xray-data-panel">
+                    <h4 style={{ color: activeFossil.accentColor }}>
+                      ANALISIS STRUKTURAL
+                    </h4>
+                    <div className="xray-data-list">
+                      <p>
+                        <strong>SPESIES:</strong> {activeFossil.title}
+                      </p>
+                      <p>
+                        <strong>ERA:</strong> {activeFossil.era}
+                      </p>
+                      <p>
+                        <strong>KLASIFIKASI:</strong> {activeFossil.type}
+                      </p>
+                      <p>
+                        <strong>KETERANGAN:</strong> {activeFossil.desc}
+                      </p>
+                    </div>
+                    <button
+                      className="view-detail-btn elegant-btn"
+                      onClick={onStart}
+                      style={{
+                        borderColor: activeFossil.accentColor,
+                        color: activeFossil.accentColor,
+                      }}
+                    >
+                      AKSES DATABASE LENGKAP
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
-        <div className="gallery-track-wrapper">
-          <div className="gallery-track" ref={scrollRef}>
-            {[...featuredFossils, ...featuredFossils, ...featuredFossils].map((item, index) => (
-              <FossilCard key={index} item={item} onStart={onStart} />
-            ))}
+      </section>
+
+      {/* SECTION 4: KUIS INTERAKTIF */}
+      <section className="quiz-section">
+        <div className="quiz-container">
+          <motion.div
+            className="quiz-header"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <h3>
+              MODUL <span className="accent">EVALUASI PENGETAHUAN</span>
+            </h3>
+            <p>
+              Uji pemahaman Anda mengenai sejarah prasejarah dan fungsionalitas
+              sistem museum digital ini.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="quiz-terminal"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <div className="quiz-top-bar">
+              <span>TERMINAL: UJIAN_01</span>
+              <span className="quiz-status">
+                {quizFinished
+                  ? "SELESAI"
+                  : `SOAL ${currentQ + 1}/${quizQuestions.length}`}
+              </span>
+            </div>
+
+            <div className="quiz-body">
+              {!quizFinished ? (
+                <>
+                  <h4 className="quiz-question">
+                    {quizQuestions[currentQ].question}
+                  </h4>
+                  <div className="quiz-options">
+                    {quizQuestions[currentQ].options.map((opt, idx) => {
+                      let btnClass = "quiz-btn";
+                      if (selectedOpt !== null) {
+                        if (idx === quizQuestions[currentQ].answer)
+                          btnClass += " correct";
+                        else if (idx === selectedOpt) btnClass += " wrong";
+                      }
+                      return (
+                        <button
+                          key={idx}
+                          className={btnClass}
+                          onClick={() => handleAnswer(idx)}
+                          disabled={selectedOpt !== null}
+                        >
+                          <span className="opt-letter">
+                            [{String.fromCharCode(65 + idx)}]
+                          </span>{" "}
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              ) : (
+                <div className="quiz-result">
+                  <div className="score-circle">
+                    <span className="score-number">
+                      {score}/{quizQuestions.length}
+                    </span>
+                  </div>
+                  <h4>EVALUASI SELESAI</h4>
+                  <p>
+                    {score === quizQuestions.length
+                      ? "Sempurna! Anda memiliki pengetahuan level Paleontolog."
+                      : "Bagus! Terus jelajahi database untuk meningkatkan pengetahuan Anda."}
+                  </p>
+                  <button className="quiz-retry-btn" onClick={resetQuiz}>
+                    RESTART EVALUASI
+                  </button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECTION 5: TECH STACK SHOWCASE */}
+      <section className="tech-spec-section">
+        <div className="tech-container">
+          <div className="tech-text">
+            <h3>
+              SPESIFIKASI <span className="accent">TEKNIS</span>
+            </h3>
+            <p>
+              Dibangun menggunakan tumpukan teknologi modern untuk menghasilkan
+              performa tinggi dan user interface futuristik.
+            </p>
+          </div>
+          <div className="tech-badges">
+            <div className="tech-badge">
+              <span>⚛️</span> React.js
+            </div>
+            <div className="tech-badge">
+              <span>🧠</span> Google Gemini AI
+            </div>
+            <div className="tech-badge">
+              <span>🎭</span> Framer Motion
+            </div>
+            <div className="tech-badge">
+              <span>🎨</span> CSS 3D Transforms
+            </div>
           </div>
         </div>
       </section>
 
-      {/* MINIMALIST FOOTER */}
-      <footer className="minimal-footer">
-        <div className="footer-top">
-          <div className="brand-col">
-            <h3>Jejak Purba</h3>
-            <p>Platform edukasi sejarah peradaban bumi dengan balutan teknologi ruang pameran modern berbasis web.</p>
+      {/* FOOTER */}
+      <footer className="landing-footer">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <h2>JP</h2>
+            <p>Digital Museum Project</p>
           </div>
-          <div className="links-col">
-            <h4>Eksplorasi</h4>
-            <a href="#home">Beranda Tur</a>
-            <Link to="/era-geologi">Materi Geologi</Link>
-            <Link to="/gallery">Arsip Fosil</Link>
-          </div>
-          <div className="links-col">
-            <h4>Kurator Utama</h4>
-            <span>Fajrina Nurhaliza</span>
-            <span>Arvan Murbiyanto</span>
-            <span>Arnanda Setya Nosa</span>
-            <span>Ihsan Nafis</span>
+          <div className="footer-links">
+            <div className="link-group">
+              <h4>EKSPLORASI</h4>
+              <a href="#home">Beranda</a>
+              <Link to="/era-geologi">Era Geologi</Link>
+              <Link to="/gallery">Galeri Fosil</Link>
+            </div>
+            <div className="link-group">
+              <h4>TEKNOLOGI</h4>
+              <span>React / Framer Motion</span>
+              <span>AI Integration</span>
+              <span>Interactive Quiz</span>
+            </div>
+            <div className="link-group">
+              <h4>TIM PENGEMBANG</h4>
+              <span>Fajrina Nurhaliza</span>
+              <span>Arvan Murbiyanto</span>
+              <span>Arnanda Setya Nosa</span>
+              <span>Ihsan Nafis Hidayat</span>
+            </div>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2026 Museum Jejak Purba. Dibangun untuk riset dan publikasi edukasi interaktif.</p>
+          <p>
+            &copy; 2026 Jejak Purba. Dirancang khusus untuk Eksibisi Edukasi
+            Digital.
+          </p>
         </div>
       </footer>
     </div>
@@ -323,14 +721,13 @@ const LandingPage = ({ onStart, onTimeline }) => {
 };
 
 /* ======================================================== */
-/* 2. CHATBOT COMPONENT (NATURAL, NO AI LABELS)             */
+/* KOMPONEN CHATBOT ARCA                                    */
 /* ======================================================== */
-
 const CyberChatbot = ({ dataFosil }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
-      text: "Selamat datang di pameran. Ada spesimen khusus yang sedang Anda teliti hari ini?",
+      text: "Sistem ARCA aktif. Silakan ajukan pertanyaan database.",
       sender: "bot",
     },
   ]);
@@ -342,92 +739,68 @@ const CyberChatbot = ({ dataFosil }) => {
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
-
-  const generateGeminiResponse = async (userQuery) => {
-    try {
-      const contextData = JSON.stringify(dataFosil);
-      // Removed AI and robotic language, made instructions focus on being a human-like guide
-      const prompt = `
-        Peranmu: Pemandu Museum bernama Pandu. 
-        Tugas: Berikan jawaban santai, natural, manusiawi dan sopan berdasarkan data fosil ini.
-        Data: ${contextData}
-        Pantangan: JANGAN SEBUT KAMU ADALAH AI. Jangan gunakan format poin yang kaku. Bicara seperti ahli paleontologi yang sabar mengobrol.
-        Tamu bertanya: "${userQuery}"
-      `;
-      const result = await model.generateContent(prompt);
-      return (await result.response).text();
-    } catch (error) {
-      return "Sepertinya saya perlu mengecek literatur tentang itu, ada pertanyaan lain?";
-    }
-  };
+  useEffect(
+    () => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }),
+    [messages, isTyping],
+  );
 
   const handleSend = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    const userMsg = { text: input, sender: "user" };
-    setMessages((prev) => [...prev, userMsg]);
+    const userMsg = input;
+    setMessages((prev) => [...prev, { text: userMsg, sender: "user" }]);
     setInput("");
     setIsTyping(true);
 
-    const botReplyText = await generateGeminiResponse(userMsg.text);
-    setMessages((prev) => [...prev, { text: botReplyText, sender: "bot" }]);
-    setIsTyping(false);
+    try {
+      const prompt = `Kamu ARCA, AI museum digital Cyberpunk. Jawab dari DATA FOSIL berikut: ${JSON.stringify(dataFosil)}. Gaya bicara futuristik. Pertanyaan: "${userMsg}"`;
+      const result = await model.generateContent(prompt);
+      const botReplyText = (await result.response).text();
+      setMessages((prev) => [...prev, { text: botReplyText, sender: "bot" }]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        { text: "ERR: Neural link terputus.", sender: "bot" },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
-  const GuideIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
-  );
-
   return (
-    <div className={`natural-chat-container ${isOpen ? "open" : ""}`}>
-      <button className="chat-toggle-btn" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? "Tutup Panduan" : <span style={{display: 'flex', gap: '8px', alignItems: 'center'}}><GuideIcon /> Tanya Pemandu</span>}
+    <div className={`chatbot-wrapper ${isOpen ? "open" : ""}`}>
+      <button className="chatbot-toggle" onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? "✕ TERMINATE ARCA" : "⚡ OVERRIDE ARCA"}
       </button>
-
       {isOpen && (
-        <div className="chat-window">
-          <div className="chat-header">
-            <div className="guide-avatar">
-              <GuideIcon />
-            </div>
-            <div className="guide-info">
-              <h4>Pandu</h4>
-              <p>Pemandu Kurasi Museum</p>
-            </div>
+        <div className="chatbot-window">
+          <div className="chatbot-header">
+            <span>
+              <span className="status-dot"></span>ARCA TERMINAL
+            </span>
+            <span className="header-code">SYS.ON</span>
           </div>
-
-          <div className="chat-messages-area">
+          <div className="chatbot-messages">
             {messages.map((msg, idx) => (
-              <div key={idx} className={`chat-bubble-row ${msg.sender}`}>
-                <div className="chat-bubble">{msg.text}</div>
+              <div key={idx} className={`message ${msg.sender}`}>
+                {msg.text}
               </div>
             ))}
             {isTyping && (
-              <div className="chat-bubble-row bot">
-                <div className="chat-bubble typing-indicator">
-                  <span></span><span></span><span></span>
-                </div>
-              </div>
+              <div className="message bot flicker">Processing Data...</div>
             )}
             <div ref={chatEndRef} />
           </div>
-
-          <form onSubmit={handleSend} className="chat-input-form">
+          <form onSubmit={handleSend} className="chatbot-input-area">
             <input
               type="text"
-              placeholder="Tuliskan pertanyaan Anda..."
+              placeholder="Akses terminal..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={isTyping}
             />
-            <button type="submit" disabled={isTyping || !input.trim()}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            <button type="submit" disabled={isTyping}>
+              &gt;
             </button>
           </form>
         </div>
@@ -435,24 +808,5 @@ const CyberChatbot = ({ dataFosil }) => {
     </div>
   );
 };
-
-/* ======================================================== */
-/* 3. FOSSIL CARD COMPONENT                                 */
-/* ======================================================== */
-
-const FossilCard = ({ item, onStart }) => (
-  <div className="elegant-card">
-    <div className="card-media">
-      <img src={item.image} alt={item.title} />
-      <div className="era-badge">{item.era}</div>
-    </div>
-    <div className="card-info">
-      <span className="card-type" style={{ color: item.accentColor }}>{item.type}</span>
-      <h4>{item.title}</h4>
-      <p>{item.desc}</p>
-      <button className="text-btn" onClick={onStart}>Baca Literatur →</button>
-    </div>
-  </div>
-);
 
 export default LandingPage;
