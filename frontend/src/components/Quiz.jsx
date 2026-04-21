@@ -19,28 +19,28 @@ const Quiz = () => {
       label: "MAKHLUK HIDUP",
       icon: "🦖",
       desc: "Evolusi fauna purba",
-      image: "/ImageModels/EraGeologi/velociraptor.webp"
+      image: "/ImageModels/EraGeologi/velociraptor.webp",
     },
     {
       id: "Jenis Fosil",
       label: "JENIS FOSIL",
       icon: "🦴",
       desc: "Taksonomi spesimen",
-      image: "/ImageModels/EraGeologi/anomalocaris.jpg"
+      image: "/ImageModels/EraGeologi/anomalocaris.jpg",
     },
     {
       id: "Era Zaman",
       label: "ERA GEOLOGI",
       icon: "⏳",
       desc: "Kronologi prasejarah",
-      image: "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+      image: "/ImageModels/EraGeologi/foto-paleozoikum.jpg",
     },
     {
       id: "Gabungan Keseluruhan",
       label: "GABUNGAN",
       icon: "🌀",
       desc: "Evaluasi total sistem",
-      image: "/ImageModels/EraGeologi/foto-kenozoikum.jpg"
+      image: "/ImageModels/EraGeologi/foto-kenozoikum.jpg",
     },
   ];
 
@@ -53,7 +53,9 @@ const Quiz = () => {
     }
 
     if (filtered.length === 0) {
-      alert("Database untuk kategori ini sedang dalam pemeliharaan. Coba kategori lain.");
+      alert(
+        "Database untuk kategori ini sedang dalam pemeliharaan. Coba kategori lain.",
+      );
       return;
     }
 
@@ -65,7 +67,7 @@ const Quiz = () => {
   };
 
   const handleAnswer = (key) => {
-    if (isAnswered) return;
+    if (isAnswered || !questions[currentIndex]) return;
     setSelectedOpt(key);
     setIsAnswered(true);
 
@@ -75,19 +77,29 @@ const Quiz = () => {
 
     setTimeout(() => {
       if (currentIndex < questions.length - 1) {
-        setCurrentIndex((prev) => prev + 1);
+        // Hapus selected opt dan status terjawab SEBELUM ganti index
         setSelectedOpt(null);
         setIsAnswered(false);
+        setCurrentIndex((prev) => prev + 1);
       } else {
         setStep("result");
       }
     }, 1200);
   };
 
+  // Guard clause untuk mencegah render saat data soal belum siap atau index out of bounds
+  const currentQuestion = questions[currentIndex];
+
   return (
     <div className="quiz-page-container">
+      {/* ... rest of the component remains similar but use currentQuestion ... */}
       {/* GLOBAL BACKGROUND PHOTO */}
-      <div className="quiz-global-bg" style={{ backgroundImage: `url('/ImageModels/EraGeologi/backgroundquiz.jpg')` }}></div>
+      <div
+        className="quiz-global-bg"
+        style={{
+          backgroundImage: `url('/ImageModels/EraGeologi/backgroundquiz.jpg')`,
+        }}
+      ></div>
       <div className="quiz-bg-overlay"></div>
 
       <div className="quiz-bg-grid"></div>
@@ -98,7 +110,9 @@ const Quiz = () => {
           <span>⟵</span> TERMINAL UTAMA
         </Link>
         <div className="quiz-logo">OS.EVALUASI_PROSES</div>
-        <div className="sys-time">{new Date().toLocaleTimeString()} // SYS_ACTIVE</div>
+        <div className="sys-time">
+          {new Date().toLocaleTimeString()} // SYS_ACTIVE
+        </div>
       </nav>
 
       <main className="quiz-main-content">
@@ -113,8 +127,13 @@ const Quiz = () => {
             >
               <div className="selection-header">
                 <span className="status-tag">ACCESS PROTOCOL: REQUIRED</span>
-                <h1>PILIH <span className="accent">MODUL EVALUASI</span></h1>
-                <p>Otentikasi pengetahuan Anda untuk membuka akses database level tinggi.</p>
+                <h1>
+                  PILIH <span className="accent">MODUL EVALUASI</span>
+                </h1>
+                <p>
+                  Otentikasi pengetahuan Anda untuk membuka akses database level
+                  tinggi.
+                </p>
               </div>
 
               <div className="category-grid-revamp">
@@ -125,7 +144,10 @@ const Quiz = () => {
                     className="category-card-revamp"
                     onClick={() => startQuiz(cat.id)}
                   >
-                    <div className="cat-card-img" style={{ backgroundImage: `url(${cat.image})` }}></div>
+                    <div
+                      className="cat-card-img"
+                      style={{ backgroundImage: `url(${cat.image})` }}
+                    ></div>
                     <div className="cat-card-overlay"></div>
                     <div className="cat-card-content">
                       <div className="cat-icon-box">{cat.icon}</div>
@@ -144,6 +166,7 @@ const Quiz = () => {
               key="playing"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
               className="playing-screen-revamp"
             >
               {/* HUD TOP */}
@@ -154,9 +177,20 @@ const Quiz = () => {
                 </div>
                 <div className="hud-cell center">
                   <div className="progress-minimal">
-                    <div className="progress-text">DATA_RECONSTRUCTION: {Math.round(((currentIndex + 1) / questions.length) * 100)}%</div>
+                    <div className="progress-text">
+                      DATA_RECONSTRUCTION:{" "}
+                      {Math.round(
+                        ((currentIndex + 1) / questions.length) * 100,
+                      )}
+                      %
+                    </div>
                     <div className="progress-bar-container">
-                      <div className="progress-bar-fill" style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}></div>
+                      <div
+                        className="progress-bar-fill"
+                        style={{
+                          width: `${((currentIndex + 1) / questions.length) * 100}%`,
+                        }}
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -171,33 +205,42 @@ const Quiz = () => {
                 {/* Sisi Kiri: Soal */}
                 <div className="quiz-question-side">
                   <div className="terminal-header-small">
-                    <span className="header-id">QUERY_ID: 0x{questions[currentIndex].id}</span>
+                    <span className="header-id">
+                      QUERY_ID: 0x{questions[currentIndex].id}
+                    </span>
                     <span className="header-status">DECODING...</span>
                   </div>
                   <div className="question-content">
                     <h2>{questions[currentIndex].pertanyaan}</h2>
                   </div>
                   <div className="options-list">
-                    {Object.entries(questions[currentIndex].pilihan).map(([key, val]) => {
-                      let status = "";
-                      if (isAnswered) {
-                        if (key === questions[currentIndex].jawaban_benar) status = "correct";
-                        else if (key === selectedAnswer) status = "wrong";
-                      }
-                      return (
-                        <button
-                          key={key}
-                          className={`modern-opt-btn ${status} ${selectedAnswer === key ? "selected" : ""}`}
-                          onClick={() => handleAnswer(key)}
-                          disabled={isAnswered}
-                        >
-                          <span className="opt-key">{key.toUpperCase()}</span>
-                          <span className="opt-val">{val}</span>
-                          {status === "correct" && <span className="opt-status-icon">✔</span>}
-                          {status === "wrong" && <span className="opt-status-icon">✘</span>}
-                        </button>
-                      );
-                    })}
+                    {Object.entries(questions[currentIndex].pilihan).map(
+                      ([key, val]) => {
+                        let status = "";
+                        if (isAnswered) {
+                          if (key === questions[currentIndex].jawaban_benar)
+                            status = "correct";
+                          else if (key === selectedAnswer) status = "wrong";
+                        }
+                        return (
+                          <button
+                            key={key}
+                            className={`modern-opt-btn ${status} ${selectedAnswer === key ? "selected" : ""}`}
+                            onClick={() => handleAnswer(key)}
+                            disabled={isAnswered}
+                          >
+                            <span className="opt-key">{key.toUpperCase()}</span>
+                            <span className="opt-val">{val}</span>
+                            {status === "correct" && (
+                              <span className="opt-status-icon">✔</span>
+                            )}
+                            {status === "wrong" && (
+                              <span className="opt-status-icon">✘</span>
+                            )}
+                          </button>
+                        );
+                      },
+                    )}
                   </div>
                 </div>
 
@@ -212,13 +255,17 @@ const Quiz = () => {
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ duration: 0.5 }}
                         className="visual-img"
-                        style={{ backgroundImage: `url(${questions[currentIndex].visual || "/ImageModels/EraGeologi/foto-paleozoikum.jpg"})` }}
+                        style={{
+                          backgroundImage: `url(${questions[currentIndex].visual || "/ImageModels/EraGeologi/foto-paleozoikum.jpg"})`,
+                        }}
                       >
                         <div className="visual-scanline"></div>
                         <div className="visual-vignette"></div>
                       </motion.div>
                     </AnimatePresence>
-                    <div className="visual-data-label">CONTEXTUAL_RECONSTRUCTION_V1.0</div>
+                    <div className="visual-data-label">
+                      CONTEXTUAL_RECONSTRUCTION_V1.0
+                    </div>
                   </div>
                 </div>
               </div>
@@ -237,26 +284,35 @@ const Quiz = () => {
                 <div className="final-stats">
                   <div className="stat-circle">
                     <div className="circle-inner">
-                      <span className="big-number">{Math.round((score / questions.length) * 100)}</span>
+                      <span className="big-number">
+                        {Math.round((score / questions.length) * 100)}
+                      </span>
                       <span className="unit">%</span>
                     </div>
                   </div>
                   <div className="stat-details">
                     <div className="detail-row">
                       <span>DATABASE MATCH:</span>
-                      <span className="accent">{score} / {questions.length}</span>
+                      <span className="accent">
+                        {score} / {questions.length}
+                      </span>
                     </div>
                     <div className="detail-row">
                       <span>RANK:</span>
                       <span className="accent">
-                        {score === questions.length ? "MASTER_PALEONTOLOGIST" : "DATA_EXCAVATOR"}
+                        {score === questions.length
+                          ? "MASTER_PALEONTOLOGIST"
+                          : "DATA_EXCAVATOR"}
                       </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="result-actions">
-                  <button className="retry-btn-modern" onClick={() => setStep("selection")}>
+                  <button
+                    className="retry-btn-modern"
+                    onClick={() => setStep("selection")}
+                  >
                     RESTART PROTOCOL
                   </button>
                   <Link to="/" className="home-btn-modern">
