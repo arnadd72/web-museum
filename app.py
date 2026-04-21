@@ -17,7 +17,7 @@ def get_data():
         db = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="cilacap",
+            password="",
             database="museum_digital"
         )
         cursor = db.cursor(dictionary=True)
@@ -47,7 +47,7 @@ def get_encyclopedia():
         db = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="cilacap",
+            password="",
             database="museum_digital"
         )
         cursor = db.cursor(dictionary=True)

@@ -16,6 +16,7 @@ import ModelViewer from "./components/ModelViewer";
 // IMPORT HALAMAN BARU
 import IntroPage from "./components/IntroPage";
 import TimelineVideo from "./components/TimelineVideo";
+import Quiz from "./components/Quiz";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
 
           {/* PERBAIKAN DI SINI: Ubah path menjadi "/timeline" */}
           <Route path="/timeline" element={<TimelineVideo />} />
+
+          {/* Rute Kuis */}
+          <Route path="/quiz" element={<Quiz />} />
 
           {/* Rute Lainnya... */}
           <Route path="/era-geologi" element={<EraGeologi />} />

@@ -1,5 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
@@ -55,6 +61,109 @@ const quizQuestions = [
     answer: 0,
   },
 ];
+
+/* ======================================================== */
+/* KOMPONEN TILT CARD (UNTUK SHOWCASE MODEL)                */
+/* ======================================================== */
+const ModelTiltCard = ({ fossil, variants }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      variants={variants}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="model-preview-card"
+    >
+      <div className="card-glitch-overlay"></div>
+      <div
+        className="model-card-frame"
+        style={{ transform: "translateZ(50px)" }}
+      >
+        <div className="card-top-header">
+          <span className="spec-id">SPEC_ID: 00{fossil.id}</span>
+          <span className="era-tag" style={{ color: fossil.accentColor }}>
+            {fossil.era}
+          </span>
+        </div>
+
+        <div
+          className="model-visual-container"
+          style={{ transform: "translateZ(30px)" }}
+        >
+          <div
+            className="model-image"
+            style={{ backgroundImage: `url(${fossil.image})` }}
+          ></div>
+          <div className="scanline-effect"></div>
+          <div
+            className="hologram-glow"
+            style={{
+              background: `radial-gradient(circle, ${fossil.accentColor}33 0%, transparent 70%)`,
+            }}
+          ></div>
+        </div>
+
+        <div className="card-info" style={{ transform: "translateZ(40px)" }}>
+          <h4 className="model-title">{fossil.title}</h4>
+          <div className="model-stats">
+            <div className="stat-row">
+              <span>TYPE</span>
+              <span style={{ color: fossil.accentColor }}>{fossil.type}</span>
+            </div>
+            <div className="stat-row">
+              <span>STATUS</span>
+              <span className="blink-text">DECODING...</span>
+            </div>
+          </div>
+          <Link
+            to="/visual-3d"
+            className="render-btn"
+            style={{
+              borderColor: fossil.accentColor,
+              color: fossil.accentColor,
+            }}
+          >
+            <span className="btn-icon">⌬</span> RENDER 3D MODEL
+          </Link>
+        </div>
+
+        {/* Decorative Elements */}
+        <div className="card-corner-decor tl"></div>
+        <div className="card-corner-decor br"></div>
+      </div>
+    </motion.div>
+  );
+};
 
 /* ======================================================== */
 /* MAIN COMPONENT: LANDING PAGE                             */
@@ -322,7 +431,7 @@ const LandingPage = ({ onStart, onTimeline }) => {
         </div>
       </section>
 
-      {/* SECTION 2: BENTO GRID */}
+      {/* SECTION 2: BENTO GRID DASHBOARD */}
       <section id="features" className="bento-section">
         <motion.div
           className="section-header"
@@ -337,7 +446,10 @@ const LandingPage = ({ onStart, onTimeline }) => {
           <div className="section-line"></div>
           <p className="section-desc">
             Platform ini menyajikan pemetaan kehidupan purba berdasarkan
-            taksonomi ilmiah multi-dimensi.
+            pendekatan ilmiah. Setiap spesimen diklasifikasikan menurut Era
+            Geologi, jenis fosil, dan kelompok biologis, sehingga memudahkan
+            pemahaman hubungan antara makhluk hidup, lingkungan, dan perubahan
+            Bumi.
           </p>
         </motion.div>
 
@@ -378,11 +490,21 @@ const LandingPage = ({ onStart, onTimeline }) => {
             className="bento-item bento-ai"
             whileHover={{ scale: 1.05 }}
           >
-            <div className="system-status-bar blink">AI: LISTENING</div>
+            <div className="system-status-bar">MODUL: 01</div>
+            <div
+              className="bento-bg"
+              style={{
+                backgroundImage: `url('/ImageModels/EraGeologi/trex.jpg')`,
+              }}
+            ></div>
+            <div className="bento-overlay"></div>
             <div className="bento-content">
-              <div className="ai-icon">🤖</div>
-              <h3>ARCA Neural Net</h3>
-              <p>Asisten AI aktif. Analisis data fosil real-time.</p>
+              <span className="bento-tag">BIOLOGI</span>
+              <h3>KELOMPOK HEWAN</h3>
+              <p>Vertebrata, Invertebrata, dan Mikrofosil.</p>
+              <Link to="/gallery" className="bento-btn-simple">
+                LIHAT SELENGKAPNYA →
+              </Link>
             </div>
           </motion.div>
 
@@ -391,40 +513,141 @@ const LandingPage = ({ onStart, onTimeline }) => {
             className="bento-item bento-3d"
             whileHover={{ scale: 1.05 }}
           >
-            <div className="system-status-bar">CHRONOS: ACTIVE</div>
+            <div className="system-status-bar">MODUL: 02</div>
+            <div
+              className="bento-bg"
+              style={{
+                backgroundImage: `url('/ImageModels/EraGeologi/anomalocaris.jpg')`,
+              }}
+            ></div>
+            <div className="bento-overlay"></div>
             <div className="bento-content">
-              <ChronologicalClock />
+              <span className="bento-tag">TAKSONOMI</span>
+              <h3>JENIS FOSIL</h3>
+              <p>Fosil Tubuh, Jejak, dan Terawetkan.</p>
+              <Link to="/gallery" className="bento-btn-simple">
+                LIHAT SELENGKAPNYA →
+              </Link>
             </div>
           </motion.div>
 
           <motion.div variants={itemVariants} className="bento-item bento-era">
-            <div className="system-status-bar">TIMELINE: SYNCED</div>
-            <div className="bento-content era-flex">
-              <div className="era-list">
-                <span>PALEOZOIKUM</span>
-                <div className="era-line"></div>
-                <span>MESOZOIKUM</span>
-                <div className="era-line"></div>
-                <span>KENOZOIKUM</span>
-              </div>
-              <Link
-                to="/era-geologi"
-                className="bento-btn mt-auto"
-                style={{
-                  background: "transparent",
-                  border: "1px solid #00d2ff",
-                  color: "#00d2ff",
-                }}
-              >
-                RENDER PETA WAKTU
+            <div className="system-status-bar">MODUL: 03</div>
+            <div
+              className="bento-bg"
+              style={{
+                backgroundImage: `url('/ImageModels/EraGeologi/foto-paleozoikum.jpg')`,
+              }}
+            ></div>
+            <div className="bento-overlay"></div>
+            <div className="bento-content">
+              <span className="bento-tag">TIMELINE</span>
+              <h3>ERA GEOLOGI</h3>
+              <p>Paleozoikum hingga Kenozoikum.</p>
+              <Link to="/era-geologi" className="bento-btn-simple">
+                LIHAT SELENGKAPNYA →
               </Link>
             </div>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* SECTION 3: RADAR & 3D FLIP CARD (ULTIMATE FEATURE) */}
-      <section className="radar-section">
+      {/* SECTION 3: QUIZ INTRO (EVALUASI) - REVAMP */}
+      <section className="quiz-intro-section">
+        <div className="quiz-intro-container">
+          <motion.div
+            className="quiz-split-layout"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* SISI KIRI: GAMBAR VISUAL */}
+            <div className="quiz-visual-side">
+              <div className="quiz-visual-frame">
+                <img
+                  src="/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+                  alt="Aptitude Test Visual"
+                  className="quiz-image"
+                />
+                <div className="quiz-image-overlay"></div>
+                <div className="quiz-scanline"></div>
+                <div className="quiz-visual-badge blink">SYSTEM.READY</div>
+              </div>
+              {/* Ornamen Cyberpunk */}
+              <div className="quiz-decor-box top-left"></div>
+              <div className="quiz-decor-box bottom-right"></div>
+            </div>
+
+            {/* SISI KANAN: KONTEN KUIS */}
+            <div className="quiz-content-side">
+              <div
+                className="header-tag flicker"
+                style={{ color: "var(--neon-green)", marginBottom: "1rem" }}
+              >
+                ▶ OTENTIKASI PENGETAHUAN
+              </div>
+              <h2 className="quiz-intro-title">
+                APTITUDE <span className="outline-text">TEST</span>
+              </h2>
+              <p className="quiz-intro-desc">
+                Untuk membuka batas keamanan protokol OS.JEJAKPURBA, sistem
+                membutuhkan verifikasi kapabilitas Anda. Buktikan pemahaman Anda
+                tentang prasejarah dan fungsionalitas sistem ini melalui modul
+                evaluasi interaktif.
+              </p>
+
+              <div className="quiz-stats-grid">
+                <div className="quiz-stat-box">
+                  <div className="stat-icon">❓</div>
+                  <div className="stat-text">
+                    <span className="stat-label">TIPE DATA</span>
+                    <span className="stat-value">MULTI-MODUL</span>
+                  </div>
+                </div>
+                <div className="quiz-stat-box">
+                  <div className="stat-icon">⏱️</div>
+                  <div className="stat-text">
+                    <span className="stat-label">DURASI</span>
+                    <span className="stat-value">UNLIMITED</span>
+                  </div>
+                </div>
+                <div
+                  className="quiz-stat-box"
+                  style={{ borderColor: "var(--neon-green)" }}
+                >
+                  <div className="stat-icon">🔑</div>
+                  <div className="stat-text">
+                    <span
+                      className="stat-label"
+                      style={{ color: "var(--neon-green)" }}
+                    >
+                      REWARD
+                    </span>
+                    <span className="stat-value" style={{ color: "#fff" }}>
+                      ACCESS KEY
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="quiz-action-wrapper">
+                <Link to="/quiz" className="quiz-init-btn">
+                  INISIASI EVALUASI SEKARANG ➔
+                  <span className="btn-glitch-effect"></span>
+                </Link>
+                <span className="action-hint">
+                  Akses ditolak sebelum evaluasi selesai.
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECTION 3: PEMINDAI GEOLOGIS (MODEL SHOWCASE) */}
+      <section className="model-showcase-section">
+        <div className="radar-bg-decoration"></div>
         <motion.div
           className="preview-header text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -432,253 +655,35 @@ const LandingPage = ({ onStart, onTimeline }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
+          <div className="header-tag">NEURAL RECONSTRUCTION ENGINE</div>
           <h2 className="section-title">
             Pemindai <span className="accent">Geologis</span>
           </h2>
           <div className="section-line mx-auto"></div>
           <p className="preview-desc mx-auto">
-            Sistem Sonar aktif mendeteksi anomali fosil. Klik titik pada radar
-            untuk memuat kartu biometrik, arahkan kursor ke kartu untuk
-            mengekstrak visual X-Ray 3D.
+            Visualisasi rekonstruksi biometrik dari spesimen purba. Pilih subjek
+            untuk mengekstrak data struktural dan render visual 3D.
           </p>
         </motion.div>
 
-        <div className="radar-layout">
-          {/* RADAR KIRI */}
-          <motion.div
-            className="radar-container-wrapper"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <div className="radar-screen">
-              <div className="radar-sweep"></div>
-              <div className="radar-grid-lines"></div>
-              <div className="radar-crosshair"></div>
-
-              {/* Radar Blips (Titik Fosil) */}
-              {featuredFossils.map((fossil) => (
-                <div
-                  key={fossil.id}
-                  className={`radar-blip ${activeFossil.id === fossil.id ? "blip-active" : ""}`}
-                  style={{
-                    top: fossil.radarPos.top,
-                    left: fossil.radarPos.left,
-                  }}
-                  onClick={() => setActiveFossil(fossil)}
-                >
-                  <span className="blip-ping"></span>
-                  <div className="blip-tooltip">{fossil.title}</div>
-                </div>
-              ))}
-            </div>
-            <div className="radar-status blink">
-              SONAR: SCANNING SECTOR 7...
-            </div>
-          </motion.div>
-
-          {/* KARTU 3D KANAN */}
-          <motion.div
-            className="flip-card-wrapper"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            {/* Wrapper luar mengatur prespektif 3D */}
-            <div className="fossil-flip-container" key={activeFossil.id}>
-              <div className="fossil-flip-inner">
-                {/* Sisi Depan Kartu (Visual Normal) */}
-                <div className="flip-card-front elegant-card">
-                  <div
-                    className="system-status-bar"
-                    style={{
-                      color: activeFossil.accentColor,
-                      borderColor: activeFossil.accentColor,
-                    }}
-                  >
-                    ID: 00{activeFossil.id} // {activeFossil.era}
-                  </div>
-                  <div
-                    className="visual-bg"
-                    style={{ backgroundImage: `url(${activeFossil.image})` }}
-                  ></div>
-                  <div className="flip-overlay"></div>
-                  <div className="preview-info">
-                    <h4>{activeFossil.title}</h4>
-                    <small
-                      style={{
-                        color: activeFossil.accentColor,
-                        letterSpacing: "1px",
-                      }}
-                    >
-                      {activeFossil.type}
-                    </small>
-                    <p className="mt-auto flip-instruction blink">
-                      HOVER UNTUK X-RAY MESH ⟳
-                    </p>
-                  </div>
-                </div>
-
-                {/* Sisi Belakang Kartu (X-Ray & Ekstrak Data) */}
-                <div
-                  className="flip-card-back elegant-card"
-                  style={{ borderColor: activeFossil.accentColor }}
-                >
-                  <div
-                    className="xray-bg"
-                    style={{ backgroundImage: `url(${activeFossil.image})` }}
-                  ></div>
-                  <div className="scanner-line"></div>
-                  <div className="xray-data-panel">
-                    <h4 style={{ color: activeFossil.accentColor }}>
-                      ANALISIS STRUKTURAL
-                    </h4>
-                    <div className="xray-data-list">
-                      <p>
-                        <strong>SPESIES:</strong> {activeFossil.title}
-                      </p>
-                      <p>
-                        <strong>ERA:</strong> {activeFossil.era}
-                      </p>
-                      <p>
-                        <strong>KLASIFIKASI:</strong> {activeFossil.type}
-                      </p>
-                      <p>
-                        <strong>KETERANGAN:</strong> {activeFossil.desc}
-                      </p>
-                    </div>
-                    <button
-                      className="view-detail-btn elegant-btn"
-                      onClick={onStart}
-                      style={{
-                        borderColor: activeFossil.accentColor,
-                        color: activeFossil.accentColor,
-                      }}
-                    >
-                      AKSES DATABASE LENGKAP
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* SECTION 4: KUIS INTERAKTIF */}
-      <section className="quiz-section">
-        <div className="quiz-container">
-          <motion.div
-            className="quiz-header"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <h3>
-              MODUL <span className="accent">EVALUASI PENGETAHUAN</span>
-            </h3>
-            <p>
-              Uji pemahaman Anda mengenai sejarah prasejarah dan fungsionalitas
-              sistem museum digital ini.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="quiz-terminal"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <div className="quiz-top-bar">
-              <span>TERMINAL: UJIAN_01</span>
-              <span className="quiz-status">
-                {quizFinished
-                  ? "SELESAI"
-                  : `SOAL ${currentQ + 1}/${quizQuestions.length}`}
-              </span>
-            </div>
-
-            <div className="quiz-body">
-              {!quizFinished ? (
-                <>
-                  <h4 className="quiz-question">
-                    {quizQuestions[currentQ].question}
-                  </h4>
-                  <div className="quiz-options">
-                    {quizQuestions[currentQ].options.map((opt, idx) => {
-                      let btnClass = "quiz-btn";
-                      if (selectedOpt !== null) {
-                        if (idx === quizQuestions[currentQ].answer)
-                          btnClass += " correct";
-                        else if (idx === selectedOpt) btnClass += " wrong";
-                      }
-                      return (
-                        <button
-                          key={idx}
-                          className={btnClass}
-                          onClick={() => handleAnswer(idx)}
-                          disabled={selectedOpt !== null}
-                        >
-                          <span className="opt-letter">
-                            [{String.fromCharCode(65 + idx)}]
-                          </span>{" "}
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </>
-              ) : (
-                <div className="quiz-result">
-                  <div className="score-circle">
-                    <span className="score-number">
-                      {score}/{quizQuestions.length}
-                    </span>
-                  </div>
-                  <h4>EVALUASI SELESAI</h4>
-                  <p>
-                    {score === quizQuestions.length
-                      ? "Sempurna! Anda memiliki pengetahuan level Paleontolog."
-                      : "Bagus! Terus jelajahi database untuk meningkatkan pengetahuan Anda."}
-                  </p>
-                  <button className="quiz-retry-btn" onClick={resetQuiz}>
-                    RESTART EVALUASI
-                  </button>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          className="model-grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          {featuredFossils.map((fossil) => (
+            <ModelTiltCard
+              key={fossil.id}
+              fossil={fossil}
+              variants={itemVariants}
+            />
+          ))}
+        </motion.div>
       </section>
 
       {/* SECTION 5: TECH STACK SHOWCASE */}
-      <section className="tech-spec-section">
-        <div className="tech-container">
-          <div className="tech-text">
-            <h3>
-              SPESIFIKASI <span className="accent">TEKNIS</span>
-            </h3>
-            <p>
-              Dibangun menggunakan tumpukan teknologi modern untuk menghasilkan
-              performa tinggi dan user interface futuristik.
-            </p>
-          </div>
-          <div className="tech-badges">
-            <div className="tech-badge">
-              <span>⚛️</span> React.js
-            </div>
-            <div className="tech-badge">
-              <span>🧠</span> Google Gemini AI
-            </div>
-            <div className="tech-badge">
-              <span>🎭</span> Framer Motion
-            </div>
-            <div className="tech-badge">
-              <span>🎨</span> CSS 3D Transforms
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FOOTER */}
       <footer className="landing-footer">
