@@ -14,31 +14,31 @@ const Quiz = () => {
   const [isAnswered, setIsAnswered] = useState(false);
 
   const categories = [
-    { 
-      id: "Makhluk Hidup", 
-      label: "MAKHLUK HIDUP", 
-      icon: "🦖", 
+    {
+      id: "Makhluk Hidup",
+      label: "MAKHLUK HIDUP",
+      icon: "🦖",
       desc: "Evolusi fauna purba",
       image: "/ImageModels/EraGeologi/velociraptor.webp"
     },
-    { 
-      id: "Jenis Fosil", 
-      label: "JENIS FOSIL", 
-      icon: "🦴", 
+    {
+      id: "Jenis Fosil",
+      label: "JENIS FOSIL",
+      icon: "🦴",
       desc: "Taksonomi spesimen",
       image: "/ImageModels/EraGeologi/anomalocaris.jpg"
     },
-    { 
-      id: "Era Zaman", 
-      label: "ERA GEOLOGI", 
-      icon: "⏳", 
+    {
+      id: "Era Zaman",
+      label: "ERA GEOLOGI",
+      icon: "⏳",
       desc: "Kronologi prasejarah",
       image: "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
     },
-    { 
-      id: "Gabungan Keseluruhan", 
-      label: "GABUNGAN", 
-      icon: "🌀", 
+    {
+      id: "Gabungan Keseluruhan",
+      label: "GABUNGAN",
+      icon: "🌀",
       desc: "Evaluasi total sistem",
       image: "/ImageModels/EraGeologi/foto-kenozoikum.jpg"
     },
@@ -51,7 +51,7 @@ const Quiz = () => {
     } else {
       filtered = quizData.filter((q) => q.kategori === catId);
     }
-    
+
     if (filtered.length === 0) {
       alert("Database untuk kategori ini sedang dalam pemeliharaan. Coba kategori lain.");
       return;
@@ -87,9 +87,9 @@ const Quiz = () => {
   return (
     <div className="quiz-page-container">
       {/* GLOBAL BACKGROUND PHOTO */}
-      <div className="quiz-global-bg" style={{ backgroundImage: `url('/ImageModels/EraGeologi/foto-mesozoikum.jpg')` }}></div>
+      <div className="quiz-global-bg" style={{ backgroundImage: `url('/ImageModels/EraGeologi/backgroundquiz.jpg')` }}></div>
       <div className="quiz-bg-overlay"></div>
-      
+
       <div className="quiz-bg-grid"></div>
       <div className="quiz-scanner-line"></div>
 
@@ -104,7 +104,7 @@ const Quiz = () => {
       <main className="quiz-main-content">
         <AnimatePresence mode="wait">
           {step === "selection" && (
-            <motion.div 
+            <motion.div
               key="selection"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -119,7 +119,7 @@ const Quiz = () => {
 
               <div className="category-grid-revamp">
                 {categories.map((cat) => (
-                  <motion.div 
+                  <motion.div
                     key={cat.id}
                     whileHover={{ y: -10, borderColor: "var(--neon-blue)" }}
                     className="category-card-revamp"
@@ -140,7 +140,7 @@ const Quiz = () => {
           )}
 
           {step === "playing" && (
-            <motion.div 
+            <motion.div
               key="playing"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -226,7 +226,7 @@ const Quiz = () => {
           )}
 
           {step === "result" && (
-            <motion.div 
+            <motion.div
               key="result"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -254,7 +254,7 @@ const Quiz = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="result-actions">
                   <button className="retry-btn-modern" onClick={() => setStep("selection")}>
                     RESTART PROTOCOL
