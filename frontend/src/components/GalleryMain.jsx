@@ -9,6 +9,7 @@ const GalleryMain = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
+  const [hoveredCategory, setHoveredCategory] = useState(null);
 
   // State untuk navigasi antar sub-kategori (Sekarang untuk Cover Flow)
   const [activeSubIndex, setActiveSubIndex] = useState(0);
@@ -180,6 +181,26 @@ const GalleryMain = () => {
               exit="out"
               className="view-layer"
             >
+              {/* DYNAMIC BACKGROUND FOR VIEW 1 */}
+              <div className="view1-dynamic-bg">
+                <AnimatePresence>
+                  {hoveredCategory && (
+                    <motion.div
+                      key={hoveredCategory}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.4 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.8 }}
+                      className="dynamic-bg-img"
+                      style={{
+                        backgroundImage: `url(${encyclopediaData[hoveredCategory].image})`,
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
+                <div className="dynamic-bg-overlay"></div>
+              </div>
+
               <div className="view-header text-center">
                 <h1 className="cyber-heading">
                   DIREKTORI <span className="accent">SPESIMEN</span>
@@ -199,6 +220,8 @@ const GalleryMain = () => {
                       key={key}
                       className="movie-card"
                       onClick={() => handleSelect(key)}
+                      onMouseEnter={() => setHoveredCategory(key)}
+                      onMouseLeave={() => setHoveredCategory(null)}
                       style={{ "--card-color": data.color }}
                     >
                       <div

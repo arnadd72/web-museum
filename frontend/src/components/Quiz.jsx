@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { quizData } from "../data/quizData";
@@ -14,10 +14,34 @@ const Quiz = () => {
   const [isAnswered, setIsAnswered] = useState(false);
 
   const categories = [
-    { id: "Makhluk Hidup", label: "MAKHLUK HIDUP", icon: "🦖", desc: "Evolusi fauna purba" },
-    { id: "Jenis Fosil", label: "JENIS FOSIL", icon: "🦴", desc: "Taksonomi spesimen" },
-    { id: "Era Zaman", label: "ERA GEOLOGI", icon: "⏳", desc: "Kronologi prasejarah" },
-    { id: "Gabungan Keseluruhan", label: "GABUNGAN", icon: "🌀", desc: "Evaluasi total" },
+    { 
+      id: "Makhluk Hidup", 
+      label: "MAKHLUK HIDUP", 
+      icon: "🦖", 
+      desc: "Evolusi fauna purba",
+      image: "/ImageModels/EraGeologi/velociraptor.webp"
+    },
+    { 
+      id: "Jenis Fosil", 
+      label: "JENIS FOSIL", 
+      icon: "🦴", 
+      desc: "Taksonomi spesimen",
+      image: "/ImageModels/EraGeologi/anomalocaris.jpg"
+    },
+    { 
+      id: "Era Zaman", 
+      label: "ERA GEOLOGI", 
+      icon: "⏳", 
+      desc: "Kronologi prasejarah",
+      image: "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+    },
+    { 
+      id: "Gabungan Keseluruhan", 
+      label: "GABUNGAN", 
+      icon: "🌀", 
+      desc: "Evaluasi total sistem",
+      image: "/ImageModels/EraGeologi/foto-kenozoikum.jpg"
+    },
   ];
 
   const startQuiz = (catId) => {
@@ -27,6 +51,12 @@ const Quiz = () => {
     } else {
       filtered = quizData.filter((q) => q.kategori === catId);
     }
+    
+    if (filtered.length === 0) {
+      alert("Database untuk kategori ini sedang dalam pemeliharaan. Coba kategori lain.");
+      return;
+    }
+
     setQuestions(filtered);
     setCategory(catId);
     setStep("playing");
@@ -51,12 +81,15 @@ const Quiz = () => {
       } else {
         setStep("result");
       }
-    }, 1500);
+    }, 1200);
   };
 
   return (
     <div className="quiz-page-container">
-      {/* Background Decor */}
+      {/* GLOBAL BACKGROUND PHOTO */}
+      <div className="quiz-global-bg" style={{ backgroundImage: `url('/ImageModels/EraGeologi/foto-mesozoikum.jpg')` }}></div>
+      <div className="quiz-bg-overlay"></div>
+      
       <div className="quiz-bg-grid"></div>
       <div className="quiz-scanner-line"></div>
 
@@ -65,6 +98,7 @@ const Quiz = () => {
           <span>⟵</span> TERMINAL UTAMA
         </Link>
         <div className="quiz-logo">OS.EVALUASI_PROSES</div>
+        <div className="sys-time">{new Date().toLocaleTimeString()} // SYS_ACTIVE</div>
       </nav>
 
       <main className="quiz-main-content">
@@ -72,30 +106,33 @@ const Quiz = () => {
           {step === "selection" && (
             <motion.div 
               key="selection"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
               className="selection-screen"
             >
               <div className="selection-header">
-                <span className="status-tag">SYSTEM: READY</span>
+                <span className="status-tag">ACCESS PROTOCOL: REQUIRED</span>
                 <h1>PILIH <span className="accent">MODUL EVALUASI</span></h1>
-                <p>Otentikasi pengetahuan Anda untuk mengakses level database yang lebih tinggi.</p>
+                <p>Otentikasi pengetahuan Anda untuk membuka akses database level tinggi.</p>
               </div>
 
-              <div className="category-grid">
+              <div className="category-grid-revamp">
                 {categories.map((cat) => (
                   <motion.div 
                     key={cat.id}
-                    whileHover={{ scale: 1.03, y: -5 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="category-card"
+                    whileHover={{ y: -10, borderColor: "var(--neon-blue)" }}
+                    className="category-card-revamp"
                     onClick={() => startQuiz(cat.id)}
                   >
-                    <div className="cat-icon">{cat.icon}</div>
-                    <h3>{cat.label}</h3>
-                    <p>{cat.desc}</p>
-                    <div className="cat-hover-effect"></div>
+                    <div className="cat-card-img" style={{ backgroundImage: `url(${cat.image})` }}></div>
+                    <div className="cat-card-overlay"></div>
+                    <div className="cat-card-content">
+                      <div className="cat-icon-box">{cat.icon}</div>
+                      <h3>{cat.label}</h3>
+                      <p>{cat.desc}</p>
+                      <button className="select-btn">INISIASI MODUL</button>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -105,60 +142,84 @@ const Quiz = () => {
           {step === "playing" && (
             <motion.div 
               key="playing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="playing-screen"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="playing-screen-revamp"
             >
-              <div className="quiz-hud">
-                <div className="hud-item">
-                  <span className="label">KATEGORI</span>
-                  <span className="value">{category.toUpperCase()}</span>
+              {/* HUD TOP */}
+              <div className="quiz-hud-modern">
+                <div className="hud-cell">
+                  <span className="cell-label">KATEGORI</span>
+                  <span className="cell-value">{category.toUpperCase()}</span>
                 </div>
-                <div className="hud-item progress-container">
-                  <span className="label">PROGRESS</span>
-                  <div className="progress-bar-bg">
-                    <div 
-                      className="progress-bar-fill" 
-                      style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
-                    ></div>
+                <div className="hud-cell center">
+                  <div className="progress-minimal">
+                    <div className="progress-text">DATA_RECONSTRUCTION: {Math.round(((currentIndex + 1) / questions.length) * 100)}%</div>
+                    <div className="progress-bar-container">
+                      <div className="progress-bar-fill" style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}></div>
+                    </div>
                   </div>
-                  <span className="value">{currentIndex + 1} / {questions.length}</span>
                 </div>
-                <div className="hud-item">
-                  <span className="label">SKOR</span>
-                  <span className="value accent">{score}</span>
+                <div className="hud-cell right">
+                  <span className="cell-label">SCORE_SYNC</span>
+                  <span className="cell-value accent">{score * 10} pts</span>
                 </div>
               </div>
 
-              <div className="question-box">
-                <div className="terminal-header">
-                  <span className="dot red"></span>
-                  <span className="dot yellow"></span>
-                  <span className="dot green"></span>
-                  <span className="title">QUERY_ID: {questions[currentIndex].id}</span>
+              {/* SPLIT LAYOUT: QUESTION & VISUAL */}
+              <div className="quiz-split-box">
+                {/* Sisi Kiri: Soal */}
+                <div className="quiz-question-side">
+                  <div className="terminal-header-small">
+                    <span className="header-id">QUERY_ID: 0x{questions[currentIndex].id}</span>
+                    <span className="header-status">DECODING...</span>
+                  </div>
+                  <div className="question-content">
+                    <h2>{questions[currentIndex].pertanyaan}</h2>
+                  </div>
+                  <div className="options-list">
+                    {Object.entries(questions[currentIndex].pilihan).map(([key, val]) => {
+                      let status = "";
+                      if (isAnswered) {
+                        if (key === questions[currentIndex].jawaban_benar) status = "correct";
+                        else if (key === selectedAnswer) status = "wrong";
+                      }
+                      return (
+                        <button
+                          key={key}
+                          className={`modern-opt-btn ${status} ${selectedAnswer === key ? "selected" : ""}`}
+                          onClick={() => handleAnswer(key)}
+                          disabled={isAnswered}
+                        >
+                          <span className="opt-key">{key.toUpperCase()}</span>
+                          <span className="opt-val">{val}</span>
+                          {status === "correct" && <span className="opt-status-icon">✔</span>}
+                          {status === "wrong" && <span className="opt-status-icon">✘</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-                <div className="question-text">
-                  <h2>{questions[currentIndex].pertanyaan}</h2>
-                </div>
-                <div className="options-grid">
-                  {Object.entries(questions[currentIndex].pilihan).map(([key, val]) => {
-                    let status = "";
-                    if (isAnswered) {
-                      if (key === questions[currentIndex].jawaban_benar) status = "correct";
-                      else if (key === selectedAnswer) status = "wrong";
-                    }
-                    return (
-                      <button
-                        key={key}
-                        className={`opt-btn ${status} ${selectedAnswer === key ? "selected" : ""}`}
-                        onClick={() => handleAnswer(key)}
-                        disabled={isAnswered}
+
+                {/* Sisi Kanan: Visual */}
+                <div className="quiz-visual-side-playing">
+                  <div className="visual-frame">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={currentIndex}
+                        initial={{ opacity: 0, scale: 1.1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.5 }}
+                        className="visual-img"
+                        style={{ backgroundImage: `url(${questions[currentIndex].visual || "/ImageModels/EraGeologi/foto-paleozoikum.jpg"})` }}
                       >
-                        <span className="key-box">[{key.toUpperCase()}]</span>
-                        <span className="val-text">{val}</span>
-                      </button>
-                    );
-                  })}
+                        <div className="visual-scanline"></div>
+                        <div className="visual-vignette"></div>
+                      </motion.div>
+                    </AnimatePresence>
+                    <div className="visual-data-label">CONTEXTUAL_RECONSTRUCTION_V1.0</div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -167,31 +228,39 @@ const Quiz = () => {
           {step === "result" && (
             <motion.div 
               key="result"
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               className="result-screen"
             >
-              <div className="result-card">
-                <div className="result-header">EVALUASI SELESAI</div>
-                <div className="score-display">
-                  <div className="circular-progress" style={{ 
-                    background: `conic-gradient(var(--neon-blue) ${(score / questions.length) * 360}deg, rgba(255,255,255,0.05) 0deg)` 
-                  }}>
-                    <div className="inner-circle">
-                      <span className="final-score">{Math.round((score / questions.length) * 100)}</span>
-                      <span className="percent">%</span>
+              <div className="result-card-revamp">
+                <div className="result-header-text">EVALUASI_SELESAI</div>
+                <div className="final-stats">
+                  <div className="stat-circle">
+                    <div className="circle-inner">
+                      <span className="big-number">{Math.round((score / questions.length) * 100)}</span>
+                      <span className="unit">%</span>
+                    </div>
+                  </div>
+                  <div className="stat-details">
+                    <div className="detail-row">
+                      <span>DATABASE MATCH:</span>
+                      <span className="accent">{score} / {questions.length}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span>RANK:</span>
+                      <span className="accent">
+                        {score === questions.length ? "MASTER_PALEONTOLOGIST" : "DATA_EXCAVATOR"}
+                      </span>
                     </div>
                   </div>
                 </div>
-                <h3>{score === questions.length ? "LEVEL: PALEONTOLOG AGUNG" : "DATA TERSIMPAN"}</h3>
-                <p>Anda menjawab benar {score} dari {questions.length} pertanyaan.</p>
                 
                 <div className="result-actions">
-                  <button className="retry-btn" onClick={() => setStep("selection")}>
-                    RESTART TERMINAL
+                  <button className="retry-btn-modern" onClick={() => setStep("selection")}>
+                    RESTART PROTOCOL
                   </button>
-                  <Link to="/" className="home-btn">
-                    BACK TO HOME
+                  <Link to="/" className="home-btn-modern">
+                    RETURN TO MAIN TERMINAL
                   </Link>
                 </div>
               </div>
