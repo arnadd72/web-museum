@@ -58,7 +58,7 @@ def get_encyclopedia():
         for row in records:
             main_title = row['main_category']
             # Kembalikan key asli untuk kecocokan navigasi
-            main_key = "BIO" if main_title == "MAKHLUK HIDUP" else "FOSSIL" if main_title == "JENIS FOSIL" else main_title
+            main_key = "BIO" if main_title == "MAKHLUK HIDUP" else "FOSSIL" if main_title == "JENIS FOSIL" else "ERA" if main_title == "ERA ZAMAN" else main_title
             
             if main_key not in encyclo:
                 encyclo[main_key] = {
