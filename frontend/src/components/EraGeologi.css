@@ -69,6 +69,13 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.nav-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 .nav-brand {
   display: flex;
   align-items: center;

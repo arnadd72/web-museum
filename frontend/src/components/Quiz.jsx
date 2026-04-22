@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { quizData } from "../data/quizData";
+import html2canvas from "html2canvas";
 import "./Quiz.css";
 
-const Quiz = () => {
-  const [step, setStep] = useState("selection"); // selection, playing, result
+const Quiz = ({ userData, onComplete }) => {
+  const [step, setStep] = useState("registration");
+  const [userName, setUserName] = useState(userData?.name || "");
+  const [userRank, setUserRank] = useState(userData?.rank || "");
   const [category, setCategory] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,6 +47,14 @@ const Quiz = () => {
     },
   ];
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (userName.trim()) {
+      onComplete({ name: userName });
+      setStep("selection");
+    }
+  };
+
   const startQuiz = (catId) => {
     let filtered = [];
     if (catId === "Gabungan Keseluruhan") {
@@ -53,17 +64,23 @@ const Quiz = () => {
     }
 
     if (filtered.length === 0) {
-      alert(
-        "Database untuk kategori ini sedang dalam pemeliharaan. Coba kategori lain.",
-      );
+      alert("Database soal belum tersedia untuk kategori ini.");
       return;
     }
 
     setQuestions(filtered);
     setCategory(catId);
-    setStep("playing");
     setCurrentIndex(0);
     setScore(0);
+    setSelectedOpt(null);
+    setIsAnswered(false);
+    setStep("playing");
+  };
+
+  const getRank = (scorePct) => {
+    if (scorePct <= 30) return "JUNIOR EXCAVATOR";
+    if (scorePct <= 70) return "PALEONTOLOGY RESEARCHER";
+    return "SENIOR ARCHAEOLOGIST";
   };
 
   const handleAnswer = (key) => {
@@ -71,29 +88,45 @@ const Quiz = () => {
     setSelectedOpt(key);
     setIsAnswered(true);
 
-    if (key === questions[currentIndex].jawaban_benar) {
-      setScore((prev) => prev + 1);
-    }
+    const isCorrect = key === questions[currentIndex].jawaban_benar;
+    if (isCorrect) setScore((prev) => prev + 1);
 
     setTimeout(() => {
       if (currentIndex < questions.length - 1) {
-        // Hapus selected opt dan status terjawab SEBELUM ganti index
         setSelectedOpt(null);
         setIsAnswered(false);
         setCurrentIndex((prev) => prev + 1);
       } else {
+        const finalScore = score + (isCorrect ? 1 : 0);
+        const finalScorePct = Math.round((finalScore / questions.length) * 100);
+        const finalRank = getRank(finalScorePct);
+        setUserRank(finalRank);
+        onComplete({ rank: finalRank });
         setStep("result");
       }
     }, 1200);
   };
 
-  // Guard clause untuk mencegah render saat data soal belum siap atau index out of bounds
-  const currentQuestion = questions[currentIndex];
+  const downloadImage = () => {
+    const element = document.getElementById("certificate-print");
+    html2canvas(element, {
+      backgroundColor: "#05080f",
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+    }).then((canvas) => {
+      const link = document.createElement("a");
+      link.download = `Sertifikat_${userName}_JejakPurba.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  };
+
+  // Guard for current question
+  const currentQData = questions[currentIndex];
 
   return (
     <div className="quiz-page-container">
-      {/* ... rest of the component remains similar but use currentQuestion ... */}
-      {/* GLOBAL BACKGROUND PHOTO */}
       <div
         className="quiz-global-bg"
         style={{
@@ -101,7 +134,6 @@ const Quiz = () => {
         }}
       ></div>
       <div className="quiz-bg-overlay"></div>
-
       <div className="quiz-bg-grid"></div>
       <div className="quiz-scanner-line"></div>
 
@@ -109,14 +141,95 @@ const Quiz = () => {
         <Link to="/" className="back-link">
           <span>⟵</span> TERMINAL UTAMA
         </Link>
-        <div className="quiz-logo">OS.EVALUASI_PROSES</div>
+        <div className="logo-section">
+          <div className="logo-symbol">JP</div>
+          <div className="logo-main-brand">JEJAKPURBA</div>
+
+          {userRank && (
+            <div className="nav-profile-stack">
+              <div className="nav-rank-badge-modern">
+                <span className="rank-prefix"></span> {userRank}
+              </div>
+              {userName && (
+                <div className="nav-user-id-modern">
+                  <span className="status-dot-blink"></span>
+                  {userName.toUpperCase()}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         <div className="sys-time">
-          {new Date().toLocaleTimeString()} // SYS_ACTIVE
+          {userName || "GUEST"} // {new Date().toLocaleTimeString()}
         </div>
       </nav>
 
       <main className="quiz-main-content">
         <AnimatePresence mode="wait">
+          {step === "registration" && (
+            <motion.div
+              key="reg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="registration-screen"
+            >
+              <div className="registration-card">
+                <div className="card-header">
+                  <span className="status-tag">SECURITY CHECK</span>
+                  <h1>
+                    IDENTITAS <span className="accent">PENGGUNA</span>
+                  </h1>
+                  <p>
+                    Masukkan nama lengkap Anda untuk otentikasi sertifikat
+                    sistem.
+                  </p>
+                </div>
+
+                <div className="rank-info-preview">
+                  <div className="rank-info-title">
+                    TINGKATAN OTORITAS SISTEM:
+                  </div>
+                  <div className="rank-steps">
+                    <div className="rank-step-item">
+                      <span className="step-range">0-30 Score</span>
+                      <span className="step-label">JUNIOR EXCAVATOR</span>
+                    </div>
+                    <div className="rank-step-item">
+                      <span className="step-range">31-70 Score</span>
+                      <span className="step-label">
+                        PALEONTOLOGY RESEARCHER
+                      </span>
+                    </div>
+                    <div className="rank-step-item expert">
+                      <span className="step-range">71-100 Score</span>
+                      <span className="step-label">SENIOR ARCHAEOLOGIST</span>
+                    </div>
+                  </div>
+                </div>
+
+                <form onSubmit={handleRegister} className="reg-form">
+                  <div className="input-group-tech">
+                    <label>NAMA LENGKAP</label>
+                    <input
+                      type="text"
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
+                      placeholder="Masukkan nama..."
+                      required
+                      spellCheck="false"
+                      autoComplete="off"
+                    />
+                    <div className="input-line"></div>
+                  </div>
+                  <button type="submit" className="start-btn-tech">
+                    MULAI SESI EVALUASI
+                  </button>
+                </form>
+              </div>
+            </motion.div>
+          )}
+
           {step === "selection" && (
             <motion.div
               key="selection"
@@ -128,14 +241,13 @@ const Quiz = () => {
               <div className="selection-header">
                 <span className="status-tag">ACCESS PROTOCOL: REQUIRED</span>
                 <h1>
-                  PILIH <span className="accent">MODUL EVALUASI</span>
+                  HALO, <span className="accent">{userName.toUpperCase()}</span>
                 </h1>
                 <p>
-                  Otentikasi pengetahuan Anda untuk membuka akses database level
-                  tinggi.
+                  Pilih modul evaluasi untuk menguji pengetahuan prasejarah
+                  Anda.
                 </p>
               </div>
-
               <div className="category-grid-revamp">
                 {categories.map((cat) => (
                   <motion.div
@@ -161,7 +273,7 @@ const Quiz = () => {
             </motion.div>
           )}
 
-          {step === "playing" && (
+          {step === "playing" && currentQData && (
             <motion.div
               key="playing"
               initial={{ opacity: 0, x: 50 }}
@@ -169,16 +281,15 @@ const Quiz = () => {
               exit={{ opacity: 0, x: -30 }}
               className="playing-screen-revamp"
             >
-              {/* HUD TOP */}
               <div className="quiz-hud-modern">
                 <div className="hud-cell">
-                  <span className="cell-label">KATEGORI</span>
-                  <span className="cell-value">{category.toUpperCase()}</span>
+                  <span className="cell-label">PENGGUNA</span>
+                  <span className="cell-value">{userName.toUpperCase()}</span>
                 </div>
                 <div className="hud-cell center">
                   <div className="progress-minimal">
                     <div className="progress-text">
-                      DATA_RECONSTRUCTION:{" "}
+                      DATA_SYNC:{" "}
                       {Math.round(
                         ((currentIndex + 1) / questions.length) * 100,
                       )}
@@ -195,76 +306,52 @@ const Quiz = () => {
                   </div>
                 </div>
                 <div className="hud-cell right">
-                  <span className="cell-label">SCORE_SYNC</span>
-                  <span className="cell-value accent">{score * 10} pts</span>
+                  <span className="cell-label">SCORE</span>
+                  <span className="cell-value accent">{score * 10}</span>
                 </div>
               </div>
 
-              {/* SPLIT LAYOUT: QUESTION & VISUAL */}
               <div className="quiz-split-box">
-                {/* Sisi Kiri: Soal */}
                 <div className="quiz-question-side">
                   <div className="terminal-header-small">
-                    <span className="header-id">
-                      QUERY_ID: 0x{questions[currentIndex].id}
-                    </span>
-                    <span className="header-status">DECODING...</span>
+                    <span>QUERY_ID: 0x{currentQData.id}</span>
+                    <span className="blink-text">DECODING_DATA...</span>
                   </div>
                   <div className="question-content">
-                    <h2>{questions[currentIndex].pertanyaan}</h2>
+                    <h2>{currentQData.pertanyaan}</h2>
                   </div>
                   <div className="options-list">
-                    {Object.entries(questions[currentIndex].pilihan).map(
-                      ([key, val]) => {
-                        let status = "";
-                        if (isAnswered) {
-                          if (key === questions[currentIndex].jawaban_benar)
-                            status = "correct";
-                          else if (key === selectedAnswer) status = "wrong";
-                        }
-                        return (
-                          <button
-                            key={key}
-                            className={`modern-opt-btn ${status} ${selectedAnswer === key ? "selected" : ""}`}
-                            onClick={() => handleAnswer(key)}
-                            disabled={isAnswered}
-                          >
-                            <span className="opt-key">{key.toUpperCase()}</span>
-                            <span className="opt-val">{val}</span>
-                            {status === "correct" && (
-                              <span className="opt-status-icon">✔</span>
-                            )}
-                            {status === "wrong" && (
-                              <span className="opt-status-icon">✘</span>
-                            )}
-                          </button>
-                        );
-                      },
-                    )}
+                    {Object.entries(currentQData.pilihan).map(([key, val]) => {
+                      let status = "";
+                      if (isAnswered) {
+                        if (key === currentQData.jawaban_benar)
+                          status = "correct";
+                        else if (key === selectedAnswer) status = "wrong";
+                      }
+                      return (
+                        <button
+                          key={key}
+                          className={`modern-opt-btn ${status} ${selectedAnswer === key ? "selected" : ""}`}
+                          onClick={() => handleAnswer(key)}
+                          disabled={isAnswered}
+                        >
+                          <span className="opt-key">{key.toUpperCase()}</span>
+                          <span className="opt-val">{val}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-
-                {/* Sisi Kanan: Visual */}
                 <div className="quiz-visual-side-playing">
                   <div className="visual-frame">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={currentIndex}
-                        initial={{ opacity: 0, scale: 1.1 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.5 }}
-                        className="visual-img"
-                        style={{
-                          backgroundImage: `url(${questions[currentIndex].visual || "/ImageModels/EraGeologi/foto-paleozoikum.jpg"})`,
-                        }}
-                      >
-                        <div className="visual-scanline"></div>
-                        <div className="visual-vignette"></div>
-                      </motion.div>
-                    </AnimatePresence>
-                    <div className="visual-data-label">
-                      CONTEXTUAL_RECONSTRUCTION_V1.0
+                    <div
+                      className="visual-img"
+                      style={{
+                        backgroundImage: `url(${currentQData.visual || "/ImageModels/EraGeologi/foto-paleozoikum.jpg"})`,
+                      }}
+                    >
+                      <div className="visual-scanline"></div>
+                      <div className="visual-vignette"></div>
                     </div>
                   </div>
                 </div>
@@ -277,47 +364,73 @@ const Quiz = () => {
               key="result"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="result-screen"
+              className="result-screen-revamp"
             >
-              <div className="result-card-revamp">
-                <div className="result-header-text">EVALUASI_SELESAI</div>
-                <div className="final-stats">
-                  <div className="stat-circle">
-                    <div className="circle-inner">
-                      <span className="big-number">
-                        {Math.round((score / questions.length) * 100)}
-                      </span>
-                      <span className="unit">%</span>
+              <div className="result-container-modern">
+                <div className="result-card-main">
+                  <div className="result-header-text">EVALUASI_SELESAI</div>
+                  <div className="success-announcement">
+                    <div className="status-blink-green">
+                      OTENTIKASI BERHASIL
                     </div>
+                    <h2>
+                      Selamat, <span className="accent">{userName}</span>!
+                    </h2>
+                    <p>
+                      Level Otoritas Anda:{" "}
+                      <span className="rank-highlight">[{userRank}]</span>
+                    </p>
                   </div>
-                  <div className="stat-details">
-                    <div className="detail-row">
-                      <span>DATABASE MATCH:</span>
-                      <span className="accent">
-                        {score} / {questions.length}
-                      </span>
-                    </div>
-                    <div className="detail-row">
-                      <span>RANK:</span>
-                      <span className="accent">
-                        {score === questions.length
-                          ? "MASTER_PALEONTOLOGIST"
-                          : "DATA_EXCAVATOR"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="result-actions">
-                  <button
-                    className="retry-btn-modern"
-                    onClick={() => setStep("selection")}
-                  >
-                    RESTART PROTOCOL
-                  </button>
-                  <Link to="/" className="home-btn-modern">
-                    RETURN TO MAIN TERMINAL
-                  </Link>
+                  <div id="certificate-print" className="digital-access-card">
+                    <div className="card-top">
+                      <div className="card-logo">JEJAK PURBA</div>
+                      <div className="card-id">
+                        ID: #{Math.floor(Math.random() * 90000) + 10000}
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <div className="cert-user-info">
+                        <span className="cert-label">NAMA PEMEGANG</span>
+                        <span className="cert-name">
+                          {userName.toUpperCase()}
+                        </span>
+                      </div>
+                      <div className="user-authority">
+                        <span className="title">LEVEL OTORITAS</span>
+                        <span className="value">{userRank}</span>
+                      </div>
+                      <div className="card-signature">
+                        <div className="barcode"></div>
+                        <div className="sig-text">SECURE RECOGNITION KEY</div>
+                      </div>
+                    </div>
+                    <div className="card-footer">
+                      <span>TANGGAL: {new Date().toLocaleDateString()}</span>
+                      <span className="valid">VALID ACCESSS</span>
+                    </div>
+                    <div className="card-glitch-layer"></div>
+                  </div>
+
+                  <div className="result-actions-revamp">
+                    <button className="retry-btn-tech" onClick={downloadImage}>
+                      SIMPAN GAMBAR (PNG)
+                    </button>
+                    <button
+                      className="retry-btn-tech"
+                      style={{
+                        background: "transparent",
+                        border: "1px solid var(--neon-blue)",
+                        color: "var(--neon-blue)",
+                      }}
+                      onClick={() => setStep("registration")}
+                    >
+                      GANTI IDENTITAS / ULANGI
+                    </button>
+                    <Link to="/" className="home-btn-tech">
+                      TERMINAL UTAMA
+                    </Link>
+                  </div>
                 </div>
               </div>
             </motion.div>

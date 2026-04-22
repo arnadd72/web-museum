@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import "./EraGeologi.css";
 
-const EraGeologi = () => {
+const EraGeologi = ({ userData }) => {
   const [activeEra, setActiveEra] = useState(0);
   const navigate = useNavigate();
 
@@ -84,15 +84,29 @@ const EraGeologi = () => {
         <div className="showcase-vignette"></div>
       </div>
 
-      {/* 2. TOP NAVBAR */}
       <nav className="showcase-nav">
-        <div className="nav-brand">
-          <div className="logo-icon">JP</div>
-          <span>JEJAK PURBA</span>
+        <div className="nav-brand-group">
+          <div className="nav-brand">
+            <div className="logo-icon">JP</div>
+            <span>JEJAK PURBA</span>
+          </div>
+
+          {userData?.rank && (
+            <div className="nav-profile-stack gallery-profile">
+              <div className="nav-rank-badge-modern">{userData.rank}</div>
+              {userData?.name && (
+                <div className="nav-user-id-modern">
+                  <span className="status-dot-blink"></span>
+                  {userData.name.toUpperCase()}
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
         <div className="nav-links">
           <Link to="/">BERANDA</Link>
-          <Link to="/gallery">DATABASE</Link>
+          <Link to="/gallery">ENSIKLOPEDIA</Link>
           <Link to="/visual-3d">VISUAL 3D</Link>
         </div>
       </nav>

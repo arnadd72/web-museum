@@ -5,7 +5,7 @@ import "../App.css";
 import { encyclopediaData } from "../data/encyclopediaData";
 import "./GalleryMain.css";
 
-const GalleryMain = () => {
+const GalleryMain = ({ userData }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
@@ -152,25 +152,46 @@ const GalleryMain = () => {
 
       {/* TOP NAVIGATION */}
       <nav className="gallery-top-nav">
-        {selectedSubCategory ? (
-          <button onClick={handleBackToSub} className="btn-sys-back" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-             <span className="arr">←</span> KELUAR ARSIP
-          </button>
-        ) : (
-          <Link to="/" className="btn-sys-back">
-            <span className="arr">←</span> KELUAR ARSIP
-          </Link>
-        )}
-        <div className="nav-sys-title">
-          <span>
-            {selectedSubCategory
-              ? "DATABASE // SPESIMEN"
-              : selectedCategory
-                ? "DATABASE // SUB-KLASIFIKASI"
-                : "DATABASE // DIREKTORI UTAMA"}
-          </span>
-          <div className="sys-blink"></div>
+        <div className="nav-left-group">
+          {selectedSubCategory ? (
+            <button
+              onClick={handleBackToSub}
+              className="btn-sys-back"
+              style={{ background: "none", border: "none", cursor: "pointer" }}
+            >
+              <span className="arr">←</span> KELUAR ARSIP
+            </button>
+          ) : (
+            <Link to="/" className="btn-sys-back">
+              <span className="arr">←</span> KELUAR ARSIP
+            </Link>
+          )}
+          
+          <div className="nav-sys-title">
+            <span>
+              {selectedSubCategory
+                ? "SPESIMEN"
+                : selectedCategory
+                  ? "SUB-KLASIFIKASI"
+                  : "ENSIKLOPEDIA UTAMA"}
+            </span>
+            <div className="sys-blink"></div>
+          </div>
         </div>
+
+        {userData?.rank && (
+          <div className="nav-profile-stack gallery-profile">
+            <div className="nav-rank-badge-modern">
+              {userData.rank}
+            </div>
+            {userData?.name && (
+              <div className="nav-user-id-modern">
+                <span className="status-dot-blink"></span>
+                {userData.name.toUpperCase()}
+              </div>
+            )}
+          </div>
+        )}
       </nav>
 
       <main className="gallery-main-area">
@@ -209,7 +230,7 @@ const GalleryMain = () => {
 
               <div className="view-header text-center">
                 <h1 className="cyber-heading">
-                  DIREKTORI <span className="accent">SPESIMEN</span>
+                  GALERI <span className="accent">SPESIMEN</span>
                 </h1>
                 <p className="cyber-subheading">
                   Pilih klasifikasi biologis untuk memuat rekaman visual dan
@@ -303,7 +324,7 @@ const GalleryMain = () => {
               </div>
 
               {/* Carousel Center Area */}
-              <motion.div 
+              <motion.div
                 className="coverflow-slider-container"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
@@ -352,7 +373,11 @@ const GalleryMain = () => {
                               : "transparent",
                         }}
                       >
-                        <img src={sub.galleryImage || sub.image} alt={sub.title} draggable="false" />
+                        <img
+                          src={sub.galleryImage || sub.image}
+                          alt={sub.title}
+                          draggable="false"
+                        />
                         <div className="cf-overlay"></div>
                         {positionClass === "cf-active" && (
                           <>
@@ -462,7 +487,7 @@ const GalleryMain = () => {
                     className="slider-tag"
                     style={{ color: selectedCategory.color }}
                   >
-                    {selectedSubCategory.title} // {selectedCategory.title}
+                    {selectedSubCategory.title}
                   </h4>
                   <h1 className="slider-title-main">SPESIMEN</h1>
                   <h1

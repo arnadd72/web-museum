@@ -1,5 +1,7 @@
 import {
   Center,
+  ContactShadows,
+  Environment,
   Float,
   Html,
   OrbitControls,
@@ -83,7 +85,7 @@ const Loader = () => (
 );
 
 // --- MAIN COMPONENT ---
-const ModelViewer = () => {
+const ModelViewer = ({ userData }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -98,56 +100,36 @@ const ModelViewer = () => {
   useEffect(() => {
     if (
       returnContext &&
-      returnContext.targetCategory &&
-      returnContext.targetSubCategory
+      encyclopediaData[returnContext.targetCategory]
     ) {
-      const cat = encyclopediaData[returnContext.targetCategory];
-      if (cat) {
-        const sub = cat.subCategories.find(
-          (s) => s.title === returnContext.targetSubCategory,
-        );
-        if (sub && sub.items) {
-          setSiblingItems(sub.items);
-        }
-      }
-    } else if (itemData) {
-      setSiblingItems([itemData]);
+      const sub = encyclopediaData[
+        returnContext.targetCategory
+      ].subCategories.find((s) => s.title === returnContext.targetSubCategory);
+      if (sub) setSiblingItems(sub.items);
     }
-  }, [returnContext, itemData]);
+  }, [returnContext]);
 
-  // === 3. LOGIC NAVIGASI ===
   const handleBack = () => {
     if (returnPath) {
       navigate(returnPath);
-      return;
+    } else if (returnContext) {
+      navigate("/gallery", { state: returnContext });
+    } else {
+      navigate("/gallery");
     }
-    if (returnContext) {
-      navigate("/gallery", { state: { ...returnContext } });
-      return;
-    }
-    navigate("/gallery");
   };
 
-  // === 4. EXTENDED DATA LOGIC ===
   const extendedData = useMemo(() => {
-    if (!activeItem) return null;
+    if (!activeItem) return {};
     const dbDesc = activeItem.description || {};
-    const customInfo = activeItem.details || {};
+    const customInfo = activeItem.customInfo || {};
 
     return {
       scientificName:
+        activeItem.scientificName ||
         customInfo.scientificName ||
-        activeItem.name.charAt(0) +
-          activeItem.name.slice(1).toLowerCase() +
-          " sp.",
-      category: activeItem.category || "Unknown Class",
-      taxonomy: customInfo.taxonomy || "Kingdom Animalia",
-      location: customInfo.location || "Global",
-      status: activeItem.status || "PUNAH",
-      diet: customInfo.diet || "Tidak Diketahui",
-      size: customInfo.size || "Bervariasi",
-      weight: customInfo.weight || "Tidak Diketahui",
-      lifespan: customInfo.lifespan || "Tidak Diketahui",
+        "Specimen Unknown",
+      category: activeItem.category || customInfo.category || "Unclassified",
       period:
         activeItem.period ||
         customInfo.period ||
@@ -200,53 +182,54 @@ const ModelViewer = () => {
       <div className="hud-canvas-wrapper">
         <Canvas
           shadows
-          dpr={[1, 2]}
           camera={{ position: cameraPosition, fov: 45 }}
+          gl={{ antialias: true, preserveDrawingBuffer: true }}
         >
-          <fog attach="fog" args={["#030508", 5, 45]} />
-          <Sparkles
-            count={100}
-            scale={15}
-            size={2}
-            speed={0.2}
-            color={themeColor}
-            opacity={0.3}
-          />
-          <ambientLight intensity={1.2} color="#ffffff" />
-          <directionalLight
-            position={[10, 10, 5]}
-            intensity={2.5}
-            color="#ffffff"
-            castShadow
-          />
-          <directionalLight
-            position={[-10, -5, -10]}
-            intensity={1}
-            color={themeColor}
-          />
+          <color attach="background" args={["#030508"]} />
+          <fog attach="fog" args={["#030508", 5, 25]} />
 
           <Suspense fallback={<Loader />}>
-            <Float
-              speed={1.5}
-              rotationIntensity={0.1}
-              floatIntensity={0.2}
-              position={[0, -0.5, 0]}
-            >
-              <group scale={1.2}>
+            <Environment files="/textures/lighting.hdr" />
+            <ambientLight intensity={0.5} />
+            <spotLight
+              position={[10, 15, 10]}
+              angle={0.3}
+              penumbra={1}
+              intensity={2}
+              castShadow
+            />
+            <pointLight position={[-10, -10, -10]} intensity={1} />
+
+            <Resize>
+              <Center top>
                 <ModelErrorBoundary color={themeColor}>
-                  <Center top>
-                    <Resize scale={modelScale}>
-                      <Model3D
-                        key={activeItem.modelPath}
-                        path={activeItem.modelPath}
-                      />
-                    </Resize>
-                  </Center>
+                  <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
+                    <Model3D path={activeItem.model} />
+                  </Float>
                 </ModelErrorBoundary>
-              </group>
-            </Float>
+              </Center>
+            </Resize>
+
+            <Sparkles
+              count={60}
+              scale={10}
+              size={1.5}
+              speed={0.4}
+              opacity={0.2}
+              color={themeColor}
+            />
+            <ContactShadows
+              position={[0, -0.01, 0]}
+              opacity={0.6}
+              scale={20}
+              blur={2}
+              far={10}
+              color="#000000"
+            />
           </Suspense>
+
           <OrbitControls
+            enablePan={false}
             autoRotate
             autoRotateSpeed={1}
             makeDefault
@@ -259,13 +242,29 @@ const ModelViewer = () => {
 
       {/* === 2. TOP NAVBAR === */}
       <header className="hud-top-nav">
-        <button onClick={handleBack} className="btn-hud-back">
-          <span className="arr">←</span> TERMINATE LINK
-        </button>
-        <div className="hud-nav-status">
-          <div className="blink-dot"></div>
-          <span>LIVE TELEMETRY // 3D RENDER</span>
+        <div className="nav-left-group">
+          <button onClick={handleBack} className="btn-hud-back">
+            <span className="arr">←</span> TERMINATE LINK
+          </button>
+          <div className="hud-nav-status">
+            <div className="blink-dot"></div>
+            <span>LIVE TELEMETRY // 3D RENDER</span>
+          </div>
         </div>
+
+        {userData?.rank && (
+          <div className="nav-profile-stack gallery-profile">
+            <div className="nav-rank-badge-modern">
+              {userData.rank}
+            </div>
+            {userData?.name && (
+              <div className="nav-user-id-modern">
+                <span className="status-dot-blink"></span>
+                {userData.name.toUpperCase()}
+              </div>
+            )}
+          </div>
+        )}
       </header>
 
       {/* === 3. LEFT PANEL (IDENTITAS & TAKSONOMI) === */}
@@ -298,45 +297,39 @@ const ModelViewer = () => {
           </div>
           <div className="hud-data-row">
             <span className="lbl">TAKSONOMI</span>
-            <span className="val">{extendedData.taxonomy}</span>
+            <span className="val">{extendedData.scientificName}</span>
           </div>
           <div className="hud-data-row">
-            <span className="lbl">LOKASI DATA</span>
-            <span className="val">{extendedData.location}</span>
-          </div>
-          <div className="hud-data-row">
-            <span className="lbl">ERA GEOLOGI</span>
+            <span className="lbl">PERIODE</span>
             <span className="val">{extendedData.period}</span>
           </div>
-          <div className="hud-data-row mt-3">
+          <div className="hud-data-row">
             <span className="lbl">STATUS</span>
             <span
               className="val status-glow"
               style={{
                 color:
-                  extendedData.status === "MASIH HIDUP" ? "#00ff88" : "#ff4d4d",
-                textShadow:
-                  extendedData.status === "MASIH HIDUP"
-                    ? "0 0 10px #00ff88"
-                    : "0 0 10px #ff4d4d",
+                  activeItem.status === "MASIH HIDUP"
+                    ? "var(--neon-green)"
+                    : "var(--neon-red)",
               }}
             >
-              [{extendedData.status}]
+              {activeItem.status || "PUNAH"}
             </span>
           </div>
         </div>
 
-        <div className="hud-desc-box">
+        <div className="hud-desc-box mt-3">
           <p>{extendedData.desc}</p>
         </div>
       </motion.aside>
 
-      {/* === 4. RIGHT PANEL (ANATOMI, METRIK, WAWASAN) === */}
+      {/* === 4. RIGHT PANEL (METRIK & ANALISIS) === */}
       <motion.aside
         key={`right-${activeItem.name}`}
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ duration: 0.6 }}
         className="hud-panel right-panel"
       >
         <div className="panel-corner tl"></div>
@@ -349,31 +342,18 @@ const ModelViewer = () => {
             className={activeTab === "ANATOMY" ? "active" : ""}
             onClick={() => setActiveTab("ANATOMY")}
             style={{
-              color: activeTab === "ANATOMY" ? themeColor : "#888",
-              borderBottomColor:
-                activeTab === "ANATOMY" ? themeColor : "transparent",
+              color: activeTab === "ANATOMY" ? themeColor : "#666",
+              borderColor: activeTab === "ANATOMY" ? themeColor : "transparent",
             }}
           >
-            ANATOMI
-          </button>
-          <button
-            className={activeTab === "METRICS" ? "active" : ""}
-            onClick={() => setActiveTab("METRICS")}
-            style={{
-              color: activeTab === "METRICS" ? themeColor : "#888",
-              borderBottomColor:
-                activeTab === "METRICS" ? themeColor : "transparent",
-            }}
-          >
-            METRIK
+            BIOMETRIK
           </button>
           <button
             className={activeTab === "LORE" ? "active" : ""}
             onClick={() => setActiveTab("LORE")}
             style={{
-              color: activeTab === "LORE" ? themeColor : "#888",
-              borderBottomColor:
-                activeTab === "LORE" ? themeColor : "transparent",
+              color: activeTab === "LORE" ? themeColor : "#666",
+              borderColor: activeTab === "LORE" ? themeColor : "transparent",
             }}
           >
             WAWASAN
@@ -382,100 +362,86 @@ const ModelViewer = () => {
 
         <div className="hud-tab-content">
           <AnimatePresence mode="wait">
-            {activeTab === "ANATOMY" && (
+            {activeTab === "ANATOMY" ? (
               <motion.div
-                key="t1"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="hud-data-list"
-              >
-                <div className="hud-data-row">
-                  <span className="lbl">DIET</span>
-                  <span className="val">{extendedData.diet}</span>
-                </div>
-                <div className="hud-data-row">
-                  <span className="lbl">ESTIMASI UMUR</span>
-                  <span className="val">{extendedData.lifespan}</span>
-                </div>
-                <div className="hud-data-row">
-                  <span className="lbl">UKURAN</span>
-                  <span className="val">{extendedData.size}</span>
-                </div>
-                <div className="hud-data-row">
-                  <span className="lbl">BERAT</span>
-                  <span className="val">{extendedData.weight}</span>
-                </div>
-                <div
-                  className="hud-wireframe-decor"
-                  style={{ borderColor: themeColor }}
-                >
-                  <div className="wf-line"></div>
-                  <div className="wf-line"></div>
-                  <div className="wf-line"></div>
-                </div>
-              </motion.div>
-            )}
-
-            {activeTab === "METRICS" && (
-              <motion.div
-                key="t2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                key="anatomy"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
                 className="hud-metrics-container"
               >
-                <div className="hud-tag mb-2" style={{ color: themeColor }}>
-                  KUALITAS SPESIMEN 3D
-                </div>
-                {[
-                  {
-                    label: "KEUTUHAN FOSIL",
-                    val: extendedData.stats.completeness,
-                  },
-                  {
-                    label: "TINGKAT KELANGKAAN",
-                    val: extendedData.stats.rarity,
-                  },
-                  { label: "NILAI EDUKASI", val: extendedData.stats.value },
-                ].map((stat, i) => (
-                  <div className="metric-bar-group" key={i}>
-                    <div className="metric-info">
-                      <span>{stat.label}</span>
-                      <span>{stat.val}%</span>
-                    </div>
-                    <div className="metric-track">
-                      <div
-                        className="metric-fill"
-                        style={{
-                          width: `${stat.val}%`,
-                          backgroundColor: themeColor,
-                          boxShadow: `0 0 10px ${themeColor}`,
-                        }}
-                      ></div>
-                    </div>
+                <div className="metric-bar-group">
+                  <div className="metric-info">
+                    <span>STRUKTUR TULANG</span>
+                    <span>{extendedData.stats.completeness}%</span>
                   </div>
-                ))}
-              </motion.div>
-            )}
-
-            {activeTab === "LORE" && (
-              <motion.div
-                key="t3"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <div className="hud-data-row mb-3">
-                  <span className="lbl">TAHUN PENEMUAN</span>
-                  <span className="val">{extendedData.discoveryYear}</span>
+                  <div className="metric-track">
+                    <div
+                      className="metric-fill"
+                      style={{
+                        width: `${extendedData.stats.completeness}%`,
+                        backgroundColor: themeColor,
+                        boxShadow: `0 0 10px ${themeColor}`,
+                      }}
+                    ></div>
+                  </div>
                 </div>
-                <div
-                  className="hud-lore-box"
-                  style={{ borderLeftColor: themeColor }}
-                >
-                  <div className="lore-title">CATATAN PALEONTOLOGI</div>
-                  <p>"{extendedData.funFact}"</p>
+
+                <div className="metric-bar-group">
+                  <div className="metric-info">
+                    <span>KELANGKAAN SPESIMEN</span>
+                    <span>{extendedData.stats.rarity}%</span>
+                  </div>
+                  <div className="metric-track">
+                    <div
+                      className="metric-fill"
+                      style={{
+                        width: `${extendedData.stats.rarity}%`,
+                        backgroundColor: themeColor,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="metric-bar-group">
+                  <div className="metric-info">
+                    <span>AKURASI DATA</span>
+                    <span>{extendedData.stats.value}%</span>
+                  </div>
+                  <div className="metric-track">
+                    <div
+                      className="metric-fill"
+                      style={{
+                        width: `${extendedData.stats.value}%`,
+                        backgroundColor: themeColor,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="hud-wireframe-decor">
+                  <div className="wf-line" style={{ color: themeColor }}></div>
+                  <div className="wf-line" style={{ color: themeColor }}></div>
+                  <div className="wf-line" style={{ color: themeColor }}></div>
+                  <div className="wf-line" style={{ color: themeColor }}></div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="lore"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="hud-lore-box"
+                style={{ borderColor: themeColor }}
+              >
+                <div className="lore-title">CATATAN PALEONTOLOGI</div>
+                <p>{extendedData.funFact}</p>
+                <div className="hud-desc-box mt-3">
+                  <span className="lbl" style={{ fontSize: "0.7rem" }}>
+                    DITEMUKAN SEKITAR:
+                  </span>
+                  <div className="val">{extendedData.discoveryYear}</div>
                 </div>
               </motion.div>
             )}
@@ -483,28 +449,34 @@ const ModelViewer = () => {
         </div>
       </motion.aside>
 
-      {/* === 5. BOTTOM CAROUSEL (SIBLING THUMBNAILS) === */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="hud-bottom-carousel"
-      >
-        <div className="carousel-track">
-          {siblingItems.map((item, idx) => (
-            <div
-              key={idx}
-              className={`carousel-thumb ${item.name === activeItem.name ? "active" : ""}`}
-              onClick={() => setActiveItem(item)}
-              style={{ "--accent": themeColor }}
-            >
-              <img src={item.image} alt={item.name} />
-              <div className="thumb-overlay"></div>
-              <span className="thumb-name">{item.name}</span>
-            </div>
-          ))}
+      {/* === 5. BOTTOM CAROUSEL (SIBLING ITEMS) === */}
+      {siblingItems.length > 0 && (
+        <div className="hud-bottom-carousel">
+          <div className="carousel-track">
+            {siblingItems.map((sibling, idx) => (
+              <div
+                key={idx}
+                className={`carousel-thumb ${
+                  activeItem.name === sibling.name ? "active" : ""
+                }`}
+                style={{ "--accent": themeColor }}
+                onClick={() => setActiveItem(sibling)}
+              >
+                <img src={sibling.image} alt={sibling.name} />
+                <div className="thumb-overlay"></div>
+                <div className="thumb-name">{sibling.name}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      </motion.div>
+      )}
+
+      {/* --- CENTER RETICLE DECOR --- */}
+      <div className="hud-center-reticle" style={{ color: themeColor }}>
+        <div className="reticle-line h"></div>
+        <div className="reticle-line v"></div>
+        <div className="reticle-circle" style={{ borderColor: themeColor }}></div>
+      </div>
     </div>
   );
 };

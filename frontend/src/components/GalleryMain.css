@@ -57,10 +57,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 3rem;
+  padding: 1rem 3rem;
   border-bottom: 1px solid var(--border-subtle);
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
+}
+
+.nav-left-group {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.gallery-profile {
+  margin: 0;
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gallery-profile .nav-rank-badge-modern {
+  font-size: 0.75rem;
+  padding: 2px 12px;
+}
+
+.gallery-profile .nav-user-id-modern {
+  font-size: 0.7rem;
 }
 
 .btn-sys-back {

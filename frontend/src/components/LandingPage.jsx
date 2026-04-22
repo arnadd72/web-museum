@@ -168,7 +168,7 @@ const ModelTiltCard = ({ fossil, variants }) => {
 /* ======================================================== */
 /* MAIN COMPONENT: LANDING PAGE                             */
 /* ======================================================== */
-const LandingPage = ({ onStart, onTimeline }) => {
+const LandingPage = ({ onStart, onTimeline, userData }) => {
   const audioRef = useRef(null);
   const observerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -224,36 +224,6 @@ const LandingPage = ({ onStart, onTimeline }) => {
       radarPos: { top: "60%", left: "80%" },
     },
   ];
-
-  // RADAR & BIOMETRIK STATE
-  const [activeFossil, setActiveFossil] = useState(featuredFossils[0]);
-
-  // KUIS STATE
-  const [currentQ, setCurrentQ] = useState(0);
-  const [score, setScore] = useState(0);
-  const [quizFinished, setQuizFinished] = useState(false);
-  const [selectedOpt, setSelectedOpt] = useState(null);
-
-  const handleAnswer = (idx) => {
-    if (selectedOpt !== null) return;
-    setSelectedOpt(idx);
-    setTimeout(() => {
-      if (idx === quizQuestions[currentQ].answer) setScore(score + 1);
-      if (currentQ < quizQuestions.length - 1) {
-        setCurrentQ(currentQ + 1);
-        setSelectedOpt(null);
-      } else {
-        setQuizFinished(true);
-      }
-    }, 1000);
-  };
-
-  const resetQuiz = () => {
-    setCurrentQ(0);
-    setScore(0);
-    setQuizFinished(false);
-    setSelectedOpt(null);
-  };
 
   // ANIMASI SCROLL
   const { scrollYProgress } = useScroll();
@@ -342,20 +312,33 @@ const LandingPage = ({ onStart, onTimeline }) => {
       <nav className="navbar hud-nav animate-fade-down">
         <div className="logo-section">
           <div className="logo-symbol">JP</div>
-          <span className="logo-text">OS.JEJAKPURBA</span>
+          <div className="logo-main-brand">JEJAKPURBA</div>
+
+          {userData?.rank && (
+            <div className="nav-profile-stack">
+              <div className="nav-rank-badge-modern">{userData.rank}</div>
+              {userData?.name && (
+                <div className="nav-user-id-modern">
+                  <span className="status-dot-blink"></span>
+                  {userData.name.toUpperCase()}
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
         <div className="nav-links">
           <a href="#home" className="nav-link active">
-            DASHBOARD
+            BERANDA
           </a>
           <Link to="/era-geologi" className="nav-link">
-            TIMELINE
+            ERA ZAMAN
           </Link>
           <Link to="/gallery" className="nav-link">
-            DATABASE
+            ENSIKLOPEDIA
           </Link>
           <Link to="/visual-3d" className="nav-link">
-            RENDER 3D
+            VISUAL 3D
           </Link>
         </div>
       </nav>
@@ -394,7 +377,7 @@ const LandingPage = ({ onStart, onTimeline }) => {
             </p>
             <div className="cta-container justify-center">
               <button className="explore-btn" onClick={onStart}>
-                AKSES DATABASE
+                AKSES ENSIKLOPEDIA
               </button>
               <div className="play-btn-wrapper" onClick={onTimeline}>
                 <div className="play-icon">▶</div>
@@ -552,96 +535,83 @@ const LandingPage = ({ onStart, onTimeline }) => {
         </motion.div>
       </section>
 
-      {/* SECTION 3: QUIZ INTRO (EVALUASI) - REVAMP */}
-      <section className="quiz-intro-section">
-        <div className="quiz-intro-container">
-          <motion.div
-            className="quiz-split-layout"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* SISI KIRI: GAMBAR VISUAL */}
-            <div className="quiz-visual-side">
-              <div className="quiz-visual-frame">
+      {/* SECTION 4: KUIS PREVIEW (EVALUASI) - REVAMPED */}
+      <section className="quiz-section-revamp">
+        <div className="quiz-container-revamp">
+          <div className="quiz-split-layout">
+            {/* Visual Side */}
+            <motion.div
+              className="quiz-visual-side"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="quiz-image-wrapper">
                 <img
-                  src="/ImageModels/EraGeologi/foto-paleozoikum.jpg"
-                  alt="Aptitude Test Visual"
-                  className="quiz-image"
+                  src="/ImageModels/EraGeologi/1backgroundquiz.jpg"
+                  alt="Quiz Preview"
+                  className="quiz-main-img"
                 />
-                <div className="quiz-image-overlay"></div>
-                <div className="quiz-scanline"></div>
-                <div className="quiz-visual-badge blink">SYSTEM.READY</div>
+                <div className="image-scanline"></div>
+                <div className="image-overlay-tech"></div>
+                <div className="image-badge">LEVEL: EXPERT</div>
               </div>
-              {/* Ornamen Cyberpunk */}
-              <div className="quiz-decor-box top-left"></div>
-              <div className="quiz-decor-box bottom-right"></div>
-            </div>
+              <div className="quiz-decoration-elements">
+                <div className="decor-circle"></div>
+                <div className="decor-dots"></div>
+              </div>
+            </motion.div>
 
-            {/* SISI KANAN: KONTEN KUIS */}
-            <div className="quiz-content-side">
-              <div
-                className="header-tag flicker"
-                style={{ color: "var(--neon-green)", marginBottom: "1rem" }}
-              >
-                ▶ OTENTIKASI PENGETAHUAN
+            {/* Content Side */}
+            <motion.div
+              className="quiz-content-side"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="content-header">
+                <span className="system-tag">EVALUATION MODULE</span>
+                <h2 className="glitch-text" data-text="MODUL EVALUASI">
+                  MODUL <span className="accent">EVALUASI</span>
+                </h2>
               </div>
-              <h2 className="quiz-intro-title">
-                APTITUDE <span className="outline-text">TEST</span>
-              </h2>
-              <p className="quiz-intro-desc">
-                Untuk membuka batas keamanan protokol OS.JEJAKPURBA, sistem
-                membutuhkan verifikasi kapabilitas Anda. Buktikan pemahaman Anda
-                tentang prasejarah dan fungsionalitas sistem ini melalui modul
-                evaluasi interaktif.
+
+              <p className="quiz-description">
+                Uji kecerdasan dan pemahaman Anda tentang kronologi sejarah
+                bumi. Selesaikan tantangan kognitif ini untuk mendapatkan{" "}
+                <span className="highlight">E-CERTIFICATE </span>
+                yang dapat diunduh.
               </p>
 
-              <div className="quiz-stats-grid">
-                <div className="quiz-stat-box">
-                  <div className="stat-icon">❓</div>
-                  <div className="stat-text">
-                    <span className="stat-label">TIPE DATA</span>
-                    <span className="stat-value">MULTI-MODUL</span>
+              <div className="quiz-stats-mini">
+                <div className="stat-mini-item">
+                  <span className="stat-icon-tech">01</span>
+                  <div className="stat-info">
+                    <span className="stat-label">Total</span>
+                    <span className="stat-value">45 SOAL</span>
                   </div>
                 </div>
-                <div className="quiz-stat-box">
-                  <div className="stat-icon">⏱️</div>
-                  <div className="stat-text">
-                    <span className="stat-label">DURASI</span>
-                    <span className="stat-value">UNLIMITED</span>
-                  </div>
-                </div>
-                <div
-                  className="quiz-stat-box"
-                  style={{ borderColor: "var(--neon-green)" }}
-                >
-                  <div className="stat-icon">🔑</div>
-                  <div className="stat-text">
-                    <span
-                      className="stat-label"
-                      style={{ color: "var(--neon-green)" }}
-                    >
-                      REWARD
-                    </span>
-                    <span className="stat-value" style={{ color: "#fff" }}>
-                      ACCESS KEY
-                    </span>
+                <div className="stat-mini-item">
+                  <span className="stat-icon-tech">02</span>
+                  <div className="stat-info">
+                    <span className="stat-label">REWARD</span>
+                    <span className="stat-value">E-CERTIFICATE</span>
                   </div>
                 </div>
               </div>
 
-              <div className="quiz-action-wrapper">
-                <Link to="/quiz" className="quiz-init-btn">
-                  INISIASI EVALUASI SEKARANG ➔
-                  <span className="btn-glitch-effect"></span>
+              <div className="quiz-action-area">
+                <div className="security-check">
+                  <div className="check-dot"></div>
+                  <span>Daftarkan diri anda</span>
+                </div>
+                <Link to="/quiz" className="start-quiz-btn-revamp">
+                  MULAI OTENTIKASI SEKARANG
+                  <span className="btn-arrow">→</span>
                 </Link>
-                <span className="action-hint">
-                  Akses ditolak sebelum evaluasi selesai.
-                </span>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -696,8 +666,8 @@ const LandingPage = ({ onStart, onTimeline }) => {
             <div className="link-group">
               <h4>EKSPLORASI</h4>
               <a href="#home">Beranda</a>
-              <Link to="/era-geologi">Era Geologi</Link>
-              <Link to="/gallery">Galeri Fosil</Link>
+              <Link to="/era-geologi">Era Zaman</Link>
+              <Link to="/gallery">Ensiklopedia</Link>
             </div>
             <div className="link-group">
               <h4>TEKNOLOGI</h4>
@@ -707,10 +677,9 @@ const LandingPage = ({ onStart, onTimeline }) => {
             </div>
             <div className="link-group">
               <h4>TIM PENGEMBANG</h4>
-              <span>Fajrina Nurhaliza</span>
+              <span>Yesika Widiyanii</span>
               <span>Arvan Murbiyanto</span>
               <span>Arnanda Setya Nosa</span>
-              <span>Ihsan Nafis Hidayat</span>
             </div>
           </div>
         </div>

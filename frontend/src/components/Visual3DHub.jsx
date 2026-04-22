@@ -4,7 +4,7 @@ import "../App.css";
 import "./Visual3DHub.css";
 import { encyclopediaData } from "../data/encyclopediaData";
 
-const Visual3DHub = () => {
+const Visual3DHub = ({ userData }) => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,13 +69,29 @@ const Visual3DHub = () => {
       <div className="hub-grid-bg"></div>
       
       <nav className="hub-nav">
-        <Link to="/" className="hub-back-btn">
-          ← KEMBALI KE BERANDA
-        </Link>
-        <div className="hub-status">
-          <div className="status-dot"></div>
-          SYSTEM ONLINE
+        <div className="nav-left-group">
+          <Link to="/" className="hub-back-btn">
+            ← KEMBALI KE BERANDA
+          </Link>
+          <div className="hub-status">
+            <div className="status-dot"></div>
+            SYSTEM ONLINE // VISUAL_DATABASE
+          </div>
         </div>
+
+        {userData?.rank && (
+          <div className="nav-profile-stack gallery-profile">
+            <div className="nav-rank-badge-modern">
+              {userData.rank}
+            </div>
+            {userData?.name && (
+              <div className="nav-user-id-modern">
+                <span className="status-dot-blink"></span>
+                {userData.name.toUpperCase()}
+              </div>
+            )}
+          </div>
+        )}
       </nav>
 
       <main className="hub-content">

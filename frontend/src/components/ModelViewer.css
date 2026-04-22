@@ -83,6 +83,17 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
   pointer-events: none;
 }
+
+.nav-left-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  pointer-events: none;
+}
+
+.btn-hud-back, .hud-nav-status {
+  pointer-events: auto;
+}
 .btn-hud-back {
   pointer-events: auto;
   background: rgba(0, 0, 0, 0.5);
