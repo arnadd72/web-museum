@@ -158,13 +158,9 @@ export const encyclopediaData = {
       {
         title: "MIKROFOSIL",
         desc: "Sisa-sisa fosil kecil organisme purba.",
-<<<<<<< HEAD
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Nanoplankton-fossil-sediment_hg.jpg/330px-Nanoplankton-fossil-sediment_hg.jpg",
         galleryImage: "/ImageModels/EraGeologi/anomalocaris.jpg",
-=======
-        image: "/ImageModels/EraGeologi/backgroundquiz.jpg",
->>>>>>> a09cedd (quiz new)
         items: [
           {
             name: "GLOBIGERINELLA BULLODES",
