@@ -336,7 +336,7 @@ const LandingPage = ({ onStart, onTimeline }) => {
         )}
       </div>
 
-      <CyberChatbot dataFosil={featuredFossils} />
+      {/* <CyberChatbot dataFosil={featuredFossils} /> */}
 
       {/* NAVBAR */}
       <nav className="navbar hud-nav animate-fade-down">
@@ -742,7 +742,7 @@ const CyberChatbot = ({ dataFosil }) => {
 
   const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
   const genAI = new GoogleGenerativeAI(API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   useEffect(
     () => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }),

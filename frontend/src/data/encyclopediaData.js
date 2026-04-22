@@ -163,7 +163,7 @@ export const encyclopediaData = {
         desc: "Sisa-sisa fosil kecil organisme purba.",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Nanoplankton-fossil-sediment_hg.jpg/330px-Nanoplankton-fossil-sediment_hg.jpg",
-        galleryImage: "/ImageModels/EraGeologi/amphibian.jpg",
+        galleryImage: "/ImageModels/EraGeologi/anomalocaris.jpg",
         items: [
           {
             name: "GLOBIGERINELLA BULLODES",
