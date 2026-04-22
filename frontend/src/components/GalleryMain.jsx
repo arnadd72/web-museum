@@ -152,9 +152,15 @@ const GalleryMain = () => {
 
       {/* TOP NAVIGATION */}
       <nav className="gallery-top-nav">
-        <Link to="/" className="btn-sys-back">
-          <span className="arr">←</span> KELUAR ARSIP
-        </Link>
+        {selectedSubCategory ? (
+          <button onClick={handleBackToSub} className="btn-sys-back" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+             <span className="arr">←</span> KELUAR ARSIP
+          </button>
+        ) : (
+          <Link to="/" className="btn-sys-back">
+            <span className="arr">←</span> KELUAR ARSIP
+          </Link>
+        )}
         <div className="nav-sys-title">
           <span>
             {selectedSubCategory
@@ -297,7 +303,15 @@ const GalleryMain = () => {
               </div>
 
               {/* Carousel Center Area */}
-              <div className="coverflow-slider-container">
+              <motion.div 
+                className="coverflow-slider-container"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={(e, info) => {
+                  if (info.offset.x < -50) handleNextSub();
+                  if (info.offset.x > 50) handlePrevSub();
+                }}
+              >
                 <button className="cf-nav-btn left" onClick={handlePrevSub}>
                   &lt;
                 </button>
@@ -324,7 +338,13 @@ const GalleryMain = () => {
                       <div
                         key={idx}
                         className={`cf-card ${positionClass}`}
-                        onClick={() => setActiveSubIndex(idx)}
+                        onClick={() => {
+                          if (idx === activeSubIndex) {
+                            handleSubSelect(sub);
+                          } else {
+                            setActiveSubIndex(idx);
+                          }
+                        }}
                         style={{
                           borderColor:
                             positionClass === "cf-active"
@@ -332,7 +352,7 @@ const GalleryMain = () => {
                               : "transparent",
                         }}
                       >
-                        <img src={sub.image} alt={sub.title} />
+                        <img src={sub.image} alt={sub.title} draggable="false" />
                         <div className="cf-overlay"></div>
                         {positionClass === "cf-active" && (
                           <>
@@ -359,7 +379,7 @@ const GalleryMain = () => {
                 <button className="cf-nav-btn right" onClick={handleNextSub}>
                   &gt;
                 </button>
-              </div>
+              </motion.div>
 
               {/* Bottom Info Panel */}
               <motion.div

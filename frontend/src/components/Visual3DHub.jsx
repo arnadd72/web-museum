@@ -2,19 +2,15 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import "./Visual3DHub.css";
+import { encyclopediaData } from "../data/encyclopediaData";
 
 const Visual3DHub = () => {
   const navigate = useNavigate();
-  const [encyclopediaData, setEncyclopediaData] = useState(null);
   const [filter, setFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/encyclopedia')
-      .then(res => res.json())
-      .then(data => setEncyclopediaData(data))
-      .catch(console.error);
     window.scrollTo(0, 0);
   }, []);
 
@@ -72,17 +68,14 @@ const Visual3DHub = () => {
     <div className="hub-container">
       <div className="hub-grid-bg"></div>
       
-      {!encyclopediaData && (
-        <div style={{color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', position: 'absolute', width: '100%', zIndex: 999}}>
-           <h2>SINKRONISASI DATABASE...</h2>
-        </div>
-      )}
-      
-      <nav className="era-navbar">
-        <Link to="/" className="back-link">
+      <nav className="hub-nav">
+        <Link to="/" className="hub-back-btn">
           ← KEMBALI KE BERANDA
         </Link>
-        <div className="system-status">SYSTEM ONLINE</div>
+        <div className="hub-status">
+          <div className="status-dot"></div>
+          SYSTEM ONLINE
+        </div>
       </nav>
 
       <main className="hub-content">
