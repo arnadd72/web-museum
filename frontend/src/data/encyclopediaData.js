@@ -14,8 +14,7 @@ export const encyclopediaData = {
         desc: "Organisme lunak tanpa tulang belakang.",
         image:
           "https://image.idntimes.com/post/20250608/0.%20Restorasi%20arthropleura.jpg",
-        galleryImage:
-          "https://images.unsplash.com/photo-1551244072-5d12893278ab?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/anomalocaris.jpg",
         items: [
           {
             name: "AMMONITE",
@@ -164,8 +163,7 @@ export const encyclopediaData = {
         desc: "Sisa-sisa fosil kecil organisme purba.",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Nanoplankton-fossil-sediment_hg.jpg/330px-Nanoplankton-fossil-sediment_hg.jpg",
-        galleryImage:
-          "https://tse3.mm.bing.net/th/id/OIP.Tx6Ip2-_771ekLVxD1Af4wHaJl?rs=1&pid=ImgDetMain&o=7&rm=3",
+        galleryImage: "/ImageModels/EraGeologi/amphibian.jpg",
         items: [
           {
             name: "GLOBIGERINELLA BULLODES",
@@ -267,8 +265,7 @@ export const encyclopediaData = {
         desc: "Hewan dengan struktur tulang belakang.",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfAwvphvtkMHKKc2Wp0Biilz60lU6wLmH_IA&s",
-        galleryImage:
-          "https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/trex.jpg",
         items: [
           {
             name: "ALLOSAURUS",
@@ -442,7 +439,7 @@ export const encyclopediaData = {
               short:
                 "Dinosaurus pemangsa berukuran kecil, lincah, cerdas, dan tertutup bulu, terkenal dengan cakar sabit besar di kakinya.",
               full: "Velociraptor mongoliensis aslinya jauh lebih kecil daripada yang digambarkan di film, hanya seukuran kalkun besar. Fosilnya membuktikan bahwa mereka memiliki 'quill knobs' (benjolan tempat melekatnya bulu) di lengan, menegaskan bahwa mereka berbulu lebat seperti burung. Mereka adalah predator gurun yang ganas, menggunakan cakar sabit di kaki kedua untuk menusuk mangsa seperti Protoceratops. Mereka mungkin berburu sendiri atau dalam kelompok kecil.",
-              key: "Velociraptor sebenarnya kecil and berbulu, bukan raksasa seperti di film. Senjata utamanya adalah cakar melengkung di kaki, bukan gigitan.",
+              key: "Velociraptor sebenarnya kecil dan berbulu, bukan raksasa seperti di film. Senjata utamanya adalah cakar melengkung di kaki, bukan gigitan.",
             },
             details: {
               diet: "Karnivora",
@@ -471,8 +468,7 @@ export const encyclopediaData = {
         desc: "Sisa aktivitas (Trace Fossils).",
         image:
           "https://cdn.grid.id//crop/0x0:0x0/360x240/photo/2018/09/21/1585206829.jpg",
-        galleryImage:
-          "https://images.unsplash.com/photo-1518115392004-972f10b777a8?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/velociraptor.webp",
         items: [
           {
             name: "JEJAK T-REX",
@@ -550,8 +546,7 @@ export const encyclopediaData = {
         desc: "Organisme utuh dalam amber/es.",
         image:
           "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1634025439/01jatjwnnhdqartezvr6zbs9p6.jpg",
-        galleryImage:
-          "https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/amphibian.jpg",
         items: [
           {
             name: "DAUN PAKIS",
@@ -655,8 +650,7 @@ export const encyclopediaData = {
         desc: "Sisa tulang, gigi, and cangkang.",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUZmQmivoRDpHKjtsx_1RgqVpFs_M2N3kwkg&s",
-        galleryImage:
-          "https://images.unsplash.com/photo-1506197357087-d35b77f19736?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/smilodon.webp",
         items: [
           {
             name: "CAKAR VELOCIRAPTOR",
@@ -841,8 +835,7 @@ export const encyclopediaData = {
         desc: "Ledakan kehidupan laut purba.",
         image:
           "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1608281832/sp4i8vlqmegorxozvxce.jpg",
-        galleryImage:
-          "https://images.unsplash.com/photo-1464802686167-b939a67e06a1?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/1foto-paleozoikum.jpg",
         items: [
           {
             name: "ANOMALOCARIS",
@@ -948,7 +941,7 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Serangga terbang mirip capung dengan bentang sayap selebar tangan manusia dewasa, predator udara yang menguasai langit zaman Karbon.",
+                "Capung raksasa dengan bentang sayap selebar tangan manusia dewasa, predator udara yang menguasai langit zaman Karbon.",
               full: "Meganeura monyi adalah serangga mirip capung (Griffinfly) yang hidup di hutan rawa periode Karbon. Dengan bentang sayap mencapai 70 cm, ia adalah serangga terbesar yang pernah diketahui. Seperti capung modern, Meganeura adalah predator udara yang gesit, memangsa serangga lain and mungkin amfibi kecil. Ukurannya yang besar didukung oleh sistem pernapasan trakea yang efisien di atmosfer berkadar oksigen tinggi.",
               key: "Meganeura adalah serangga terbesar yang pernah hidup dengan bentang sayap sangat lebar. Ukurannya dimungkinkan oleh kadar oksigen tinggi di atmosfer purba.",
             },
@@ -1017,8 +1010,7 @@ export const encyclopediaData = {
         desc: "Zaman kejayaan reptil raksasa.",
         image:
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4-f90I9kDih-MYUYrWd2v455oWs2jgyfDQzorbMVDMFESo_Mg515wcwZ4L-XmdqMAuKjtCwKITZnxD4UW9hhowELsPhgc1pOpqpzm3n33Bo4fx2POyFDpiJ51mvACxZ5C0TqveOhuwiNr/s1600/Pengertian+Zaman+Mesozoikum.jpg",
-        galleryImage:
-          "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/1foto-mesozoikum.jpg",
         items: [
           {
             name: "ALLOSAURUS",
@@ -1400,8 +1392,7 @@ export const encyclopediaData = {
         desc: "Era mamalia and manusia.",
         image:
           "https://sijai.com/wp-content/uploads/2017/05/Zaman-Neozoikum-perjuanganislami.blogspot.co_.id_.jpg",
-        galleryImage:
-          "https://images.unsplash.com/photo-1469474099711-423907a78e4d?q=80&w=2000&auto=format&fit=crop",
+        galleryImage: "/ImageModels/EraGeologi/1foto-kenozoikum.jpg",
         items: [
           {
             name: "PARACERATHERIUM",
