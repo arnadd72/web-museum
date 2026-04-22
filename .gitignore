@@ -9,3 +9,4 @@ __pycache__/
 # Abaikan folder upload dan file sistem
 uploads/
 .DS_Store
+.env

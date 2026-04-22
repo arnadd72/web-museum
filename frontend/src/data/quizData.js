@@ -10,7 +10,7 @@ export const quizData = [
             "d": "Trilobite"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/anomalocaris.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Nautilus_belauensis_from_Palau.jpg"
     },
     {
         "id": 2,
@@ -23,7 +23,7 @@ export const quizData = [
             "d": "Echinodermata"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/8/85/Sponges_in_Caribbean_Sea%2C_Cayman_Islands.jpg"
     },
     {
         "id": 3,
@@ -36,7 +36,7 @@ export const quizData = [
             "d": "Star Fish (Bintang Laut)"
         },
         "jawaban_benar": "d",
-        "visual": "/ImageModels/EraGeologi/anomalocaris.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Starfish_montage.png"
     },
     {
         "id": 4,
@@ -49,7 +49,7 @@ export const quizData = [
             "d": "Cyanobacteria"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/amphibian.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/1/1c/PSM_V44_D483_Globigerina_ooze.jpg"
     },
     {
         "id": 5,
@@ -62,7 +62,7 @@ export const quizData = [
             "d": "Coccolithophore"
         },
         "jawaban_benar": "d",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/3/33/Coccolithus_pelagicus.jpg"
     },
     {
         "id": 6,
@@ -75,7 +75,7 @@ export const quizData = [
             "d": "Carnotaurus"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/allosaurus.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/5/56/WLA_hmns_Allosaurus_White_Background.jpg"
     },
     {
         "id": 7,
@@ -88,7 +88,7 @@ export const quizData = [
             "d": "Mosasaurus"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/anomalocaris.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Coelacanth_off_Pumula_on_the_KwaZulu-Natal_South_Coast%2C_South_Africa%2C_on_22_November_2019.png"
     },
     {
         "id": 8,
@@ -101,7 +101,7 @@ export const quizData = [
             "d": "Buaya Muara"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/amphibian.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/f/f5/202306_Varanus_komodoensis.jpg"
     },
     {
         "id": 9,
@@ -114,7 +114,7 @@ export const quizData = [
             "d": "Pterodactylus"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/velociraptor.webp"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Velociraptor_skeleton_white_background.jpg"
     },
     {
         "id": 10,
@@ -127,7 +127,7 @@ export const quizData = [
             "d": "Pteranodon"
         },
         "jawaban_benar": "d",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/7/77/Pteranodon_amnh_martyniuk.jpg"
     },
     {
         "id": 11,
@@ -140,7 +140,7 @@ export const quizData = [
             "d": "Allosaurus"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/trex.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/9/94/Tyrannosaurus_Rex_Holotype.jpg"
     },
     {
         "id": 12,
@@ -153,7 +153,7 @@ export const quizData = [
             "d": "Deinonychus"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/velociraptor.webp"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Velociraptor_skeleton_white_background.jpg"
     },
     {
         "id": 13,
@@ -166,7 +166,7 @@ export const quizData = [
             "d": "Ganggang Laut"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/4/47/The_ferns_of_Great_Britain%2C_and_their_allies_the_club-mosses%2C_pepperworts%2C_and_horsetails_%28Pl._2%29_%288515393495%29.jpg"
     },
     {
         "id": 14,
@@ -179,7 +179,7 @@ export const quizData = [
             "d": "Fosil Cetakan"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Polished_slice_of_petrified_wood.jpg"
     },
     {
         "id": 15,
@@ -192,7 +192,7 @@ export const quizData = [
             "d": "Khroma"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/mammoth.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/9/90/Lyuba.jpg"
     },
     {
         "id": 16,
@@ -205,7 +205,7 @@ export const quizData = [
             "d": "Mutiara Purba"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/anomalocaris.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Aedes_aegypti.jpg"
     },
     {
         "id": 17,
@@ -218,7 +218,7 @@ export const quizData = [
             "d": "Bivalvia"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/0/07/Passaloteuthis_bisulcata.JPG"
     },
     {
         "id": 18,
@@ -231,7 +231,7 @@ export const quizData = [
             "d": "Gigi Megalodon"
         },
         "jawaban_benar": "d",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Megalodon_jaw%2C_Tellus_Science_Museum.jpg"
     },
     {
         "id": 19,
@@ -244,7 +244,7 @@ export const quizData = [
             "d": "Hyaenodon"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/smilodon.webp"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/9/94/Smilodon_populator_fossil%2C_Tellus_Science_Museum_1.jpg"
     },
     {
         "id": 20,
@@ -257,7 +257,7 @@ export const quizData = [
             "d": "Unta Kutub"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-kenozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Irish_Elk_Side_%28white_background%29.jpg"
     },
     {
         "id": 21,
@@ -270,7 +270,7 @@ export const quizData = [
             "d": "Pachycephalosaurus"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/f/f2/FMNH_Parasaurolophus_fossil.jpg"
     },
     {
         "id": 22,
@@ -283,7 +283,7 @@ export const quizData = [
             "d": "Ammonite"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/anomalocaris.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Anomalocaris_canadensis_%28TMP_2023.003.0003%29%2C_Royal_Tyrrell_Museum%2C_Drumheller%2C_Alberta%2C_2025-07-13.jpg"
     },
     {
         "id": 23,
@@ -296,7 +296,7 @@ export const quizData = [
             "d": "Mosasaurus"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Dimetrodon_incisivum_01.jpg"
     },
     {
         "id": 24,
@@ -309,7 +309,7 @@ export const quizData = [
             "d": "Lipan Prasejarah"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Arthropleura_sp._MNHN.F.SOT002122.jpg"
     },
     {
         "id": 25,
@@ -322,7 +322,7 @@ export const quizData = [
             "d": "Plesiosaurus"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/anomalocaris.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Dunkleosteus_terrelli_%28fossil_fish%29_%28Cleveland_Shale_Member%2C_Ohio_Shale%2C_Upper_Devonian%3B_Rocky_River_Valley%2C_Cleveland%2C_Ohio%2C_USA%29_21_%2834001200911%29.jpg"
     },
     {
         "id": 26,
@@ -335,7 +335,7 @@ export const quizData = [
             "d": "Kalajengking Udara"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Meganeura_monyi_MNHN_R51142_1.jpg"
     },
     {
         "id": 27,
@@ -348,7 +348,7 @@ export const quizData = [
             "d": "Plesiosaurus"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Ophthalmosaurus_icenicus_updated_reconstruction.png"
     },
     {
         "id": 28,
@@ -361,7 +361,7 @@ export const quizData = [
             "d": "Quetzalcoatlus"
         },
         "jawaban_benar": "d",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/2/27/Quetzalcoatlus_northropi.jpg"
     },
     {
         "id": 29,
@@ -374,7 +374,7 @@ export const quizData = [
             "d": "Brachiosaurus"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Ankylosaur_head_-_cast_-_Custer_County_Montana_-_Museum_of_the_Rockies_-_2013-07-08.jpg"
     },
     {
         "id": 30,
@@ -387,7 +387,7 @@ export const quizData = [
             "d": "Elasmotherium"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/foto-kenozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%9F%D0%B0%D0%BB%D0%B5%D0%BE%D0%BD%D1%82%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D0%B0_%2820221008151051%29.jpg"
     },
     {
         "id": 31,
@@ -400,7 +400,7 @@ export const quizData = [
             "d": "Mutiara Belemnite"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/2/26/Malawi_Agate_%28Malawi%2C_southeastern_Africa%29_%2832734668126%29.jpg"
     },
     {
         "id": 32,
@@ -413,7 +413,7 @@ export const quizData = [
             "d": "Diatom silika"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/amphibian.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/1/1c/PSM_V44_D483_Globigerina_ooze.jpg"
     },
     {
         "id": 33,
@@ -426,7 +426,7 @@ export const quizData = [
             "d": "Mengubur seluruh tubuhnya ke dalam pasir dalam hitungan detik"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Trilobita_Diversity.png"
     },
     {
         "id": 34,
@@ -439,7 +439,7 @@ export const quizData = [
             "d": "Star fish (Bintang laut)"
         },
         "jawaban_benar": "d",
-        "visual": "/ImageModels/EraGeologi/anomalocaris.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Starfish_montage.png"
     },
     {
         "id": 35,
@@ -452,7 +452,7 @@ export const quizData = [
             "d": "Alat berburu untuk menakuti mangsa herbivora kecil"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/1/12/DilophosaurusROM1.JPG"
     },
     {
         "id": 36,
@@ -465,7 +465,7 @@ export const quizData = [
             "d": "Rahang Penghancur Karang bawah laut"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Platecarpus_planifrons_Clean.png"
     },
     {
         "id": 37,
@@ -478,7 +478,7 @@ export const quizData = [
             "d": "Ia bisa berdiri sempurna hanya menggunakan dua kaki belakangnya"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Brachiosaurus_mount.jpg"
     },
     {
         "id": 38,
@@ -491,7 +491,7 @@ export const quizData = [
             "d": "Megalosaurus"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/f/f0/FSAC-KK-11888.jpg"
     },
     {
         "id": 39,
@@ -504,7 +504,7 @@ export const quizData = [
             "d": "Menggali liang dalam di tanah beku sebagai tempat berlindung saat badai"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/mammoth.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Siegsdorfer_Mammut.jpg"
     },
     {
         "id": 40,
@@ -517,7 +517,7 @@ export const quizData = [
             "d": "Sekepal batu bata seberat 2 kilogram"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Journal.pone.0138352.g001A.jpg"
     },
     {
         "id": 41,
@@ -530,7 +530,7 @@ export const quizData = [
             "d": "Marga Predator 'Therocephalian'"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Inostrancevia_alexandri_-_MUSE.jpg"
     },
     {
         "id": 42,
@@ -543,7 +543,7 @@ export const quizData = [
             "d": "Taktik mengiris bersih daging tanpa menyentuh tulang (Slicing)"
         },
         "jawaban_benar": "c",
-        "visual": "/ImageModels/EraGeologi/trex.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/9/94/Tyrannosaurus_Rex_Holotype.jpg"
     },
     {
         "id": 43,
@@ -556,7 +556,7 @@ export const quizData = [
             "d": "Dinosaurus Ankylosaurus"
         },
         "jawaban_benar": "a",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/e/ec/LA-Triceratops_mount-2.jpg"
     },
     {
         "id": 44,
@@ -569,7 +569,7 @@ export const quizData = [
             "d": "Echinodermata Penyaring Bawah Pasir"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-paleozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Terebratalia_transversa_141510036.jpg"
     },
     {
         "id": 45,
@@ -582,6 +582,6 @@ export const quizData = [
             "d": "Jejak Cakar Berat Ankylosauria Berzirah"
         },
         "jawaban_benar": "b",
-        "visual": "/ImageModels/EraGeologi/foto-mesozoikum.jpg"
+        "visual": "https://upload.wikimedia.org/wikipedia/commons/4/42/JialingpusYuechiensis%28Ichnite%29-PaleozoologicalMuseumOfChina-May23-08.jpg"
     }
 ];

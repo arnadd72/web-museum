@@ -2,6 +2,10 @@ import os
 import mysql.connector
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+# Load variabel environment dari file .env
+load_dotenv()
 
 # Arahkan ke folder hasil build React
 app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
@@ -15,10 +19,10 @@ def serve_frontend():
 def get_data():
     try:
         db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="museum_digital"
+            host=os.getenv("DB_HOST", "localhost"),
+            user=os.getenv("DB_USER", "root"),
+            password=os.getenv("DB_PASS", ""),
+            database=os.getenv("DB_NAME", "museum_digital")
         )
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM models")
@@ -45,10 +49,10 @@ def get_data():
 def get_encyclopedia():
     try:
         db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="museum_digital"
+            host=os.getenv("DB_HOST", "localhost"),
+            user=os.getenv("DB_USER", "root"),
+            password=os.getenv("DB_PASS", ""),
+            database=os.getenv("DB_NAME", "museum_digital")
         )
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM models")
