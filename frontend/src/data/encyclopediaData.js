@@ -929,7 +929,7 @@ export const encyclopediaData = {
             name: "MEGANEURA",
             modelPath: "/models/geologi/era_paleozoikum/meganeura.glb",
             image:
-              "https://cdn.rri.co.id/berita/Bengkulu/o/1761752463317-01/4wfu9532zwn2g8u.jpeg",
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkspHJnRrRvRBvObxlyzBGwvDr9F1H4birvQ&s",
             period: "Paleozoikum (Karbon)",
             status: "PUNAH",
             description: {
