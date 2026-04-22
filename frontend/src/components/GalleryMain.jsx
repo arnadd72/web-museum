@@ -279,7 +279,7 @@ const GalleryMain = () => {
               <div className="coverflow-bg-wrapper">
                 <motion.img
                   key={`bg-${activeSubData.title}`}
-                  src={activeSubData.image}
+                  src={activeSubData.galleryImage || activeSubData.image}
                   className="coverflow-bg-img"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.3 }}
@@ -352,7 +352,7 @@ const GalleryMain = () => {
                               : "transparent",
                         }}
                       >
-                        <img src={sub.image} alt={sub.title} draggable="false" />
+                        <img src={sub.galleryImage || sub.image} alt={sub.title} draggable="false" />
                         <div className="cf-overlay"></div>
                         {positionClass === "cf-active" && (
                           <>

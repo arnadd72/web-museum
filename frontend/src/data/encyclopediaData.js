@@ -14,6 +14,8 @@ export const encyclopediaData = {
         desc: "Organisme lunak tanpa tulang belakang.",
         image:
           "https://image.idntimes.com/post/20250608/0.%20Restorasi%20arthropleura.jpg",
+        galleryImage:
+          "https://images.unsplash.com/photo-1551244072-5d12893278ab?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "AMMONITE",
@@ -162,6 +164,8 @@ export const encyclopediaData = {
         desc: "Sisa-sisa fosil kecil organisme purba.",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Nanoplankton-fossil-sediment_hg.jpg/330px-Nanoplankton-fossil-sediment_hg.jpg",
+        galleryImage:
+          "https://tse3.mm.bing.net/th/id/OIP.Tx6Ip2-_771ekLVxD1Af4wHaJl?rs=1&pid=ImgDetMain&o=7&rm=3",
         items: [
           {
             name: "GLOBIGERINELLA BULLODES",
@@ -263,6 +267,8 @@ export const encyclopediaData = {
         desc: "Hewan dengan struktur tulang belakang.",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfAwvphvtkMHKKc2Wp0Biilz60lU6wLmH_IA&s",
+        galleryImage:
+          "https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "ALLOSAURUS",
@@ -436,7 +442,7 @@ export const encyclopediaData = {
               short:
                 "Dinosaurus pemangsa berukuran kecil, lincah, cerdas, dan tertutup bulu, terkenal dengan cakar sabit besar di kakinya.",
               full: "Velociraptor mongoliensis aslinya jauh lebih kecil daripada yang digambarkan di film, hanya seukuran kalkun besar. Fosilnya membuktikan bahwa mereka memiliki 'quill knobs' (benjolan tempat melekatnya bulu) di lengan, menegaskan bahwa mereka berbulu lebat seperti burung. Mereka adalah predator gurun yang ganas, menggunakan cakar sabit di kaki kedua untuk menusuk mangsa seperti Protoceratops. Mereka mungkin berburu sendiri atau dalam kelompok kecil.",
-              key: "Velociraptor sebenarnya kecil dan berbulu, bukan raksasa seperti di film. Senjata utamanya adalah cakar melengkung di kaki, bukan gigitan.",
+              key: "Velociraptor sebenarnya kecil and berbulu, bukan raksasa seperti di film. Senjata utamanya adalah cakar melengkung di kaki, bukan gigitan.",
             },
             details: {
               diet: "Karnivora",
@@ -465,6 +471,8 @@ export const encyclopediaData = {
         desc: "Sisa aktivitas (Trace Fossils).",
         image:
           "https://cdn.grid.id//crop/0x0:0x0/360x240/photo/2018/09/21/1585206829.jpg",
+        galleryImage:
+          "https://images.unsplash.com/photo-1518115392004-972f10b777a8?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "JEJAK T-REX",
@@ -542,6 +550,8 @@ export const encyclopediaData = {
         desc: "Organisme utuh dalam amber/es.",
         image:
           "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1634025439/01jatjwnnhdqartezvr6zbs9p6.jpg",
+        galleryImage:
+          "https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "DAUN PAKIS",
@@ -624,7 +634,7 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Serangga kecil yang terperangkap dan mati di dalam getah pohon yang mengeras, tubuhnya terawetkan utuh dalam 'peti mati' emas transparan.",
+                "Serangga kecil yang terperangkap and mati di dalam getah pohon yang mengeras, tubuhnya terawetkan utuh dalam 'peti mati' emas transparan.",
               full: "Amber adalah getah pohon purba (resin) yang telah memfosil. Seringkali, serangga atau hewan kecil terjebak di dalam getah lengket ini saat masih cair. Ketika getah mengeras dan mengalami proses polimerisasi selama jutaan tahun, tubuh hewan di dalamnya terisolasi dari udara dan bakteri pembusuk, sehingga terawetkan dengan detail tiga dimensi yang sempurna. Amber menjadi kapsul waktu yang menyimpan ekosistem hutan purba.",
               key: "Nyamuk Amber populer di film fiksi ilmiah, namun mengekstraksi DNA dari fosil ini sangatlah sulit dan belum terbukti berhasil.",
             },
@@ -642,9 +652,11 @@ export const encyclopediaData = {
       },
       {
         title: "FOSIL TUBUH",
-        desc: "Sisa tulang, gigi, dan cangkang.",
+        desc: "Sisa tulang, gigi, and cangkang.",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUZmQmivoRDpHKjtsx_1RgqVpFs_M2N3kwkg&s",
+        galleryImage:
+          "https://images.unsplash.com/photo-1506197357087-d35b77f19736?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "CAKAR VELOCIRAPTOR",
@@ -657,7 +669,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Fosil cakar kaki melengkung tajam berbentuk sabit, senjata utama dinosaurus raptor untuk menusuk dan mencengkeram mangsanya.",
-              full: "Ini adalah fosil 'Terrible Claw' atau cakar pembunuh yang menjadi ciri khas dinosaurus Dromaeosaurid seperti Velociraptor dan Deinonychus. Cakar ini terletak di jari kaki kedua dan memiliki persendian khusus yang memungkinkannya ditarik ke atas (retractable) saat berjalan dan diayunkan ke bawah dengan kekuatan besar saat menyerang. Bentuknya yang melengkung dan tajam dirancang untuk menembus kulit tebal mangsa atau memanjat tubuh dinosaurus yang lebih besar.",
+              full: "Ini adalah fosil 'Terrible Claw' atau cakar pembunuh yang menjadi ciri khas dinosaurus Dromaeosaurid seperti Velociraptor and Deinonychus. Cakar ini terletak di jari kaki kedua and memiliki persendian khusus yang memungkinkannya ditarik ke atas (retractable) saat berjalan and diayunkan ke bawah dengan kekuatan besar saat menyerang. Bentuknya yang melengkung and tajam dirancang untuk menembus kulit tebal mangsa atau memanjat tubuh dinosaurus yang lebih besar.",
               key: "Cakar Velociraptor adalah adaptasi evolusioner yang mengubah kaki menjadi senjata ofensif yang mematikan.",
             },
             details: {
@@ -681,8 +693,8 @@ export const encyclopediaData = {
             description: {
               short:
                 "Bagian dalam cangkang keras berbentuk peluru dari hewan laut purba mirip cumi-cumi, sering ditemukan melimpah di batuan sedimen.",
-              full: "Belemnite adalah ordo cephalopoda punah yang hidup pada era Mesozoikum. Fosil yang umum ditemukan adalah bagian 'rostrum' atau 'guard', yaitu struktur internal keras berbentuk seperti peluru yang berfungsi sebagai penyeimbang berat tubuh agar hewan ini bisa berenang lurus secara horizontal. Bagian tubuh lunaknya mirip cumi-cumi modern dengan tentakel berkait (bukan pengisap) dan kantung tinta.",
-              key: "Belemnite sangat umum ditemukan di batuan Jura dan Kapur, sering dijadikan fosil indeks dan indikator suhu laut purba.",
+              full: "Belemnite adalah ordo cephalopoda punah yang hidup pada era Mesozoikum. Fosil yang umum ditemukan adalah bagian 'rostrum' atau 'guard', yaitu struktur internal keras berbentuk seperti peluru yang berfungsi sebagai penyeimbang berat tubuh agar hewan ini bisa berenang lurus secara horizontal. Bagian tubuh lunaknya mirip cumi-cumi modern dengan tentakel berkait (bukan pengisap) and kantung tinta.",
+              key: "Belemnite sangat umum ditemukan di batuan Jura and Kapur, sering dijadikan fosil indeks and indikator suhu laut purba.",
             },
             details: {
               diet: "Karnivora",
@@ -703,8 +715,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Gigi fosil berukuran raksasa, berbentuk segitiga dan bergerigi tajam, satu-satunya sisa yang tertinggal dari hiu terbesar sepanjang masa.",
-              full: "Megalodon (Otodus megalodon) adalah hiu terbesar yang pernah meneror lautan. Karena kerangka hiu terbuat dari tulang rawan yang mudah hancur, gigi adalah satu-satunya bagian tubuh yang umum memfosil. Gigi ini bisa mencapai ukuran diagonal lebih dari 18 cm, dengan tepi bergerigi halus seperti gergaji untuk memotong daging paus dan mamalia laut besar lainnya. Ukuran gigi ini mengindikasikan kekuatan gigitan yang mencapai 180.000 Newton.",
+                "Gigi fosil berukuran raksasa, berbentuk segitiga and bergerigi tajam, satu-satunya sisa yang tertinggal dari hiu terbesar sepanjang masa.",
+              full: "Megalodon (Otodus megalodon) adalah hiu terbesar yang pernah meneror lautan. Karena kerangka hiu terbuat dari tulang rawan yang mudah hancur, gigi adalah satu-satunya bagian tubuh yang umum memfosil. Gigi ini bisa mencapai ukuran diagonal lebih dari 18 cm, dengan tepi bergerigi halus seperti gergaji untuk memotong daging paus and mamalia laut besar lainnya. Ukuran gigi ini mengindikasikan kekuatan gigitan yang mencapai 180.000 Newton.",
               key: "Gigi Megalodon adalah gigi terbesar di dunia hewan, simbol kekuatan predator puncak lautan purba.",
             },
             details: {
@@ -728,7 +740,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Tengkorak macan purba dengan sepasang gigi taring atas yang sangat panjang seperti pedang, rahangnya bisa membuka sangat lebar.",
-              full: "Tengkorak Smilodon fatalis memperlihatkan adaptasi predator yang sangat spesifik. Taring 'saber' (pedang) yang panjangnya bisa mencapai 28 cm ini sebenarnya cukup rapuh terhadap tekanan samping. Oleh karena itu, Smilodon memiliki struktur rahang yang bisa membuka hingga 120 derajat dan otot leher yang sangat kuat untuk menancapkan taringnya ke leher mangsa yang sudah dilumpuhkan, memutus pembuluh darah utama dengan presisi bedah.",
+              full: "Tengkorak Smilodon fatalis memperlihatkan adaptasi predator yang sangat spesifik. Taring 'saber' (pedang) yang panjangnya bisa mencapai 28 cm ini sebenarnya cukup rapuh terhadap tekanan samping. Oleh karena itu, Smilodon memiliki struktur rahang yang bisa membuka hingga 120 derajat and otot leher yang sangat kuat untuk menancapkan taringnya ke leher mangsa yang sudah dilumpuhkan, memutus pembuluh darah utama dengan presisi bedah.",
               key: "Smilodon adalah ikon predator Zaman Es yang menunjukkan spesialisasi evolusi berburu yang ekstrem.",
             },
             details: {
@@ -751,8 +763,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Tengkorak kokoh dengan rahang yang sangat kuat dan gigi berbentuk pisang yang tebal, didesain untuk meremukkan tulang mangsa.",
-              full: "Tengkorak Tyrannosaurus rex berbeda dari theropoda lain karena bentuknya yang lebar di bagian belakang, memberikan penglihatan binokular (kedalaman visual) yang sangat baik. Tulang tengkoraknya menyatu dan sangat tebal untuk menahan gaya gigitan yang ekstrem. Giginya tidak pipih dan tajam untuk mengiris, melainkan tebal dan bulat seperti pasak besi, dirancang untuk menusuk dan menghancurkan tulang (osteophagy) mangsanya hingga hancur.",
+                "Tengkorak kokoh dengan rahang yang sangat kuat and gigi berbentuk pisang yang tebal, didesain untuk meremukkan tulang mangsa.",
+              full: "Tengkorak Tyrannosaurus rex berbeda dari theropoda lain karena bentuknya yang lebar di bagian belakang, memberikan penglihatan binokular (kedalaman visual) yang sangat baik. Tulang tengkoraknya menyatu and sangat tebal untuk menahan gaya gigitan yang ekstrem. Giginya tidak pipih and tajam untuk mengiris, melainkan tebal and bulat seperti pasak besi, dirancang untuk menusuk and menghancurkan tulang (osteophagy) mangsanya hingga hancur.",
               key: "Tengkorak T-Rex memiliki struktur pemangsa paling mematikan dengan kekuatan gigitan terkuat di antara hewan darat yang pernah ada.",
             },
             details: {
@@ -775,9 +787,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Fosil gigi geraham besar dengan permukaan kasar dari Megaloceros, digunakan untuk mengunyah rumput dan vegetasi keras di padang es.",
-              full: "Gigi ini milik Megaloceros giganteus (Rusa Raksasa Irlandia), rusa terbesar yang pernah hidup. Struktur giginya yang tinggi dan bergelombang (hypsodont) menunjukkan adaptasi khusus untuk memakan rumput yang keras dan abrasif di lingkungan stepa terbuka Zaman Es. Gigi ini harus sangat kuat untuk memproses volume makanan yang besar guna menopang tubuh raksasa dan pertumbuhan tanduk masif mereka setiap tahunnya.",
-              key: "Gigi Rusa Raksasa ini memberikan petunjuk tentang pola makan dan lingkungan hidup megafauna Pleistosen.",
+                "Fosil gigi geraham besar dengan permukaan kasar dari Megaloceros, digunakan untuk mengunyah rumput and vegetasi keras di padang es.",
+              full: "Gigi ini milik Megaloceros giganteus (Rusa Raksasa Irlandia), rusa terbesar yang pernah hidup. Struktur giginya yang tinggi and bergelombang (hypsodont) menunjukkan adaptasi khusus untuk memakan rumput yang keras and abrasif di lingkungan stepa terbuka Zaman Es. Gigi ini harus sangat kuat untuk memproses volume makanan yang besar guna menopang tubuh raksasa and pertumbuhan tanduk masif mereka setiap tahunnya.",
+              key: "Gigi Rusa Raksasa ini memberikan petunjuk tentang pola makan and lingkungan hidup megafauna Pleistosen.",
             },
             details: {
               diet: "Herbivora",
@@ -798,9 +810,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Salah satu tengkorak terbesar hewan darat, dilengkapi paruh keras, tiga tanduk tajam, dan tameng leher tulang yang kokoh.",
-              full: "Tengkorak Triceratops adalah mahakarya pertahanan alam. Panjangnya bisa mencapai 2,5 meter, hampir sepertiga panjang tubuhnya. Paruh di bagian depan sangat kuat untuk mematahkan dahan tanaman keras. Tiga tanduknya digunakan untuk bertarung sesama pejantan atau melawan predator. Tameng leher (frill) yang terbuat dari tulang padat berfungsi melindungi leher dari gigitan dan tempat melekatnya otot rahang yang kuat.",
-              key: "Tengkorak Triceratops sering ditemukan memfosil secara utuh karena struktur tulangnya yang sangat tebal dan keras.",
+                "Salah satu tengkorak terbesar hewan darat, dilengkapi paruh keras, tiga tanduk tajam, and tameng leher tulang yang kokoh.",
+              full: "Tengkorak Triceratops adalah mahakarya pertahanan alam. Panjangnya bisa mencapai 2,5 meter, hampir sepertiga panjang tubuhnya. Paruh di bagian depan sangat kuat untuk mematahkan dahan tanaman keras. Tiga tanduknya digunakan untuk bertarung sesama pejantan atau melawan predator. Tameng leher (frill) yang terbuat dari tulang padat berfungsi melindungi leher dari gigitan and tempat melekatnya otot rahang yang kuat.",
+              key: "Tengkorak Triceratops sering ditemukan memfosil secara utuh karena struktur tulangnya yang sangat tebal and keras.",
             },
             details: {
               diet: "Herbivora",
@@ -829,6 +841,8 @@ export const encyclopediaData = {
         desc: "Ledakan kehidupan laut purba.",
         image:
           "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1608281832/sp4i8vlqmegorxozvxce.jpg",
+        galleryImage:
+          "https://images.unsplash.com/photo-1464802686167-b939a67e06a1?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "ANOMALOCARIS",
@@ -840,8 +854,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Predator laut raksasa pertama di bumi dari zaman Kambrium, memiliki mata majemuk besar dan sepasang lengan berduri di dekat mulut untuk menangkap mangsa.",
-              full: "Anomalocaris ('Udang Aneh') adalah penguasa lautan Kambrium sekitar 500 juta tahun lalu. Dengan panjang mencapai 1 meter, ia adalah raksasa di zamannya. Hewan ini memiliki tubuh bersegmen dengan sirip samping untuk berenang, mulut berbentuk cincin yang unik untuk meremukkan mangsa bercangkang lunak, dan sepasang lengan berduri untuk menyambar trilobita. Mata majemuknya sangat canggih, memberinya penglihatan tajam sebagai pemburu visual.",
+                "Predator laut raksasa pertama di bumi dari zaman Kambrium, memiliki mata majemuk besar and sepasang lengan berduri di dekat mulut untuk menangkap mangsa.",
+              full: "Anomalocaris ('Udang Aneh') adalah penguasa lautan Kambrium sekitar 500 juta tahun lalu. Dengan panjang mencapai 1 meter, ia adalah raksasa di zamannya. Hewan ini memiliki tubuh bersegmen dengan sirip samping untuk berenang, mulut berbentuk cincin yang unik untuk meremukkan mangsa bercangkang lunak, and sepasang lengan berduri untuk menyambar trilobita. Mata majemuknya sangat canggih, memberinya penglihatan tajam sebagai pemburu visual.",
               key: "Anomalocaris merupakan predator puncak (apex predator) pertama yang diketahui dalam sejarah evolusi hewan.",
             },
             details: {
@@ -863,8 +877,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Reptil purba berkaki empat dengan layar besar di punggungnya, hidup jauh sebelum dinosaurus dan sebenarnya lebih berkerabat dekat dengan mamalia.",
-              full: "Dimetrodon sering dikira dinosaurus, padahal ia adalah Pelycosaur (Synapsida) yang hidup pada periode Permian, jutaan tahun sebelum dinosaurus pertama muncul. Ciri khasnya adalah layar punggung tinggi yang dibentuk oleh perpanjangan tulang belakang. Layar ini kaya akan pembuluh darah dan berfungsi sebagai alat termoregulasi canggih—menyerap panas matahari di pagi hari agar ia bisa aktif berburu lebih cepat daripada mangsanya.",
+                "Reptil purba berkaki empat dengan layar besar di punggungnya, hidup jauh sebelum dinosaurus and sebenarnya lebih berkerabat dekat dengan mamalia.",
+              full: "Dimetrodon sering dikira dinosaurus, padahal ia adalah Pelycosaur (Synapsida) yang hidup pada periode Permian, jutaan tahun sebelum dinosaurus pertama muncul. Ciri khasnya adalah layar punggung tinggi yang dibentuk oleh perpanjangan tulang belakang. Layar ini kaya akan pembuluh darah and berfungsi sebagai alat termoregulasi canggih—menyerap panas matahari di pagi hari agar ia bisa aktif berburu lebih cepat daripada mangsanya.",
               key: "Dimetrodon bukan dinosaurus, melainkan kerabat awal mamalia. Layar besar di punggungnya berfungsi untuk mengatur suhu tubuh.",
             },
             details: {
@@ -888,7 +902,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Kelabang raksasa seukuran mobil yang hidup di hutan rawa zaman Karbon, invertebrata darat terbesar yang pernah merayap di bumi.",
-              full: "Arthropleura adalah artropoda raksasa yang hidup sekitar 300 juta tahun lalu. Panjang tubuhnya bisa mencapai 2,5 meter. Ukuran fantastis ini dimungkinkan karena tingginya kadar oksigen di atmosfer pada periode Karbon dan belum adanya predator vertebrata darat yang besar. Meskipun berpenampilan menyeramkan, penelitian fosil isi perut menunjukkan bahwa kemungkinan besar mereka adalah herbivora yang memakan tumbuhan paku dan sisa tanaman busuk.",
+              full: "Arthropleura adalah artropoda raksasa yang hidup sekitar 300 juta tahun lalu. Panjang tubuhnya bisa mencapai 2,5 meter. Ukuran fantastis ini dimungkinkan karena tingginya kadar oksigen di atmosfer pada periode Karbon and belum adanya predator vertebrata darat yang besar. Meskipun berpenampilan menyeramkan, penelitian fosil isi perut menunjukkan bahwa kemungkinan besar mereka adalah herbivora yang memakan tumbuhan paku and sisa tanaman busuk.",
               key: "Arthropleura adalah invertebrata darat terbesar yang pernah ada. Meski terlihat menyeramkan, hewan ini kemungkinan besar adalah herbivora.",
             },
             details: {
@@ -911,8 +925,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Ikan purba raksasa yang kepala dan dadanya dilindungi pelat tulang keras, memiliki rahang tajam pemotong tulang tanpa gigi sejati.",
-              full: "Dunkleosteus terrelli adalah ikan Placoderm (ikan berahang perisai) terbesar yang hidup di periode Devon. Panjangnya mencapai 6 meter dan berat 1 ton. Ia tidak memiliki gigi, melainkan lempengan tulang rahang yang menajam sendiri seperti gunting raksasa. Kekuatan gigitannya setara dengan T-Rex, memungkinkannya membelah mangsa bercangkang keras atau ikan hiu purba sekalipun. Ikan ini punah tanpa meninggalkan keturunan langsung.",
+                "Ikan purba raksasa yang kepala and dadanya dilindungi pelat tulang keras, memiliki rahang tajam pemotong tulang tanpa gigi sejati.",
+              full: "Dunkleosteus terrelli adalah ikan Placoderm (ikan berahang perisai) terbesar yang hidup di periode Devon. Panjangnya mencapai 6 meter and berat 1 ton. Ia tidak memiliki gigi, melainkan lempengan tulang rahang yang menajam sendiri seperti gunting raksasa. Kekuatan gigitannya setara dengan T-Rex, memungkinkannya membelah mangsa bercangkang keras atau ikan hiu purba sekalipun. Ikan ini punah tanpa meninggalkan keturunan langsung.",
               key: "Dunkleosteus memiliki rahang pemotong tulang tanpa gigi sejati. Kekuatan gigitannya termasuk yang terkuat di lautan purba.",
             },
             details: {
@@ -935,7 +949,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Serangga terbang mirip capung dengan bentang sayap selebar tangan manusia dewasa, predator udara yang menguasai langit zaman Karbon.",
-              full: "Meganeura monyi adalah serangga mirip capung (Griffinfly) yang hidup di hutan rawa periode Karbon. Dengan bentang sayap mencapai 70 cm, ia adalah serangga terbesar yang pernah diketahui. Seperti capung modern, Meganeura adalah predator udara yang gesit, memangsa serangga lain dan mungkin amfibi kecil. Ukurannya yang besar didukung oleh sistem pernapasan trakea yang efisien di atmosfer berkadar oksigen tinggi.",
+              full: "Meganeura monyi adalah serangga mirip capung (Griffinfly) yang hidup di hutan rawa periode Karbon. Dengan bentang sayap mencapai 70 cm, ia adalah serangga terbesar yang pernah diketahui. Seperti capung modern, Meganeura adalah predator udara yang gesit, memangsa serangga lain and mungkin amfibi kecil. Ukurannya yang besar didukung oleh sistem pernapasan trakea yang efisien di atmosfer berkadar oksigen tinggi.",
               key: "Meganeura adalah serangga terbesar yang pernah hidup dengan bentang sayap sangat lebar. Ukurannya dimungkinkan oleh kadar oksigen tinggi di atmosfer purba.",
             },
             details: {
@@ -958,9 +972,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Hewan laut purba yang sangat sukses dan beragam, memiliki tubuh bersegmen tiga lobus dan mata majemuk kristal, mendominasi lautan selama ratusan juta tahun.",
-              full: "Trilobita adalah kelas artropoda laut yang punah, menjadi salah satu kelompok hewan paling sukses dalam sejarah bumi. Mereka muncul di Kambrium Awal dan bertahan selama hampir 300 juta tahun. Tubuhnya terbagi menjadi tiga lobus (sehingga namanya Trilobita). Mereka memiliki beragam bentuk dan ukuran, serta mata majemuk dari mineral kalsit yang canggih. Sebagian besar hidup merayap di dasar laut, berenang, atau menggali lumpur.",
-              key: "Trilobite adalah hewan laut purba yang sangat sukses dan bertahan hampir 300 juta tahun. Mata majemuknya terbuat dari kristal kalsit.",
+                "Hewan laut purba yang sangat sukses and beragam, memiliki tubuh bersegmen tiga lobus and mata majemuk kristal, mendominasi lautan selama ratusan juta tahun.",
+              full: "Trilobita adalah kelas artropoda laut yang punah, menjadi salah satu kelompok hewan paling sukses dalam sejarah bumi. Mereka muncul di Kambrium Awal and bertahan selama hampir 300 juta tahun. Tubuhnya terbagi menjadi tiga lobus (sehingga namanya Trilobita). Mereka memiliki beragam bentuk and ukuran, serta mata majemuk dari mineral kalsit yang canggih. Sebagian besar hidup merayap di dasar laut, berenang, atau menggali lumpur.",
+              key: "Trilobite adalah hewan laut purba yang sangat sukses and bertahan hampir 300 juta tahun. Mata majemuknya terbuat dari kristal kalsit.",
             },
             details: {
               diet: "Detritivora",
@@ -983,7 +997,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Predator darat utama pada akhir masa Paleozoikum, reptil mirip mamalia yang gesit dengan gigi taring besar untuk merobek mangsa.",
-              full: "Gorgonopsid adalah kelompok Therapsida (reptil mirip mamalia) yang menjadi predator puncak pada periode Permian Akhir. Mereka menggabungkan ciri reptil dan mamalia; memiliki kaki yang tegak di bawah tubuh (bukan merayap samping) yang memungkinkan gerakan cepat. Ciri utamanya adalah gigi taring 'saber' yang besar, yang kemudian berevolusi konvergen pada macan gigi pedang. Mereka punah dalam kepunahan massal Permian-Trias.",
+              full: "Gorgonopsid adalah kelompok Therapsida (reptil mirip mamalia) yang menjadi predator puncak pada periode Permian Akhir. Mereka menggabungkan ciri reptil and mamalia; memiliki kaki yang tegak di bawah tubuh (bukan merayap samping) yang memungkinkan gerakan cepat. Ciri utamanya adalah gigi taring 'saber' yang besar, yang kemudian berevolusi konvergen pada macan gigi pedang. Mereka punah dalam kepunahan massal Permian-Trias.",
               key: "Gorgonopsid adalah predator puncak darat sebelum dinosaurus muncul. Ia memiliki gigi taring besar mirip pedang, pendahulu evolusi gigi mamalia.",
             },
             details: {
@@ -1003,6 +1017,8 @@ export const encyclopediaData = {
         desc: "Zaman kejayaan reptil raksasa.",
         image:
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4-f90I9kDih-MYUYrWd2v455oWs2jgyfDQzorbMVDMFESo_Mg515wcwZ4L-XmdqMAuKjtCwKITZnxD4UW9hhowELsPhgc1pOpqpzm3n33Bo4fx2POyFDpiJ51mvACxZ5C0TqveOhuwiNr/s1600/Pengertian+Zaman+Mesozoikum.jpg",
+        galleryImage:
+          "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "ALLOSAURUS",
@@ -1013,8 +1029,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Predator puncak zaman Jura yang berburu mangsa besar dengan gigi tajam dan cakar tangan kuat, teror bagi dinosaurus herbivora.",
-              full: "Allosaurus adalah dinosaurus theropoda karnivora paling umum dan berbahaya di Amerika Utara selama periode Jura Akhir. Berbeda dengan T-Rex yang mengandalkan kekuatan gigitan penghancur tulang, Allosaurus menggunakan rahangnya seperti kapak (hatchet attack)—membuka mulut lebar dan mengayunkan gigi atasnya ke mangsa untuk menyebabkan pendarahan hebat. Ia memiliki lengan yang kuat dengan tiga cakar tajam untuk mencengkeram.",
+                "Predator puncak zaman Jura yang berburu mangsa besar dengan gigi tajam and cakar tangan kuat, teror bagi dinosaurus herbivora.",
+              full: "Allosaurus adalah dinosaurus theropoda karnivora paling umum and berbahaya di Amerika Utara selama periode Jura Akhir. Berbeda dengan T-Rex yang mengandalkan kekuatan gigitan penghancur tulang, Allosaurus menggunakan rahangnya seperti kapak (hatchet attack)—membuka mulut lebar and mengayunkan gigi atasnya ke mangsa untuk menyebabkan pendarahan hebat. Ia memiliki lengan yang kuat dengan tiga cakar tajam untuk mencengkeram.",
               key: "Allosaurus berburu dengan cara melukai mangsa secara berulang hingga kehabisan darah. Strategi ini berbeda dari T-Rex yang mengandalkan gigitan penghancur tulang.",
             },
             details: {
@@ -1039,7 +1055,7 @@ export const encyclopediaData = {
               short:
                 "Dinosaurus leher panjang raksasa dengan kaki depan yang lebih tinggi dari kaki belakang, memungkinkannya memakan daun di puncak pohon.",
               full: "Brachiosaurus adalah sauropoda kolosal yang memiliki postur tubuh unik seperti jerapah, dengan kaki depan lebih panjang daripada kaki belakang. Struktur ini memungkinkannya menjangkau dedaunan di pohon conifer yang sangat tinggi tanpa perlu mengangkat lehernya secara aktif. Lubang hidungnya terletak di puncak kepala yang menonjol. Tidak seperti sauropoda lain, Brachiosaurus kemungkinan tidak bisa berdiri dengan dua kaki belakang.",
-              key: "Brachiosaurus memiliki kaki depan lebih panjang dari kaki belakang, Struktur ini memungkinkannya memakan daun di puncak pohon tinggi dan menjadikannya Dinosaurus tertinggi.",
+              key: "Brachiosaurus memiliki kaki depan lebih panjang dari kaki belakang, Struktur ini memungkinkannya memakan daun di puncak pohon tinggi and menjadikannya Dinosaurus tertinggi.",
             },
             details: {
               diet: "Herbivora",
@@ -1084,8 +1100,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Dinosaurus herbivora yang tubuhnya dilindungi baju zirah tulang anti peluru dan memiliki gada berat di ujung ekornya untuk pertahanan.",
-              full: "Ankylosaurus adalah tank hidup dari periode Kapur Akhir. Seluruh tubuh bagian atasnya tertutup osteoderm (lempeng tulang) yang menyatu dengan kulit, bahkan kelopak matanya pun bertulang. Ia memiliki tubuh lebar dan rendah sehingga sulit dibalikkan oleh predator. Senjata utamanya adalah gada tulang padat di ujung ekor yang dapat diayunkan dengan kecepatan tinggi, cukup kuat untuk mematahkan kaki T-Rex.",
+                "Dinosaurus herbivora yang tubuhnya dilindungi baju zirah tulang anti peluru and memiliki gada berat di ujung ekornya untuk pertahanan.",
+              full: "Ankylosaurus adalah tank hidup dari periode Kapur Akhir. Seluruh tubuh bagian atasnya tertutup osteoderm (lempeng tulang) yang menyatu dengan kulit, bahkan kelopak matanya pun bertulang. Ia memiliki tubuh lebar and rendah sehingga sulit dibalikkan oleh predator. Senjata utamanya adalah gada tulang padat di ujung ekor yang dapat diayunkan dengan kecepatan tinggi, cukup kuat untuk mematahkan kaki T-Rex.",
               key: "Ankylosaurus adalah dinosaurus bertameng paling kuat dengan tubuh dilapisi tulang keras. Gada di ekornya cukup kuat untuk mematahkan kaki predator besar.",
             },
             details: {
@@ -1109,7 +1125,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Salah satu dinosaurus paling awal yang pernah ditemukan, predator lincah berkaki dua yang hidup pada zaman Trias.",
-              full: "Herrerasaurus ischigualastensis adalah salah satu dinosaurus primitif yang hidup di Argentina sekitar 230 juta tahun lalu (Trias Akhir). Ia memiliki campuran ciri-ciri dinosaurus modern dan nenek moyang reptil archosauria, membuat klasifikasinya sempat membingungkan ilmuwan. Sebagai predator bipedal (berjalan dua kaki) yang cepat, ia memiliki rahang fleksibel yang bisa menahan mangsa yang meronta.",
+              full: "Herrerasaurus ischigualastensis adalah salah satu dinosaurus primitif yang hidup di Argentina sekitar 230 juta tahun lalu (Trias Akhir). Ia memiliki campuran ciri-ciri dinosaurus modern and nenek moyang reptil archosauria, membuat klasifikasinya sempat membingungkan ilmuwan. Sebagai predator bipedal (berjalan dua kaki) yang cepat, ia memiliki rahang fleksibel yang bisa menahan mangsa yang meronta.",
               key: "Herrerasaurus adalah salah satu dinosaurus paling awal yang pernah hidup. Ia menunjukkan transisi penting dari reptil purba menuju dinosaurus sejati.",
             },
             details: {
@@ -1132,8 +1148,8 @@ export const encyclopediaData = {
             description: {
               short:
                 "Reptil laut yang berevolusi memiliki bentuk tubuh menyerupai lumba-lumba modern, perenang cepat yang melahirkan anak di dalam air.",
-              full: "Ichthyosaurus adalah contoh sempurna evolusi konvergen, di mana reptil purba mengembangkan bentuk tubuh 'streamline' yang sangat mirip dengan ikan atau lumba-lumba untuk berenang cepat di laut. Mereka memiliki sirip punggung, sirip ekor vertikal, dan paru-paru untuk bernapas di permukaan. Mata mereka sangat besar, dilindungi cincin tulang sklerotik, untuk melihat mangsa (cumi-cumi dan ikan) di kedalaman laut yang gelap.",
-              key: "Ichthyosaurus berevolusi dengan bentuk tubuh mirip lumba-lumba untuk berenang cepat. Ia melahirkan anak di dalam air dan tidak pernah naik ke darat.",
+              full: "Ichthyosaurus adalah contoh sempurna evolusi konvergen, di mana reptil purba mengembangkan bentuk tubuh 'streamline' yang sangat mirip dengan ikan atau lumba-lumba untuk berenang cepat di laut. Mereka memiliki sirip punggung, sirip ekor vertikal, and paru-paru untuk bernapas di permukaan. Mata mereka sangat besar, dilindungi cincin tulang sklerotik, untuk melihat mangsa (cumi-cumi and ikan) di kedalaman laut yang gelap.",
+              key: "Ichthyosaurus berevolusi dengan bentuk tubuh mirip lumba-lumba untuk berenang cepat. Ia melahirkan anak di dalam air and tidak pernah naik ke darat.",
             },
             details: {
               diet: "Piscivora",
@@ -1156,7 +1172,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Hewan terbang terbesar sepanjang sejarah bumi, reptil pterosaurus raksasa dengan tinggi setara jerapah saat berdiri di tanah.",
-              full: "Quetzalcoatlus northropi adalah pterosaurus azhdarchid dari periode Kapur Akhir yang ukurannya menentang imajinasi. Dengan bentang sayap 10-11 meter dan leher yang sangat panjang, ia menguasai langit Amerika Utara. Saat di darat, ia berjalan dengan empat kaki dan berburu hewan kecil seperti dinosaurus bayi dengan mematuknya menggunakan paruh raksasa yang tajam, mirip perilaku bangau raksasa.",
+              full: "Quetzalcoatlus northropi adalah pterosaurus azhdarchid dari periode Kapur Akhir yang ukurannya menentang imajinasi. Dengan bentang sayap 10-11 meter and leher yang sangat panjang, ia menguasai langit Amerika Utara. Saat di darat, ia berjalan dengan empat kaki and berburu hewan kecil seperti dinosaurus bayi dengan mematuknya menggunakan paruh raksasa yang tajam, mirip perilaku bangau raksasa.",
               key: "Quetzalcoatlus adalah hewan terbang terbesar yang pernah ada. Saat berdiri, tingginya bisa setara jerapah meski mampu terbang jarak jauh.",
             },
             details: {
@@ -1178,9 +1194,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Dinosaurus karnivora kecil, ramping, dan lincah dari zaman Trias yang tulang-tulangnya berongga ringan, hidup dan berburu secara berkelompok.",
-              full: "Coelophysis bauri adalah salah satu dinosaurus theropoda awal yang paling sukses. Tubuhnya ramping, berleher panjang, dan memiliki tulang berongga (seperti burung) yang membuatnya sangat ringan dan cepat. Penemuan ratusan kerangka Coelophysis di Ghost Ranch, New Mexico, menunjukkan bahwa mereka kemungkinan besar hidup atau mati bersama dalam kawanan besar. Gigi tajamnya menunjukkan ia pemangsa serangga dan reptil kecil.",
-              key: "Coelophysis adalah salah satu dinosaurus karnivora paling awal dan bertubuh ramping. Fosilnya sering ditemukan berkelompok, menunjukkan kemungkinan hidup berkoloni.",
+                "Dinosaurus karnivora kecil, ramping, and lincah dari zaman Trias yang tulang-tulangnya berongga ringan, hidup and berburu secara berkelompok.",
+              full: "Coelophysis bauri adalah salah satu dinosaurus theropoda awal yang paling sukses. Tubuhnya ramping, berleher panjang, and memiliki tulang berongga (seperti burung) yang membuatnya sangat ringan and cepat. Penemuan ratusan kerangka Coelophysis di Ghost Ranch, New Mexico, menunjukkan bahwa mereka kemungkinan besar hidup atau mati bersama dalam kawanan besar. Gigi tajamnya menunjukkan ia pemangsa serangga and reptil kecil.",
+              key: "Coelophysis adalah salah satu dinosaurus karnivora paling awal and bertubuh ramping. Fosilnya sering ditemukan berkelompok, menunjukkan kemungkinan hidup berkoloni.",
             },
             details: {
               diet: "Karnivora",
@@ -1202,8 +1218,8 @@ export const encyclopediaData = {
             description: {
               short:
                 "Kadal laut raksasa penguasa lautan zaman Kapur, predator puncak dengan rahang kuat yang memangsa apa saja di laut.",
-              full: "Mosasaurus bukanlah dinosaurus, melainkan kadal laut raksasa (kerabat biawak dan ular) yang sepenuhnya beradaptasi di laut. Panjangnya mencapai 17 meter. Ia memiliki tubuh kekar, sirip dayung, dan ekor kuat untuk berenang cepat. Rahangnya yang mengerikan memiliki sendi ganda yang memungkinkannya menelan mangsa besar, serta barisan gigi tambahan di langit-langit mulut (gigi pterygoid) untuk menahan mangsa agar tidak lolos.",
-              key: "Mosasaurus adalah predator laut raksasa dan bukan dinosaurus. Ia memiliki rahang tambahan di langit-langit mulut untuk menahan mangsa agar tidak lolos.",
+              full: "Mosasaurus bukanlah dinosaurus, melainkan kadal laut raksasa (kerabat biawak and ular) yang sepenuhnya beradaptasi di laut. Panjangnya mencapai 17 meter. Ia memiliki tubuh kekar, sirip dayung, and ekor kuat untuk berenang cepat. Rahangnya yang mengerikan memiliki sendi ganda yang memungkinkannya menelan mangsa besar, serta barisan gigi tambahan di langit-langit mulut (gigi pterygoid) untuk menahan mangsa agar tidak lolos.",
+              key: "Mosasaurus adalah predator laut raksasa and bukan dinosaurus. Ia memiliki rahang tambahan di langit-langit mulut untuk menahan mangsa agar tidak lolos.",
             },
             details: {
               diet: "Karnivora",
@@ -1227,7 +1243,7 @@ export const encyclopediaData = {
               short:
                 "Dinosaurus pemakan tumbuhan dengan jambul tabung panjang di belakang kepala yang berfungsi seperti terompet untuk berkomunikasi.",
               full: "Parasaurolophus adalah dinosaurus hadrosaurida (berparuh bebek) yang ikonik. Jambul tabung di kepalanya bukan sekadar hiasan, melainkan rongga resonansi yang terhubung dengan saluran napas. Ilmuwan meyakini jambul ini digunakan untuk menghasilkan suara frekuensi rendah yang keras untuk komunikasi jarak jauh antar anggota kawanan atau peringatan bahaya. Ia berjalan dengan empat kaki tetapi bisa berlari dengan dua kaki.",
-              key: "Parasaurolophus memiliki jambul panjang berongga yang digunakan untuk menghasilkan suara. Jambul ini kemungkinan berfungsi untuk komunikasi dan penanda kelompok.",
+              key: "Parasaurolophus memiliki jambul panjang berongga yang digunakan untuk menghasilkan suara. Jambul ini kemungkinan berfungsi untuk komunikasi and penanda kelompok.",
             },
             details: {
               diet: "Herbivora",
@@ -1248,9 +1264,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Reptil terbang terkenal yang memiliki paruh panjang tanpa gigi dan jambul kepala menonjol, ahli meluncur di atas samudra purba.",
-              full: "Pteranodon adalah pterosaurus besar yang sangat spesialis dalam terbang layang (soaring) di atas lautan, mirip burung albatros modern. Sayapnya yang panjang memungkinkannya terbang jarak jauh hemat energi. Jambul di kepalanya bervariasi bentuk dan ukurannya tergantung jenis kelamin dan usia, berfungsi sebagai display sosial atau kemudi aerodinamis. Ia menangkap ikan dengan paruh panjangnya saat terbang rendah di permukaan air.",
-              key: "Pteranodon bukan dinosaurus, melainkan reptil terbang. Ia tidak memiliki gigi dan menggunakan paruh panjangnya untuk menangkap ikan di laut.",
+                "Reptil terbang terkenal yang memiliki paruh panjang tanpa gigi and jambul kepala menonjol, ahli meluncur di atas samudra purba.",
+              full: "Pteranodon adalah pterosaurus besar yang sangat spesialis dalam terbang layang (soaring) di atas lautan, mirip burung albatros modern. Sayapnya yang panjang memungkinkannya terbang jarak jauh hemat energi. Jambul di kepalanya bervariasi bentuk and ukurannya tergantung jenis kelamin and usia, berfungsi sebagai display sosial atau kemudi aerodinamis. Ia menangkap ikan dengan paruh panjangnya saat terbang rendah di permukaan air.",
+              key: "Pteranodon bukan dinosaurus, melainkan reptil terbang. Ia tidak memiliki gigi and menggunakan paruh panjangnya untuk menangkap ikan di laut.",
             },
             details: {
               diet: "Piscivora",
@@ -1271,8 +1287,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Karnivora terbesar di bumi yang beradaptasi untuk hidup di air dan darat, memiliki layar punggung raksasa dan moncong panjang pemakan ikan.",
-              full: "Spinosaurus mengubah pandangan kita tentang dinosaurus theropoda. Ia adalah satu-satunya dinosaurus yang diketahui beradaptasi baik untuk gaya hidup semi-akuatik. Kaki belakangnya pendek, tulang-tulangnya padat untuk kontrol daya apung, dan ekornya berbentuk seperti dayung untuk berenang. Moncongnya yang panjang dan gigi kerucut sangat efisien untuk menangkap ikan purba raksasa seperti Onchopristis di sungai delta Afrika Utara.",
+                "Karnivora terbesar di bumi yang beradaptasi untuk hidup di air and darat, memiliki layar punggung raksasa and moncong panjang pemakan ikan.",
+              full: "Spinosaurus mengubah pandangan kita tentang dinosaurus theropoda. Ia adalah satu-satunya dinosaurus yang diketahui beradaptasi baik untuk gaya hidup semi-akuatik. Kaki belakangnya pendek, tulang-tulangnya padat untuk kontrol daya apung, and ekornya berbentuk seperti dayung untuk berenang. Moncongnya yang panjang and gigi kerucut sangat efisien untuk menangkap ikan purba raksasa seperti Onchopristis di sungai delta Afrika Utara.",
               key: "Spinosaurus adalah dinosaurus karnivora terbesar yang pernah ditemukan, bahkan lebih panjang dari T-Rex. Ia adalah dinosaurus semi-akuatik yang berburu ikan menggunakan rahang panjang mirip buaya.",
             },
             details: {
@@ -1294,8 +1310,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Dinosaurus herbivora dengan barisan lempeng tulang di punggung dan empat duri tajam di ekor, namun memiliki otak yang sangat kecil.",
-              full: "Stegosaurus adalah dinosaurus yang mudah dikenali berkat barisan pelat (plates) berbentuk layang-layang di punggungnya dan duri tajam (thagomizer) di ujung ekornya. Pelat ini kemungkinan berfungsi untuk pamer (display), identifikasi spesies, atau termoregulasi, bukan sebagai perisai pelindung. Duri ekornya adalah senjata pertahanan mematikan yang bisa diayunkan ke predator seperti Allosaurus. Uniknya, walau bertubuh besar, otaknya hanya sebesar buah kenari.",
+                "Dinosaurus herbivora dengan barisan lempeng tulang di punggung and empat duri tajam di ekor, namun memiliki otak yang sangat kecil.",
+              full: "Stegosaurus adalah dinosaurus yang mudah dikenali berkat barisan pelat (plates) berbentuk layang-layang di punggungnya and duri tajam (thagomizer) di ujung ekornya. Pelat ini kemungkinan berfungsi untuk pamer (display), identifikasi spesies, atau termoregulasi, bukan sebagai perisai pelindung. Duri ekornya adalah senjata pertahanan mematikan yang bisa diayunkan ke predator seperti Allosaurus. Uniknya, walau bertubuh besar, otaknya hanya sebesar buah kenari.",
               key: "Stegosaurus memiliki otak yang sangat kecil dibandingkan tubuhnya yang besar. Duri di punggungnya berfungsi sebagai pertahanan sekaligus membantu mengatur suhu tubuh.",
             },
             details: {
@@ -1317,8 +1333,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Tyrannosaurus Rex, raja dinosaurus karnivora dengan gigitan terkuat di daratan, lengan kecil, dan indra penciuman yang sangat tajam.",
-              full: "T-Rex adalah predator puncak definitif di akhir zaman Kapur. Tubuhnya yang masif, kaki yang kuat, dan tengkorak besar menjadikannya mesin pembunuh yang efisien. Gigitannya mampu menghasilkan tekanan ribuan kilogram, cukup untuk menghancurkan tulang mangsanya. Penelitian terbaru menunjukkan T-Rex memiliki penglihatan binokular yang lebih baik dari elang dan indra penciuman yang luar biasa sensitif, menjadikannya pemburu aktif sekaligus pemakan bangkai yang oportunis.",
+                "Tyrannosaurus Rex, raja dinosaurus karnivora dengan gigitan terkuat di daratan, lengan kecil, and indra penciuman yang sangat tajam.",
+              full: "T-Rex adalah predator puncak definitif di akhir zaman Kapur. Tubuhnya yang masif, kaki yang kuat, and tengkorak besar menjadikannya mesin pembunuh yang efisien. Gigitannya mampu menghasilkan tekanan ribuan kilogram, cukup untuk menghancurkan tulang mangsanya. Penelitian terbaru menunjukkan T-Rex memiliki penglihatan binokular yang lebih baik dari elang and indra penciuman yang luar biasa sensitif, menjadikannya pemburu aktif sekaligus pemakan bangkai yang oportunis.",
               key: "T-Rex memiliki gigitan terkuat di antara hewan darat yang pernah hidup. Indra penciumannya sangat tajam untuk mendeteksi mangsa dari jauh.",
             },
             details: {
@@ -1340,9 +1356,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Dinosaurus berbadan badak dengan tiga tanduk wajah dan tameng leher, herbivora tangguh yang berani berhadapan dengan T-Rex.",
-              full: "Triceratops horridus adalah salah satu dinosaurus non-unggas terakhir yang berevolusi sebelum kepunahan massal. Tiga tanduknya (dua di dahi, satu di hidung) dan jumbai lehernya yang solid (tanpa lubang) menjadikannya lawan yang sulit bagi predator manapun. Tidak seperti ceratopsid lain, jumbai Triceratops murni tulang tebal yang berfungsi sebagai perisai leher yang efektif dalam pertarungan. Mereka hidup di dataran banjir Amerika Utara purba.",
-              key: "Triceratops memiliki tiga tanduk tajam dan perisai tulang besar di lehernya. Ia hidup sezaman dan mampu melawan predator seperti T-Rex..",
+                "Dinosaurus berbadan badak dengan tiga tanduk wajah and tameng leher, herbivora tangguh yang berani berhadapan dengan T-Rex.",
+              full: "Triceratops horridus adalah salah satu dinosaurus non-unggas terakhir yang berevolusi sebelum kepunahan massal. Tiga tanduknya (dua di dahi, satu di hidung) and jumbai lehernya yang solid (tanpa lubang) menjadikannya lawan yang sulit bagi predator manapun. Tidak seperti ceratopsid lain, jumbai Triceratops murni tulang tebal yang berfungsi sebagai perisai leher yang efektif dalam pertarungan. Mereka hidup di dataran banjir Amerika Utara purba.",
+              key: "Triceratops memiliki tiga tanduk tajam and perisai tulang besar di lehernya. Ia hidup sezaman and mampu melawan predator seperti T-Rex..",
             },
             details: {
               diet: "Herbivora",
@@ -1363,9 +1379,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Dinosaurus pemangsa berukuran kecil, lincah, cerdas, dan tertutup bulu, terkenal dengan cakar sabit besar di kakinya.",
+                "Dinosaurus pemangsa berukuran kecil, lincah, cerdas, and tertutup bulu, terkenal with cakar sabit besar di kakinya.",
               full: "Velociraptor mongoliensis aslinya jauh lebih kecil daripada yang digambarkan di film, hanya seukuran kalkun besar. Fosilnya membuktikan bahwa mereka memiliki 'quill knobs' (benjolan tempat melekatnya bulu) di lengan, menegaskan bahwa mereka berbulu lebat seperti burung. Mereka adalah predator gurun yang ganas, menggunakan cakar sabit di kaki kedua untuk menusuk mangsa seperti Protoceratops. Mereka mungkin berburu sendiri atau dalam kelompok kecil.",
-              key: "Velociraptor sebenarnya kecil dan berbulu, bukan raksasa seperti di film. Senjata utamanya adalah cakar melengkung di kaki, bukan gigitan.",
+              key: "Velociraptor sebenarnya kecil and berbulu, bukan raksasa seperti di film. Senjata utamanya adalah cakar melengkung di kaki, bukan gigitan.",
             },
             details: {
               diet: "Karnivora",
@@ -1381,9 +1397,11 @@ export const encyclopediaData = {
       },
       {
         title: "KENOZOIKUM",
-        desc: "Era mamalia dan manusia.",
+        desc: "Era mamalia and manusia.",
         image:
           "https://sijai.com/wp-content/uploads/2017/05/Zaman-Neozoikum-perjuanganislami.blogspot.co_.id_.jpg",
+        galleryImage:
+          "https://images.unsplash.com/photo-1469474099711-423907a78e4d?q=80&w=2000&auto=format&fit=crop",
         items: [
           {
             name: "PARACERATHERIUM",
@@ -1396,7 +1414,7 @@ export const encyclopediaData = {
             description: {
               short:
                 "Mamalia darat terbesar yang pernah berjalan di bumi, kerabat badak raksasa tanpa cula dengan leher panjang pemakan daun tinggi.",
-              full: "Paraceratherium (dulu dikenal sebagai Indricotherium) adalah raksasa sejati zaman Oligosen. Tingginya mencapai 4,8 meter di bahu dan berat hingga 20 ton. Meskipun berkerabat dengan badak modern, ia tidak memiliki cula dan memiliki leher serta kaki panjang, mengisi relung ekologi yang mirip jerapah untuk memakan dedaunan pohon tinggi. Ukurannya yang masif membuatnya hampir kebal terhadap serangan predator manapun di zamannya.",
+              full: "Paraceratherium (dulu dikenal sebagai Indricotherium) adalah raksasa sejati zaman Oligosen. Tingginya mencapai 4,8 meter di bahu and berat hingga 20 ton. Meskipun berkerabat with badak modern, ia tidak memiliki cula and memiliki leher serta kaki panjang, mengisi relung ekologi yang mirip jerapah untuk memakan dedaunan pohon tinggi. Ukurannya yang masif membuatnya hampir kebal terhadap serangan predator manapun di zamannya.",
               key: "Paraceratherium adalah hewan darat terbesar yang pernah hidup, bahkan lebih tinggi dari jerapah. Meski kerabat badak, hewan ini tidak memiliki tanduk.",
             },
             details: {
@@ -1418,9 +1436,9 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Gajah purba ikonik Zaman Es yang tubuhnya tertutup rambut tebal dan memiliki gading melengkung besar, hidup berdampingan dengan manusia purba.",
-              full: "Mammoth Berbulu (Mammuthus primigenius) adalah spesies gajah yang beradaptasi sempurna dengan iklim dingin Pleistosen. Tubuhnya dilindungi lapisan lemak tebal dan dua lapisan rambut. Gadingnya yang sangat panjang dan melengkung digunakan untuk menyingkirkan salju demi mencari rumput kering di bawahnya. Mereka hidup di padang rumput stepa raksasa yang membentang dari Eropa hingga Amerika Utara dan sering menjadi buruan manusia purba.",
-              key: "Mammoth memiliki bulu tebal dan lapisan lemak untuk bertahan di Zaman Es. Menariknya, Mammoth terakhir masih hidup saat piramida Mesir sudah dibangun.",
+                "Gajah purba ikonik Zaman Es yang tubuhnya tertutup rambut tebal and memiliki gading melengkung besar, hidup berdampingan with manusia purba.",
+              full: "Mammoth Berbulu (Mammuthus primigenius) adalah spesies gajah yang beradaptasi sempurna with iklim dingin Pleistosen. Tubuhnya dilindungi lapisan lemak tebal and dua lapisan rambut. Gadingnya yang sangat panjang and melengkung digunakan untuk menyingkirkan salju demi mencari rumput kering di bawahnya. Mereka hidup di padang rumput stepa raksasa yang membentang dari Eropa hingga Amerika Utara and sering menjadi buruan manusia purba.",
+              key: "Mammoth memiliki bulu tebal and lapisan lemak untuk bertahan di Zaman Es. Menariknya, Mammoth terakhir masih hidup saat piramida Mesir sudah dibangun.",
             },
             details: {
               diet: "Herbivora",
@@ -1442,8 +1460,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Burung pemangsa raksasa yang tidak bisa terbang, predator puncak berkaki cepat dengan paruh besar mematikan yang menguasai Amerika Selatan.",
-              full: "Phorusrhacidae, atau 'Burung Teror', adalah kelompok burung karnivora yang berevolusi menjadi predator puncak setelah dinosaurus punah, terutama di Amerika Selatan yang saat itu terisolasi. Phorusrhacos tingginya mencapai 2,5 meter dan tidak bisa terbang, namun berlari sangat cepat. Paruhnya yang besar dan melengkung seperti kapak digunakan untuk mematuk mangsa dengan gerakan vertikal yang kuat, menghancurkan tulang belakang korbannya.",
+                "Burung pemangsa raksasa yang tidak bisa terbang, predator puncak berkaki cepat with paruh besar mematikan yang menguasai Amerika Selatan.",
+              full: "Phorusrhacidae, atau 'Burung Teror', adalah kelompok burung karnivora yang berevolusi menjadi predator puncak setelah dinosaurus punah, terutama di Amerika Selatan yang saat itu terisolasi. Phorusrhacos tingginya mencapai 2,5 meter and tidak bisa terbang, namun berlari sangat cepat. Paruhnya yang besar and melengkung seperti kapak digunakan untuk mematuk mangsa with gerakan vertikal yang kuat, menghancurkan tulang belakang korbannya.",
               key: "Terror Bird adalah burung raksasa yang tidak bisa terbang, tetapi sangat cepat berlari. ia menjadi predator darat paling ditakuti setelah dinosaurus punah.",
             },
             details: {
@@ -1465,8 +1483,8 @@ export const encyclopediaData = {
             status: "PUNAH",
             description: {
               short:
-                "Kucing besar prasejarah yang terkenal dengan dua gigi taring atas yang sangat panjang seperti pedang, pemburu hewan besar di Zaman Es.",
-              full: "Smilodon fatalis, atau macan gigi pedang, bukanlah leluhur harimau/singa modern, melainkan cabang terpisah dari keluarga kucing (Felidae). Tubuhnya kekar dan berotot, dirancang untuk bergulat menjatuhkan mangsa besar seperti bison atau unta purba, bukan untuk mengejar jarak jauh. Sepasang taringnya yang ikonik digunakan untuk memberikan gigitan presisi yang mematikan pada leher mangsa yang sudah tak berdaya.",
+                "Kucing besar prasejarah yang terkenal with dua gigi taring atas yang sangat panjang seperti pedang, pemburu hewan besar di Zaman Es.",
+              full: "Smilodon fatalis, atau macan gigi pedang, bukanlah leluhur harimau/singa modern, melainkan cabang terpisah dari keluarga kucing (Felidae). Tubuhnya kekar and berotot, dirancang untuk bergulat menjatuhkan mangsa besar seperti bison atau unta purba, bukan untuk mengejar jarak jauh. Sepasang taringnya yang ikonik digunakan untuk memberikan gigitan presisi yang mematikan pada leher mangsa yang sudah tak berdaya.",
               key: "Smilodon adalah predator Pleistosen paling terkenal yang fosilnya ribuan jumlahnya ditemukan di lubang aspal La Brea Tar Pits.",
             },
             details: {
