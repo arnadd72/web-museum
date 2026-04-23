@@ -280,6 +280,18 @@ const ModelViewer = ({ userData }) => {
         </Canvas>
       </div>
 
+      {/* === CONTROLS HINT === */}
+      <div className="hud-controls-hint">
+        <span className="hint-icon">🖱️</span>
+        <span>Gerak Mouse = Putar Model</span>
+        <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
+        <kbd>Ctrl</kbd>
+        <span>+ Gerak Mouse = Geser Model</span>
+        <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
+        <span className="hint-icon">🔍</span>
+        <span>Scroll = Zoom</span>
+      </div>
+
       {/* === 2. TOP NAVBAR === */}
       <header className="hud-top-nav">
         <div className="nav-left-group">
