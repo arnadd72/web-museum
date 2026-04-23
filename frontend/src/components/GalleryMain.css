@@ -1096,10 +1096,12 @@
     font-size: 0.65rem;
   }
 
-  /* VIEW 3: Specimen Slider — Stacked layout to prevent overlap */
+  /* VIEW 3: Specimen Slider — Full vertical scroll layout */
   .magic-slider-view {
+    position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
   .slider-bg-container {
     position: fixed;
@@ -1109,16 +1111,17 @@
     background:
       linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0.85) 0%,
-        rgba(0, 0, 0, 0.6) 30%,
-        rgba(0, 0, 0, 0.85) 100%
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.7) 40%,
+        rgba(0, 0, 0, 0.88) 100%
       );
   }
   .slider-content {
     position: relative;
     height: auto;
-    padding: 80px 5% 1rem;
+    padding: 70px 5% 1rem;
     align-items: flex-start;
+    display: flex;
   }
   .slider-text-wrapper {
     max-width: 100%;
@@ -1126,26 +1129,34 @@
   .slider-tag {
     font-size: 0.85rem;
     letter-spacing: 2px;
+    margin-bottom: 6px;
   }
   .slider-title-main {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
+    margin-bottom: 2px;
   }
   .slider-title-accent {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
   }
   .item-status-glow {
     font-size: 0.75rem;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .slider-desc {
     font-size: 0.85rem;
-    -webkit-line-clamp: 3;
+    display: block;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+    overflow: visible;
     margin-bottom: 1.2rem;
+    line-height: 1.5;
   }
   .slider-buttons {
     flex-direction: column;
     gap: 8px;
     width: 100%;
+    margin-bottom: 1rem;
   }
   .slider-buttons button {
     width: 100%;
@@ -1171,7 +1182,7 @@
     right: auto;
     left: auto;
     max-width: 100%;
-    padding: 0 5% 1.5rem;
+    padding: 0 5% 2rem;
     gap: 10px;
     z-index: 10;
   }
@@ -1235,17 +1246,16 @@
   }
 
   .slider-content {
-    padding: 60px 5% 1rem;
+    padding: 55px 5% 1rem;
   }
   .slider-title-main {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
   .slider-title-accent {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
   .slider-desc {
-    font-size: 0.8rem;
-    -webkit-line-clamp: 2;
+    font-size: 0.78rem;
   }
   .thumb-card {
     width: 80px;
