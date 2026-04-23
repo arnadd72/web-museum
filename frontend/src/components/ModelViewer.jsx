@@ -200,11 +200,11 @@ const ModelViewer = ({ userData }) => {
             />
             <pointLight position={[-10, -10, -10]} intensity={1} />
 
-            <Resize>
-              <Center top>
+            <Resize scale={modelScale}>
+              <Center>
                 <ModelErrorBoundary color={themeColor}>
                   <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-                    <Model3D path={activeItem.model} />
+                    <Model3D path={activeItem.modelPath || activeItem.model} />
                   </Float>
                 </ModelErrorBoundary>
               </Center>
@@ -229,7 +229,7 @@ const ModelViewer = ({ userData }) => {
           </Suspense>
 
           <OrbitControls
-            enablePan={false}
+            enablePan={true}
             autoRotate
             autoRotateSpeed={1}
             makeDefault

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
 import { encyclopediaData } from "../data/encyclopediaData";
@@ -107,6 +107,25 @@ const GalleryMain = ({ userData }) => {
       ? selectedSubCategory.items.findIndex((i) => i.name === activeItem.name)
       : 0;
 
+  const sliderThumbnailsRef = useRef(null);
+
+  useEffect(() => {
+    if (sliderThumbnailsRef.current) {
+      const activeThumb = sliderThumbnailsRef.current.querySelector(".thumb-card.active");
+      const container = sliderThumbnailsRef.current;
+      if (activeThumb && container) {
+        const thumbPosition = activeThumb.offsetLeft;
+        const thumbWidth = activeThumb.offsetWidth;
+        const containerCenter = container.offsetWidth / 2;
+        
+        container.scrollTo({
+          left: thumbPosition - containerCenter + (thumbWidth / 2),
+          behavior: "smooth"
+        });
+      }
+    }
+  }, [activeItemIdx]);
+
   const handleNextItem = () => {
     if (!selectedSubCategory) return;
     const nextIdx = (activeItemIdx + 1) % selectedSubCategory.items.length;
@@ -153,19 +172,9 @@ const GalleryMain = ({ userData }) => {
       {/* TOP NAVIGATION */}
       <nav className="gallery-top-nav">
         <div className="nav-left-group">
-          {selectedSubCategory ? (
-            <button
-              onClick={handleBackToSub}
-              className="btn-sys-back"
-              style={{ background: "none", border: "none", cursor: "pointer" }}
-            >
-              <span className="arr">←</span> KELUAR ARSIP
-            </button>
-          ) : (
-            <Link to="/" className="btn-sys-back">
-              <span className="arr">←</span> KELUAR ARSIP
-            </Link>
-          )}
+          <Link to="/" className="btn-sys-back">
+            <span className="arr">←</span> KELUAR ARSIP
+          </Link>
           
           <div className="nav-sys-title">
             <span>
@@ -547,7 +556,7 @@ const GalleryMain = ({ userData }) => {
               </div>
 
               {/* Thumbnails Kanan Bawah */}
-              <div className="slider-thumbnails">
+              <div className="slider-thumbnails" ref={sliderThumbnailsRef}>
                 {selectedSubCategory.items.map((item, idx) => (
                   <div
                     key={idx}

@@ -6,19 +6,51 @@ import { encyclopediaData } from "../data/encyclopediaData";
 
 const Visual3DHub = ({ userData }) => {
   const navigate = useNavigate();
-  const [filter, setFilter] = useState("ALL");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState(() => sessionStorage.getItem("visual3d_filter") || "ALL");
+  const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem("visual3d_search") || "");
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const [dbData, setDbData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // FETCH DATA DARI DATABASE
   useEffect(() => {
-    window.scrollTo(0, 0);
+    fetch("http://127.0.0.1:5000/api/encyclopedia")
+      .then(res => res.json())
+      .then(data => {
+        setDbData(data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error("Gagal mengambil data dari database:", err);
+        setIsLoading(false);
+      });
   }, []);
+
+  useEffect(() => {
+    if (!isLoading && dbData) {
+      const savedScroll = sessionStorage.getItem("visual3d_scroll");
+      if (savedScroll) {
+        setTimeout(() => {
+          const container = document.querySelector(".hub-content");
+          if (container) {
+            container.scrollTop = parseInt(savedScroll, 10);
+          }
+        }, 100);
+        sessionStorage.removeItem("visual3d_scroll");
+        sessionStorage.removeItem("visual3d_filter");
+        sessionStorage.removeItem("visual3d_search");
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+  }, [isLoading, dbData]);
 
   const allItems = useMemo(() => {
     let collected = [];
-    if (encyclopediaData) {
-      Object.keys(encyclopediaData).forEach((mainKey) => {
-        const mainCategory = encyclopediaData[mainKey];
+    if (dbData) {
+      Object.keys(dbData).forEach((mainKey) => {
+        const mainCategory = dbData[mainKey];
         if (mainCategory.subCategories) {
           mainCategory.subCategories.forEach((sub) => {
             if (sub.items) {
@@ -37,7 +69,7 @@ const Visual3DHub = ({ userData }) => {
       });
     }
     return collected;
-  }, [encyclopediaData]);
+  }, [dbData]);
 
   const filteredItems = useMemo(() => {
     return allItems.filter((item) => {
@@ -52,6 +84,13 @@ const Visual3DHub = ({ userData }) => {
 
   const handleProceed = () => {
     if (selectedItem) {
+      sessionStorage.setItem("visual3d_filter", filter);
+      sessionStorage.setItem("visual3d_search", searchQuery);
+      const container = document.querySelector(".hub-content");
+      if (container) {
+        sessionStorage.setItem("visual3d_scroll", container.scrollTop.toString());
+      }
+      
       navigate("/model-viewer", { 
         state: { 
           itemData: selectedItem,

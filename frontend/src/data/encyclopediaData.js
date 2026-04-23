@@ -489,7 +489,7 @@ export const encyclopediaData = {
             name: "JEJAK VELOCIRAPTOR",
             modelPath: "/models/fosil/fosil_jejak/footprint_raptor.glb",
             image:
-              "https://media.sciencephoto.com/c0/59/74/79/c0597479-800px-wm.jpg",
+              "https://upload.wikimedia.org/wikipedia/commons/f/f4/Velociraptor_footprint_%2817100106312%29.jpg",
             period: "Mesozoikum (Kapur)",
             status: "PUNAH",
             description: {
@@ -692,7 +692,7 @@ export const encyclopediaData = {
             name: "GIGI MEGALODON",
             modelPath: "/models/fosil/fosil_tubuh/megalodon_teeth_fossil.glb",
             image:
-              "https://images-cdn.ubuy.co.id/653fefa96b30650eee069979-genuine-megalodon-shark-tooth-66-8.jpg",
+              "https://www.buriedtreasurefossils.com/media/magefan_blog/OSB-1---LC-meg.gif",
             period: "Kenozoikum (Miosen)",
             status: "PUNAH",
             description: {
@@ -820,7 +820,7 @@ export const encyclopediaData = {
       {
         title: "PALEOZOIKUM",
         desc: "Ledakan kehidupan laut purba.",
-        image: "/ImageModels/EraGeologi/1foto-paleozoikum.jpg",
+        image: "/ImageModels/EraGeologi/foto-paleozoikum.jpg",
         items: [
           {
             name: "ANOMALOCARIS",
@@ -993,7 +993,7 @@ export const encyclopediaData = {
       {
         title: "MESOZOIKUM",
         desc: "Zaman kejayaan reptil raksasa.",
-        image: "/ImageModels/EraGeologi/1foto-mesozoikum.jpg",
+        image: "/ImageModels/EraGeologi/foto-mesozoikum.jpg",
         items: [
           {
             name: "ALLOSAURUS",
@@ -1373,7 +1373,7 @@ export const encyclopediaData = {
       {
         title: "KENOZOIKUM",
         desc: "Era mamalia and manusia.",
-        image: "/ImageModels/EraGeologi/1foto-kenozoikum.jpg",
+        image: "/ImageModels/EraGeologi/foto-kenozoikum.jpg",
         items: [
           {
             name: "PARACERATHERIUM",
