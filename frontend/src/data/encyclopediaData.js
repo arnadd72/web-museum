@@ -160,7 +160,7 @@ export const encyclopediaData = {
         desc: "Sisa-sisa fosil kecil organisme purba.",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Nanoplankton-fossil-sediment_hg.jpg/330px-Nanoplankton-fossil-sediment_hg.jpg",
-        galleryImage: "/ImageModels/EraGeologi/anomalocaris.jpg",
+        galleryImage: "/ImageModels/EraGeologi/mikrofosil.jpg",
         items: [
           {
             name: "GLOBIGERINELLA BULLODES",
@@ -260,7 +260,7 @@ export const encyclopediaData = {
       {
         title: "VERTEBRATA",
         desc: "Hewan dengan struktur tulang belakang.",
-        image: "/ImageModels/EraGeologi/trex.jpg",
+        image: "/ImageModels/EraGeologi/vertebrata.jpg",
         items: [
           {
             name: "ALLOSAURUS",
@@ -460,7 +460,7 @@ export const encyclopediaData = {
       {
         title: "FOSIL JEJAK",
         desc: "Sisa aktivitas (Trace Fossils).",
-        image: "/ImageModels/EraGeologi/velociraptor.webp",
+        image: "/ImageModels/EraGeologi/fosiljejak.jpg",
         items: [
           {
             name: "JEJAK T-REX",
@@ -536,7 +536,7 @@ export const encyclopediaData = {
       {
         title: "TERAWETKAN",
         desc: "Organisme utuh dalam amber/es.",
-        image: "/ImageModels/EraGeologi/amphibian.jpg",
+        image: "/ImageModels/EraGeologi/fosilterawetkan.png",
         items: [
           {
             name: "DAUN PAKIS",
@@ -638,7 +638,7 @@ export const encyclopediaData = {
       {
         title: "FOSIL TUBUH",
         desc: "Sisa tulang, gigi, and cangkang.",
-        image: "/ImageModels/EraGeologi/smilodon.webp",
+        image: "/ImageModels/EraGeologi/fosiltubuh.jpg",
         items: [
           {
             name: "CAKAR VELOCIRAPTOR",
