@@ -95,6 +95,7 @@ const ModelViewer = ({ userData }) => {
   const [activeItem, setActiveItem] = useState(itemData);
   const [siblingItems, setSiblingItems] = useState([]);
   const [activeTab, setActiveTab] = useState("ANATOMY");
+  const [isLoading, setIsLoading] = useState(false);
 
   // === 2. SIBLING ITEMS UNTUK CAROUSEL BAWAH ===
   useEffect(() => {
@@ -107,6 +108,7 @@ const ModelViewer = ({ userData }) => {
   }, [returnContext]);
 
   const handleBack = () => {
+    setIsLoading(true);
     if (returnPath) {
       navigate(returnPath);
     } else if (returnContext) {
@@ -212,6 +214,12 @@ const ModelViewer = ({ userData }) => {
 
   return (
     <div className="hud-viewer-container">
+      {isLoading && (
+        <div className="fullscreen-loader">
+          <div className="spinner"></div>
+          <p>TERMINATING LINK...</p>
+        </div>
+      )}
       {/* === 1. 3D CANVAS FULLSCREEN === */}
       <div className="hud-canvas-wrapper">
         <Canvas

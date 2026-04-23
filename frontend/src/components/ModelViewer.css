@@ -1,3 +1,21 @@
+.fullscreen-loader {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: var(--neon-blue);
+  font-family: monospace;
+  letter-spacing: 3px;
+  pointer-events: none;
+}
+
 /* ==========================================================================
    GLOBAL LAYOUT (TACTICAL HUD STYLE)
    ========================================================================== */
