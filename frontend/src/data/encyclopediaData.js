@@ -6,7 +6,7 @@ export const encyclopediaData = {
     title: "MAKHLUK HIDUP",
     desc: "Analisis struktur biologis organisme purba.",
     color: "#00ff88",
-    image: "/ImageModels/EraGeologi/1foto-mesozoikum.jpg",
+    image: "/ImageModels/EraGeologi/foto-mesozoikum.jpg",
     subCategories: [
       {
         title: "INVERTEBRATA",
@@ -455,7 +455,7 @@ export const encyclopediaData = {
     title: "JENIS FOSIL",
     desc: "Klasifikasi batuan & mineral.",
     color: "#ff4d4d",
-    image: "/ImageModels/EraGeologi/1foto-kenozoikum.jpg",
+    image: "/ImageModels/EraGeologi/jenisfosil.jpg",
     subCategories: [
       {
         title: "FOSIL JEJAK",
@@ -815,7 +815,7 @@ export const encyclopediaData = {
     title: "ERA ZAMAN",
     desc: "Timeline sejarah bumi.",
     color: "#00d2ff",
-    image: "/ImageModels/EraGeologi/foto-mesozoikum.jpg",
+    image: "/ImageModels/EraGeologi/backgroundquiz.jpg",
     subCategories: [
       {
         title: "PALEOZOIKUM",
