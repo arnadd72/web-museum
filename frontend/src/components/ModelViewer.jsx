@@ -216,31 +216,28 @@ const ModelViewer = ({ userData }) => {
       <div className="hud-canvas-wrapper">
         <Canvas
           shadows
+          dpr={[1, 2]}
           camera={{ position: cameraPosition, fov: 45 }}
-          gl={{ antialias: true, preserveDrawingBuffer: true, toneMapping: 2 }}
+          gl={{ antialias: true, preserveDrawingBuffer: true }}
         >
           <color attach="background" args={["#020305"]} />
           <fog attach="fog" args={["#020305", 5, 20]} />
           <Suspense fallback={<Loader />}>
-            <Environment files="/textures/lighting.hdr" intensity={0.2} />
-            <ambientLight intensity={0.1} />
-            {/* Fokuskan Key Light untuk menonjolkan detail dan tekstur */}
-            <spotLight
-              position={[5, 8, 5]}
-              angle={0.3}
-              penumbra={0.5}
-              intensity={0.8}
+            <Environment files="/textures/lighting.hdr" intensity={0.8} />
+            <ambientLight intensity={0.5} />
+            {/* Main directional light for clear visibility and crisp shadows */}
+            <directionalLight
               castShadow
+              position={[5, 10, 7]}
+              intensity={1.2}
+              shadow-bias={-0.0001}
+              shadow-mapSize={[1024, 1024]}
             />
-            {/* Rim light tipis untuk memisahkan model dari background */}
-            <spotLight
-              position={[-5, 2, -5]}
-              angle={0.4}
-              penumbra={1}
-              intensity={0.3}
-              color="#ffffff"
+            {/* Fill light to prevent completely dark shadows */}
+            <directionalLight
+              position={[-5, 5, -5]}
+              intensity={0.5}
             />
-            <pointLight position={[0, 0, 5]} intensity={0.2} color="#ffffff" />
             <Resize scale={modelScale}>
               <Center>
                 <ModelErrorBoundary color={themeColor}>
