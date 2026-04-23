@@ -138,18 +138,8 @@ const EraGeologi = ({ userData }) => {
               <p className="info-desc">{currentData.desc}</p>
 
               <div className="info-actions">
-                <div
-                  className="btn-play-icon"
-                  style={{
-                    backgroundColor: currentData.color,
-                    cursor: "default",
-                  }}
-                >
-                  ▶
-                </div>
-
-                <button className="btn-outline" onClick={handleWatchVideo}>
-                  JELAJAHI ERA INI
+                <button className="btn-outline" onClick={handleWatchVideo} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '1rem' }}>▶</span> JELAJAHI ERA INI
                 </button>
               </div>
             </motion.div>
