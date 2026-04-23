@@ -1480,29 +1480,31 @@ body {
 /* ==========================================================================
    MEDIA QUERIES (RESPONSIVE)
    ========================================================================== */
+
+/* --- TABLET (max-width: 1024px) --- */
 @media screen and (max-width: 1024px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
+  /* NAVBAR */
+  .hud-nav {
+    padding: 1rem 2rem;
   }
-  .bento-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+  .nav-links {
+    gap: 1.5rem;
   }
-  .bento-large {
-    grid-column: 1 / 3;
-    grid-row: auto;
-    min-height: 300px;
-  }
-  .bento-ai,
-  .bento-3d {
-    grid-column: 1 / 2;
-    grid-row: auto;
-  }
-  .bento-era {
-    grid-column: 1 / 3;
-    grid-row: auto;
+  .nav-link {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
   }
 
+  /* HERO */
+  .hero-title {
+    font-size: clamp(3rem, 7vw, 5rem);
+  }
+  .hero-desc {
+    font-size: 1rem;
+    max-width: 500px;
+  }
+
+  /* TELEMETRY */
   .telemetry-inner {
     flex-direction: row;
     flex-wrap: wrap;
@@ -1517,10 +1519,73 @@ body {
     margin-bottom: 1rem;
   }
 
-  .radar-layout {
-    flex-direction: column;
+  /* BENTO GRID */
+  .bento-section {
+    padding: 4rem 5%;
+  }
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .bento-large {
+    grid-column: 1 / 3;
+    grid-row: auto;
+    min-height: 300px;
+  }
+  .bento-ai,
+  .bento-3d {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 250px;
+  }
+  .bento-era {
+    grid-column: 1 / 3;
+    grid-row: auto;
+    min-height: 250px;
   }
 
+  /* MODEL SHOWCASE */
+  .model-showcase-section {
+    padding: 5rem 5%;
+  }
+  .model-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .model-preview-card {
+    height: 420px;
+  }
+
+  /* QUIZ */
+  .quiz-section-revamp {
+    padding: 6rem 5%;
+  }
+  .quiz-split-layout {
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .quiz-visual-side {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .quiz-content-side {
+    text-align: center;
+  }
+  .quiz-description {
+    margin: 0 auto 3rem;
+  }
+  .quiz-stats-mini {
+    justify-content: center;
+  }
+  .quiz-action-area {
+    align-items: center;
+  }
+  .start-quiz-btn-revamp {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  /* TECH */
   .tech-container {
     flex-direction: column;
     text-align: center;
@@ -1528,9 +1593,113 @@ body {
   .tech-badges {
     justify-content: center;
   }
+
+  /* FOOTER */
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-links {
+    justify-content: center;
+    gap: 3rem;
+  }
 }
 
+/* --- MOBILE (max-width: 768px) --- */
 @media screen and (max-width: 768px) {
+  /* NAVBAR */
+  .hud-nav {
+    padding: 0.8rem 1.2rem;
+    flex-direction: row;
+    align-items: center;
+  }
+  .nav-links {
+    display: none;
+  }
+  .logo-main-brand {
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+  .nav-profile-stack {
+    padding-left: 0.8rem;
+    margin-left: 0.3rem;
+  }
+  .nav-rank-badge-modern {
+    font-size: 0.6rem;
+    padding: 2px 8px;
+  }
+  .nav-user-id-modern {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+  }
+
+  /* HERO */
+  .hero-section {
+    height: auto;
+    min-height: 100vh;
+    padding: 100px 5% 4rem;
+  }
+  .centered-hero {
+    max-width: 100%;
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+  .outline-text {
+    -webkit-text-stroke: 1.5px var(--neon-blue);
+  }
+  .hero-desc {
+    font-size: 0.95rem;
+    max-width: 100%;
+    margin: 1.5rem auto;
+  }
+  .cta-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+  .explore-btn {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 2rem;
+  }
+  .play-btn-wrapper {
+    justify-content: center;
+  }
+  .floating-tag {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+
+  /* TELEMETRY */
+  .telemetry-banner {
+    padding: 1.5rem 0;
+  }
+  .telemetry-inner {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .telemetry-item {
+    width: 100%;
+  }
+  .telemetry-value {
+    font-size: 2.5rem;
+  }
+  .telemetry-label {
+    font-size: 0.75rem;
+  }
+
+  /* BENTO GRID */
+  .bento-section {
+    padding: 3rem 5%;
+  }
+  .section-title {
+    font-size: 2.5rem;
+  }
+  .section-desc {
+    font-size: 1rem;
+  }
   .bento-grid {
     grid-template-columns: 1fr;
   }
@@ -1539,39 +1708,181 @@ body {
   .bento-3d,
   .bento-era {
     grid-column: 1 / -1;
+    min-height: 250px;
   }
-  .hud-nav {
-    padding: 1rem;
-    flex-direction: column;
+  .bento-large {
+    min-height: 300px;
   }
-  .nav-links {
-    display: none;
+  .bento-large h3 {
+    font-size: 2rem;
   }
-  .hero-title {
-    font-size: 3.5rem;
-  }
-  .hero-section {
-    height: auto;
-    padding-top: 120px;
-    padding-bottom: 5rem;
-  }
-  .cta-container {
-    flex-direction: column;
+  .bento-item h3 {
+    font-size: 1.5rem;
   }
 
-  .telemetry-item {
-    width: 100%;
+  /* MODEL SHOWCASE */
+  .model-showcase-section {
+    padding: 4rem 5%;
   }
-
-  .radar-screen {
-    width: 280px;
-    height: 280px;
-  }
-  .quiz-options {
+  .model-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .model-preview-card {
+    height: 400px;
+  }
+  .model-title {
+    font-size: 1.3rem;
+  }
+  .preview-desc {
+    font-size: 0.95rem;
+  }
+
+  /* QUIZ */
+  .quiz-section-revamp {
+    padding: 4rem 5%;
+  }
+  .glitch-text {
+    font-size: 2.5rem;
+  }
+  .quiz-description {
+    font-size: 1rem;
+  }
+  .quiz-stats-mini {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  .quiz-image-wrapper {
+    padding: 10px;
+  }
+
+  /* FOOTER */
+  .landing-footer {
+    padding: 3rem 5% 1rem;
+  }
+  .footer-brand h2 {
+    font-size: 2rem;
+    letter-spacing: 3px;
+  }
+  .footer-links {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-bottom {
+    font-size: 0.7rem;
+  }
+
+  /* AUDIO & CHATBOT */
+  .audio-control {
+    bottom: 1rem;
+    left: 1rem;
+    padding: 6px 12px;
+    font-size: 0.65rem;
+  }
+  .chatbot-wrapper {
+    bottom: 1rem;
+    right: 1rem;
   }
   .chatbot-window {
     width: 90vw;
+    height: 350px;
+  }
+  .chatbot-toggle {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+  }
+}
+
+/* --- SMALL MOBILE (max-width: 480px) --- */
+@media screen and (max-width: 480px) {
+  .hud-nav {
+    padding: 0.6rem 1rem;
+  }
+  .logo-main-brand {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+  .nav-profile-stack {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+  .hero-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .explore-btn {
+    font-size: 0.85rem;
+    padding: 0.8rem 1.5rem;
+  }
+  .play-btn-wrapper span {
+    font-size: 0.85rem;
+  }
+  .play-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 0.8rem;
+  }
+
+  .telemetry-value {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+  .bento-large {
+    min-height: 220px;
+  }
+  .bento-ai,
+  .bento-3d,
+  .bento-era {
+    min-height: 200px;
+  }
+  .bento-item {
+    padding: 1.5rem;
+  }
+
+  .model-preview-card {
+    height: 380px;
+  }
+  .model-card-frame {
+    padding: 1rem;
+  }
+  .model-title {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+  .render-btn {
+    font-size: 0.75rem;
+    padding: 0.6rem;
+  }
+
+  .glitch-text {
+    font-size: 2rem;
+  }
+  .quiz-description {
+    font-size: 0.9rem;
+  }
+  .start-quiz-btn-revamp {
+    font-size: 0.8rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .footer-brand h2 {
+    font-size: 1.5rem;
+  }
+  .footer-links {
+    gap: 1.5rem;
+  }
+  .link-group h4 {
+    margin-bottom: 1rem;
   }
 }
 
