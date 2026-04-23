@@ -903,8 +903,258 @@
 }
 
 @media screen and (max-width: 900px) {
-  .quiz-split-box { grid-template-columns: 1fr; }
-  .quiz-visual-side-playing { height: 300px; order: -1; }
-  .quiz-hud-modern { grid-template-columns: 1fr; text-align: center; gap: 1rem; }
-  .hud-cell.right { text-align: center; }
+  .quiz-split-box {
+    grid-template-columns: 1fr;
+  }
+  .quiz-visual-side-playing {
+    height: 250px;
+    order: -1;
+  }
+  .quiz-hud-modern {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1rem;
+  }
+  .hud-cell.right {
+    text-align: center;
+  }
+  .final-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-circle-modern {
+    margin: 0 auto;
+  }
+}
+
+/* --- MOBILE (max-width: 768px) --- */
+@media screen and (max-width: 768px) {
+  /* NAV */
+  .quiz-nav {
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .quiz-nav .btn-sys-back {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+  .sys-time {
+    font-size: 0.65rem;
+  }
+  .nav-rank-tag {
+    font-size: 0.65rem;
+  }
+
+  /* SELECTION SCREEN */
+  .selection-screen {
+    padding: 1rem;
+  }
+  .selection-header {
+    margin-bottom: 2rem;
+  }
+  .selection-header h1 {
+    font-size: 2rem;
+  }
+  .category-grid-revamp {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .category-card-revamp {
+    height: 280px;
+  }
+  .cat-card-content {
+    padding: 1.5rem;
+  }
+  .cat-card-content h3 {
+    font-size: 1.3rem;
+  }
+  .cat-card-content p {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .select-btn {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  /* PLAYING SCREEN */
+  .playing-screen-revamp {
+    padding: 0 1rem;
+  }
+  .quiz-hud-modern {
+    padding: 0.8rem 1rem;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .cell-value {
+    font-size: 1rem;
+  }
+  .quiz-split-box {
+    min-height: auto;
+  }
+  .quiz-question-side {
+    padding: 1.5rem;
+  }
+  .terminal-header-small {
+    font-size: 0.65rem;
+    margin-bottom: 1.5rem;
+  }
+  .question-content h2 {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+  }
+  .modern-opt-btn {
+    padding: 0.9rem;
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+  .opt-key {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+  .quiz-visual-side-playing {
+    height: 200px;
+  }
+
+  /* RESULT SCREEN */
+  .result-screen-revamp {
+    padding: 1rem;
+  }
+  .result-card-main {
+    padding: 2rem 1.5rem;
+  }
+  .result-header-text {
+    font-size: 0.9rem;
+    letter-spacing: 5px;
+  }
+  .success-announcement h2 {
+    font-size: 1.8rem;
+  }
+  .final-stats-grid {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+  .stat-circle-modern {
+    width: 130px;
+    height: 130px;
+  }
+  .circle-content .big-number {
+    font-size: 2.5rem;
+  }
+  .data-row {
+    font-size: 0.85rem;
+  }
+  .result-actions-revamp {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .retry-btn-tech, .home-btn-tech {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* REWARD / CERTIFICATE */
+  .reward-section {
+    padding: 1.5rem;
+  }
+  .digital-access-card {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+  .user-authority .value {
+    font-size: 1.4rem;
+  }
+  .card-top {
+    font-size: 0.7rem;
+    margin-bottom: 1.5rem;
+  }
+  .barcode {
+    width: 80px;
+    height: 20px;
+  }
+  .download-btn-tech {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.85rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* REGISTRATION */
+  .registration-screen {
+    padding: 1rem;
+  }
+  .registration-card {
+    padding: 2rem 1.5rem;
+  }
+  .card-header h1 {
+    font-size: 2rem;
+  }
+  .input-group-tech input {
+    font-size: 1.2rem;
+  }
+  .rank-info-preview {
+    padding: 1rem;
+  }
+}
+
+/* --- SMALL MOBILE (max-width: 480px) --- */
+@media screen and (max-width: 480px) {
+  .quiz-nav {
+    padding: 0.8rem 1rem;
+  }
+  .quiz-nav .btn-sys-back {
+    font-size: 0.6rem;
+  }
+  .sys-time {
+    display: none;
+  }
+
+  .selection-header h1 {
+    font-size: 1.6rem;
+  }
+  .category-card-revamp {
+    height: 240px;
+  }
+  .cat-icon-box {
+    font-size: 2rem;
+  }
+  .cat-card-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .question-content h2 {
+    font-size: 1rem;
+  }
+  .modern-opt-btn {
+    padding: 0.7rem;
+    font-size: 0.8rem;
+    gap: 10px;
+  }
+  .opt-key {
+    padding: 3px 8px;
+    font-size: 0.7rem;
+  }
+
+  .result-header-text {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+  }
+  .success-announcement h2 {
+    font-size: 1.5rem;
+  }
+  .stat-circle-modern {
+    width: 110px;
+    height: 110px;
+  }
+  .circle-content .big-number {
+    font-size: 2rem;
+  }
+
+  .card-header h1 {
+    font-size: 1.6rem;
+  }
+  .registration-card {
+    padding: 1.5rem 1rem;
+  }
 }
