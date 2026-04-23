@@ -217,27 +217,27 @@ const ModelViewer = ({ userData }) => {
         <Canvas
           shadows
           camera={{ position: cameraPosition, fov: 45 }}
-          gl={{ antialias: true, preserveDrawingBuffer: true, toneMapping: 1 }}
+          gl={{ antialias: true, preserveDrawingBuffer: true, toneMapping: 2 }}
         >
-          <color attach="background" args={["#030508"]} />
-          <fog attach="fog" args={["#030508", 5, 25]} />
+          <color attach="background" args={["#020305"]} />
+          <fog attach="fog" args={["#020305", 5, 20]} />
           <Suspense fallback={<Loader />}>
-            <Environment files="/textures/lighting.hdr" intensity={0.15} />
+            <Environment files="/textures/lighting.hdr" intensity={0.2} />
             <ambientLight intensity={0.1} />
-            {/* Key Light - Soft and focused for detail */}
+            {/* Fokuskan Key Light untuk menonjolkan detail dan tekstur */}
             <spotLight
-              position={[5, 5, 5]}
-              angle={0.4}
-              penumbra={1}
-              intensity={0.5}
+              position={[5, 8, 5]}
+              angle={0.3}
+              penumbra={0.5}
+              intensity={0.8}
               castShadow
             />
-            {/* Rim Light - To highlight silhouette/edges */}
+            {/* Rim light tipis untuk memisahkan model dari background */}
             <spotLight
               position={[-5, 2, -5]}
               angle={0.4}
               penumbra={1}
-              intensity={0.4}
+              intensity={0.3}
               color="#ffffff"
             />
             <pointLight position={[0, 0, 5]} intensity={0.2} color="#ffffff" />
