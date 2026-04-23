@@ -394,7 +394,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
         <div className="telemetry-inner">
           <div className="telemetry-item">
             <span className="telemetry-value">3</span>
-            <span className="telemetry-label">ERA AKTIF</span>
+            <span className="telemetry-label">ERA ZAMAN</span>
           </div>
           <div className="telemetry-divider"></div>
           <div className="telemetry-item">

@@ -11,7 +11,7 @@ export const encyclopediaData = {
       {
         title: "INVERTEBRATA",
         desc: "Organisme lunak tanpa tulang belakang.",
-        image: "/ImageModels/EraGeologi/anomalocaris.jpg",
+        image: "/ImageModels/EraGeologi/INVERTEBRATA.jpeg",
         items: [
           {
             name: "AMMONITE",
@@ -160,7 +160,7 @@ export const encyclopediaData = {
         desc: "Sisa-sisa fosil kecil organisme purba.",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Nanoplankton-fossil-sediment_hg.jpg/330px-Nanoplankton-fossil-sediment_hg.jpg",
-        galleryImage: "/ImageModels/EraGeologi/mikrofosil.jpg",
+        galleryImage: "/ImageModels/EraGeologi/MIKROFOSIL.jpeg",
         items: [
           {
             name: "GLOBIGERINELLA BULLODES",
@@ -260,7 +260,7 @@ export const encyclopediaData = {
       {
         title: "VERTEBRATA",
         desc: "Hewan dengan struktur tulang belakang.",
-        image: "/ImageModels/EraGeologi/vertebrata.jpg",
+        image: "/ImageModels/EraGeologi/VERTEBRATA.jpeg",
         items: [
           {
             name: "ALLOSAURUS",
@@ -460,7 +460,7 @@ export const encyclopediaData = {
       {
         title: "FOSIL JEJAK",
         desc: "Sisa aktivitas (Trace Fossils).",
-        image: "/ImageModels/EraGeologi/fosiljejak.jpg",
+        image: "/ImageModels/EraGeologi/FOSILJEJAKK.jpg",
         items: [
           {
             name: "JEJAK T-REX",
@@ -536,7 +536,7 @@ export const encyclopediaData = {
       {
         title: "TERAWETKAN",
         desc: "Organisme utuh dalam amber/es.",
-        image: "/ImageModels/EraGeologi/fosilterawetkan.png",
+        image: "/ImageModels/EraGeologi/TERAWETKAN.jpg",
         items: [
           {
             name: "DAUN PAKIS",
@@ -638,7 +638,7 @@ export const encyclopediaData = {
       {
         title: "FOSIL TUBUH",
         desc: "Sisa tulang, gigi, and cangkang.",
-        image: "/ImageModels/EraGeologi/fosiltubuh.jpg",
+        image: "/ImageModels/EraGeologi/FOSILTUBUHH.jpg",
         items: [
           {
             name: "CAKAR VELOCIRAPTOR",

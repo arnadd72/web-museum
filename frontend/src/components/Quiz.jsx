@@ -60,7 +60,9 @@ const Quiz = ({ userData, onComplete }) => {
     if (catId === "Gabungan Keseluruhan") {
       filtered = [...quizData].sort(() => 0.5 - Math.random()).slice(0, 15);
     } else {
-      filtered = quizData.filter((q) => q.kategori === catId).sort(() => 0.5 - Math.random());
+      filtered = quizData
+        .filter((q) => q.kategori === catId)
+        .sort(() => 0.5 - Math.random());
     }
 
     if (filtered.length === 0) {
@@ -116,7 +118,7 @@ const Quiz = ({ userData, onComplete }) => {
       allowTaint: true,
     }).then((canvas) => {
       const link = document.createElement("a");
-      link.download = `Sertifikat_${userName}_JejakPurba.png`;
+      link.download = `Sertifikat_${userName}_purbatech.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     });
@@ -392,7 +394,7 @@ const Quiz = ({ userData, onComplete }) => {
 
                   <div id="certificate-print" className="digital-access-card">
                     <div className="card-top">
-                      <div className="card-logo">JEJAK PURBA</div>
+                      <div className="card-logo">PURBATECH</div>
                       <div className="card-id">
                         ID: #{Math.floor(Math.random() * 90000) + 10000}
                       </div>
