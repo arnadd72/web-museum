@@ -221,7 +221,7 @@ const ModelViewer = ({ userData }) => {
           gl={{ antialias: true, preserveDrawingBuffer: true }}
         >
           <color attach="background" args={["#020305"]} />
-          <fog attach="fog" args={["#020305", 5, 20]} />
+          <fog attach="fog" args={["#020305", 10, 70]} />
           <Suspense fallback={<Loader />}>
             <Environment files="/textures/lighting.hdr" intensity={0.8} />
             <ambientLight intensity={0.5} />
