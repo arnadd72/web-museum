@@ -646,84 +646,6 @@
 }
 
 /* ==========================================================================
-   MOBILE RESPONSIVE
-   ========================================================================== */
-@media screen and (max-width: 1024px) {
-  .hud-panel {
-    width: 320px;
-    padding: 1.5rem;
-  }
-  .left-panel {
-    left: 1.5rem;
-  }
-  .right-panel {
-    right: 1.5rem;
-  }
-  .hud-main-title {
-    font-size: 2rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .hud-top-nav {
-    padding: 1rem;
-  }
-  .hud-nav-status {
-    display: none;
-  }
-
-  .hud-canvas-wrapper {
-    height: 45vh;
-    top: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .hud-panel {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0;
-    padding: 1.5rem;
-    background: #05080c;
-    backdrop-filter: none;
-    box-shadow: none;
-  }
-
-  .hud-viewer-container {
-    overflow-y: auto;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  .hud-viewer-container::before {
-    content: "";
-    display: block;
-    height: 45vh;
-    width: 100%;
-    flex-shrink: 0;
-  }
-
-  .hud-bottom-carousel {
-    position: relative;
-    bottom: 0;
-    padding: 1rem;
-    background: #030508;
-  }
-  .panel-corner {
-    display: none;
-  }
-  .hud-center-reticle {
-    width: 250px;
-    height: 250px;
-  }
-}
-
-/* ==========================================================================
    CONTROLS HINT
    ========================================================================== */
 .hud-controls-hint {
@@ -763,11 +685,208 @@
   font-weight: bold;
 }
 
+/* ==========================================================================
+   RESPONSIVE
+   ==========================================================================  */
+
+/* --- TABLET (max-width: 1024px) --- */
+@media screen and (max-width: 1024px) {
+  .hud-panel {
+    width: 300px;
+    padding: 1.2rem;
+  }
+  .left-panel {
+    left: 1rem;
+  }
+  .right-panel {
+    right: 1rem;
+  }
+  .hud-main-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* --- MOBILE (max-width: 768px) --- */
 @media screen and (max-width: 768px) {
-  .hud-controls-hint {
-    top: 70px;
+  /* NAVBAR */
+  .hud-top-nav {
+    padding: 0.8rem 1rem;
+    gap: 0.5rem;
+  }
+  .hud-back-btn {
     font-size: 0.7rem;
-    padding: 6px 15px;
+    letter-spacing: 1px;
+    gap: 5px;
+  }
+  .hud-nav-status {
+    display: none;
+  }
+  .gallery-profile {
+    display: none;
+  }
+
+  /* CONTAINER: Scroll layout instead of overlay */
+  .hud-viewer-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  /* 3D CANVAS: Fixed portion at top */
+  .hud-canvas-wrapper {
+    position: relative;
+    height: 45vh;
+    min-height: 300px;
+    width: 100%;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .hud-center-reticle {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* HUD PANELS: Stack below canvas */
+  .hud-panel {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0;
+    padding: 1.2rem 1.5rem;
+    background: #05080c;
     backdrop-filter: none;
+    box-shadow: none;
+  }
+  .left-panel,
+  .right-panel {
+    left: auto;
+    right: auto;
+  }
+  .panel-corner {
+    display: none;
+  }
+
+  /* Panel content */
+  .hud-main-title {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+  }
+  .specimen-subtitle {
+    font-size: 0.8rem;
+  }
+  .hud-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
+  .data-block-row {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .data-block {
+    width: 100%;
+  }
+
+  /* Stats panel */
+  .stat-entry {
+    padding: 8px 0;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+  }
+  .stat-value {
+    font-size: 0.9rem;
+  }
+
+  /* BOTTOM CAROUSEL */
+  .hud-bottom-carousel {
+    position: relative;
+    bottom: auto;
+    padding: 1rem;
+    background: #030508;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .carousel-track {
+    gap: 10px;
+  }
+  .carousel-card-mini {
+    width: 70px;
+    height: 50px;
+  }
+
+  /* CONTROLS HINT */
+  .hud-controls-hint {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin: 0 auto;
+    width: max-content;
+    font-size: 0.6rem;
+    padding: 5px 12px;
+    gap: 6px;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  .hud-controls-hint kbd {
+    padding: 1px 5px;
+    font-size: 0.55rem;
+  }
+}
+
+/* --- SMALL MOBILE (max-width: 480px) --- */
+@media screen and (max-width: 480px) {
+  .hud-top-nav {
+    padding: 0.6rem 0.8rem;
+  }
+  .hud-back-btn {
+    font-size: 0.6rem;
+    letter-spacing: 0.5px;
+  }
+  .hud-canvas-wrapper {
+    height: 40vh;
+    min-height: 250px;
+  }
+  .hud-center-reticle {
+    width: 160px;
+    height: 160px;
+  }
+  .hud-main-title {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+  .hud-panel {
+    padding: 1rem;
+  }
+  .hud-desc {
+    font-size: 0.8rem;
+  }
+  .stat-label {
+    font-size: 0.6rem;
+  }
+  .stat-value {
+    font-size: 0.8rem;
+  }
+  .carousel-card-mini {
+    width: 60px;
+    height: 40px;
+  }
+  .hud-controls-hint {
+    font-size: 0.55rem;
+    padding: 4px 10px;
   }
 }
