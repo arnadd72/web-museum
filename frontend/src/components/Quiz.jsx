@@ -60,7 +60,7 @@ const Quiz = ({ userData, onComplete }) => {
     if (catId === "Gabungan Keseluruhan") {
       filtered = [...quizData].sort(() => 0.5 - Math.random()).slice(0, 15);
     } else {
-      filtered = quizData.filter((q) => q.kategori === catId);
+      filtered = quizData.filter((q) => q.kategori === catId).sort(() => 0.5 - Math.random());
     }
 
     if (filtered.length === 0) {
