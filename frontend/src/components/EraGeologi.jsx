@@ -18,7 +18,7 @@ const EraGeologi = ({ userData }) => {
       image: "/ImageModels/EraGeologi/foto-paleozoikum.jpg",
       color: "#00d2ff",
       video: "/paleozoikum.mp4",
-      cardImg: "/ImageModels/EraGeologi/anomalocaris.jpg", // Gambar untuk thumbnail kartu
+      cardImg: "/ImageModels/EraGeologi/PALEOZOIKUM.jpg", // Gambar untuk thumbnail kartu
     },
     {
       id: 1,
@@ -29,7 +29,7 @@ const EraGeologi = ({ userData }) => {
       image: "/ImageModels/EraGeologi/foto-mesozoikum.jpg",
       color: "#ff4d4d",
       video: "/mesozoikum.mp4",
-      cardImg: "/ImageModels/EraGeologi/trex.jpg",
+      cardImg: "/ImageModels/EraGeologi/MESOZOIKUM.jpg",
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ const EraGeologi = ({ userData }) => {
       image: "/ImageModels/EraGeologi/foto-kenozoikum.jpg",
       color: "#00ff88",
       video: "/neozoikum.mp4",
-      cardImg: "/ImageModels/EraGeologi/mammoth.jpg",
+      cardImg: "/ImageModels/EraGeologi/KENOZOIKUM.jpg",
     },
   ];
 
@@ -138,8 +138,12 @@ const EraGeologi = ({ userData }) => {
               <p className="info-desc">{currentData.desc}</p>
 
               <div className="info-actions">
-                <button className="btn-outline" onClick={handleWatchVideo} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '1rem' }}>▶</span> JELAJAHI ERA INI
+                <button
+                  className="btn-outline"
+                  onClick={handleWatchVideo}
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <span style={{ fontSize: "1rem" }}>▶</span> JELAJAHI ERA INI
                 </button>
               </div>
             </motion.div>
