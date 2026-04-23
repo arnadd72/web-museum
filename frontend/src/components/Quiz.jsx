@@ -378,7 +378,7 @@ const Quiz = ({ userData, onComplete }) => {
             >
               <div className="result-container-modern">
                 <div className="result-card-main">
-                  <div className="result-header-text">EVALUASI_SELESAI</div>
+                  <div className="result-header-text">EVALUASI SELESAI</div>
                   <div className="success-announcement">
                     <div className="status-blink-green">
                       OTENTIKASI BERHASIL

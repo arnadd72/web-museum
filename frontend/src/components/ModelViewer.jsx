@@ -222,22 +222,22 @@ const ModelViewer = ({ userData }) => {
           <color attach="background" args={["#030508"]} />
           <fog attach="fog" args={["#030508", 5, 25]} />
           <Suspense fallback={<Loader />}>
-            <Environment files="/textures/lighting.hdr" intensity={1.5} />
-            <ambientLight intensity={1.2} />
+            <Environment files="/textures/lighting.hdr" intensity={0.8} />
+            <ambientLight intensity={0.5} />
             <spotLight
               position={[10, 15, 10]}
               angle={0.3}
               penumbra={1}
-              intensity={3}
+              intensity={1.5}
               castShadow
             />
             {/* Fill light to reduce harsh dark shadows */}
             <pointLight
               position={[-10, 5, -10]}
-              intensity={2}
+              intensity={0.8}
               color="#ffffff"
             />
-            <pointLight position={[0, 0, 10]} intensity={1.5} color="#ffffff" />
+            <pointLight position={[0, 0, 10]} intensity={0.6} color="#ffffff" />
             <Resize scale={modelScale}>
               <Center>
                 <ModelErrorBoundary color={themeColor}>
