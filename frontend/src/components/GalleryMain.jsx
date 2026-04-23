@@ -475,8 +475,8 @@ const GalleryMain = ({ userData }) => {
                   src={activeItem.image}
                   alt={activeItem.name}
                   className="slider-main-img"
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ duration: 0.8 }}
                 />
                 <div className="slider-overlay"></div>

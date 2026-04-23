@@ -850,7 +850,7 @@ export const encyclopediaData = {
             name: "DIMETRODON",
             modelPath: "/models/geologi/era_paleozoikum/dimetrodon.glb",
             image:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7Om1KbpIjtaEVrAfucbh-LepeHUcPK6i_Ng&s",
+              "https://dinosaurland.es/wp-content/uploads/2024/01/dinosaurio-dimetrodon-dinosaurland.jpg",
             period: "Paleozoikum (Permian)",
             status: "PUNAH",
             description: {
@@ -874,7 +874,7 @@ export const encyclopediaData = {
             modelPath:
               "/models/geologi/era_paleozoikum/dinorauls_arthropleura.glb",
             image:
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Arthropleura_Reconstruction.jpg/250px-Arthropleura_Reconstruction.jpg",
+              "https://en.clickpetroleoegas.com.br/wp-content/uploads/2025/12/Imagem-CPG-redimencionada-para-google-discovery-2025-12-30T194257.290.jpg",
             period: "Paleozoikum (Karbon)",
             status: "PUNAH",
             description: {
@@ -921,7 +921,7 @@ export const encyclopediaData = {
             name: "MEGANEURA",
             modelPath: "/models/geologi/era_paleozoikum/meganeura.glb",
             image:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkspHJnRrRvRBvObxlyzBGwvDr9F1H4birvQ&s",
+              "https://lenkas.com/wp-content/uploads/2018/09/meganeura.jpg?w=680&h=508",
             period: "Paleozoikum (Karbon)",
             status: "PUNAH",
             description: {
@@ -945,7 +945,7 @@ export const encyclopediaData = {
             modelPath:
               "/models/geologi/era_paleozoikum/model_of_a_trilobite.glb",
             image:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRstc9xAVu7a6fljWVLAqaDeOHWyE2U6R88Gg&s",
+              "https://www.nhm.ac.uk/content/dam/nhm-www/discover/trilobite-diet/trilobite-diet-full-width.jpg",
             period: "Paleozoikum (Kambrium)",
             status: "PUNAH",
             description: {
@@ -1380,7 +1380,7 @@ export const encyclopediaData = {
             modelPath:
               "/models/geologi/era_kenozoikum/dinorauls_paraceratherium.glb",
             image:
-              "https://www.fossilguy.com/gallery/vert/mammal/land/paraceratherium/paraceratherium-statue-5820747273.jpg",
+              "https://static.wikia.nocookie.net/pkgame/images/3/37/Paraceratherium_bugtiense.jpg/revision/latest?cb=20230321211751",
             period: "Kenozoikum (Oligosen)",
             status: "PUNAH",
             description: {
@@ -1427,7 +1427,7 @@ export const encyclopediaData = {
             modelPath:
               "/models/geologi/era_kenozoikum/phorusrhacos_longissimus_terror_bird.glb",
             image:
-              "https://imgapps.okezone.com/dynamic/content/2023/04/17/56/2800114/mengenal-terror-bird-burung-predator-purba-yang-sempat-jadi-puncak-rantai-makanan-gzmizQFatb.jpg?w=350",
+              "https://www.popsci.com/wp-content/uploads/2024/11/Terror-Bird.jpg?quality=85&w=1200",
             period: "Kenozoikum (Miosen)",
             status: "PUNAH",
             description: {
