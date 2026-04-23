@@ -249,7 +249,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1200);
+    const timer = setTimeout(() => setIsLoading(false), 700);
     return () => clearTimeout(timer);
   }, []);
 
@@ -311,8 +311,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
       {/* NAVBAR */}
       <nav className="navbar hud-nav animate-fade-down">
         <div className="logo-section">
-          <div className="logo-symbol">JP</div>
-          <div className="logo-main-brand">JEJAKPURBA</div>
+          <div className="logo-main-brand">PURBATECH</div>
 
           {userData?.rank && (
             <div className="nav-profile-stack">
@@ -364,20 +363,21 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             transition={{ duration: 0.8 }}
           >
             <div className="floating-tag flicker justify-center">
-              <span className="live-dot"></span> CONNECTION ESTABLISHED
+              <span className="live-dot"></span> PURBATECH WEBSITE
             </div>
             <h1 className="hero-title">
-              DATA <br />
-              <span className="outline-text">EKSKAVASI</span>
+              Evolusi <br />
+              <span className="outline-text">Digital</span>
             </h1>
             <p className="hero-desc text-center">
-              Sistem operasi museum digital. Akses eksklusif ke arsip evolusi
-              bumi. Memproses rekonstruksi makhluk purba dari Era Paleozoikum
-              hingga Kenozoikum melalui analisis Neural Network.
+              Platform museum digital yang menggabungkan fosil, ensiklopedia
+              makhluk hidup, dan pengalaman interaktif. Temukan dunia purba,
+              pelajari evolusi, dan uji pengetahuanmu dalam satu ekosistem
+              futuristik.
             </p>
             <div className="cta-container justify-center">
               <button className="explore-btn" onClick={onStart}>
-                AKSES ENSIKLOPEDIA
+                MULAI JELAJAHI
               </button>
               <div className="play-btn-wrapper" onClick={onTimeline}>
                 <div className="play-icon">▶</div>
@@ -399,17 +399,12 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
           <div className="telemetry-divider"></div>
           <div className="telemetry-item">
             <span className="telemetry-value">50+</span>
-            <span className="telemetry-label">ENTITAS FOSIL</span>
+            <span className="telemetry-label">ENTITAS SPESIMEN</span>
           </div>
           <div className="telemetry-divider"></div>
           <div className="telemetry-item">
             <span className="telemetry-value">100%</span>
             <span className="telemetry-label">INTEGRITAS DATA</span>
-          </div>
-          <div className="telemetry-divider"></div>
-          <div className="telemetry-item">
-            <span className="telemetry-value text-glow">ON</span>
-            <span className="telemetry-label">ARCA AI</span>
           </div>
         </div>
       </section>
@@ -659,7 +654,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
       <footer className="landing-footer">
         <div className="footer-content">
           <div className="footer-brand">
-            <h2>JP</h2>
+            <h2>PURBATECH</h2>
             <p>Digital Museum Project</p>
           </div>
           <div className="footer-links">
@@ -672,7 +667,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             <div className="link-group">
               <h4>TEKNOLOGI</h4>
               <span>React / Framer Motion</span>
-              <span>AI Integration</span>
+              <span>CSS Animation</span>
               <span>Interactive Quiz</span>
             </div>
             <div className="link-group">

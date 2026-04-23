@@ -86,10 +86,14 @@ const EraGeologi = ({ userData }) => {
 
       <nav className="showcase-nav">
         <div className="nav-brand-group">
-          <div className="nav-brand">
+          <Link
+            to="/"
+            className="nav-brand"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <div className="logo-icon">JP</div>
             <span>JEJAK PURBA</span>
-          </div>
+          </Link>
 
           {userData?.rank && (
             <div className="nav-profile-stack gallery-profile">
@@ -105,7 +109,7 @@ const EraGeologi = ({ userData }) => {
         </div>
 
         <div className="nav-links">
-          <Link to="/">BERANDA</Link>
+          <Link to="/">KEMBALI KE BERANDA</Link>
           <Link to="/gallery">ENSIKLOPEDIA</Link>
           <Link to="/visual-3d">VISUAL 3D</Link>
         </div>
@@ -134,13 +138,16 @@ const EraGeologi = ({ userData }) => {
               <p className="info-desc">{currentData.desc}</p>
 
               <div className="info-actions">
-                <button
+                <div
                   className="btn-play-icon"
-                  style={{ backgroundColor: currentData.color }}
-                  onClick={handleWatchVideo}
+                  style={{
+                    backgroundColor: currentData.color,
+                    cursor: "default",
+                  }}
                 >
                   ▶
-                </button>
+                </div>
+
                 <button className="btn-outline" onClick={handleWatchVideo}>
                   JELAJAHI ERA INI
                 </button>

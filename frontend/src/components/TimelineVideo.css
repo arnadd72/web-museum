@@ -1,168 +1,444 @@
 /* ==========================================================================
-   GLOBAL RESET
+   GLOBAL RESET & CONTAINER
    ========================================================================== */
-   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* Wajib agar padding tidak menambah lebar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.video-page-container {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #030508;
+  color: #e0f7fa;
+  font-family: "Rajdhani", sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background Effects */
+.video-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.video-radial-glow {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vh;
+  background: radial-gradient(
+    circle,
+    rgba(0, 210, 255, 0.05) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   LOADING DECRYPTION
+   ========================================================================== */
+.decryption-loader {
+  text-align: center;
+  z-index: 10;
+}
+
+.cyber-spinner {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(0, 210, 255, 0.2);
+  border-top-color: #00d2ff;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+.decryption-loader h2 {
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: #00d2ff;
+  margin-bottom: 10px;
+}
+
+.cyber-code {
+  font-family: monospace;
+  color: #8fa3b0;
+  letter-spacing: 1px;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
   }
-  
-  /* ==========================================================================
-     CONTAINER UTAMA (MOBILE FIRST)
-     Logika: Mulai dari atas (flex-start), bukan tengah.
-     ========================================================================== */
-  .video-page-container {
-    width: 100%;
-    min-height: 100vh;
-    background: radial-gradient(ellipse at center, #0a1a22 0%, #000 70%);
-    color: white;
-    font-family: "Rajdhani", sans-serif;
-    overflow-x: hidden; /* Mencegah scroll samping */
-    
-    /* PENTING UNTUK HP: */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* JANGAN CENTER! Biar ga kepotong kiri/atas */
-    align-items: center;
-    
-    /* Padding agar konten tidak nempel pinggir layar */
-    padding: 80px 20px 40px 20px;
+}
+
+/* ==========================================================================
+   NAVIGATION BAR
+   ========================================================================== */
+.video-nav {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background: linear-gradient(180deg, rgba(3, 5, 8, 0.9) 0%, transparent 100%);
+  pointer-events: auto;
+}
+
+.video-back-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #8fa3b0;
+  padding: 0.8rem 1.5rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+}
+
+.video-back-btn:hover {
+  background: rgba(0, 210, 255, 0.1);
+  border-color: #00d2ff;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+.video-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: monospace;
+  font-weight: bold;
+  color: #ff4d4d;
+  background: rgba(255, 77, 77, 0.1);
+  padding: 5px 15px;
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  border-radius: 20px;
+}
+
+.video-status-badge .status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ff4d4d;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff4d4d;
+}
+
+/* ==========================================================================
+   MAIN LAYOUT (SPLIT DESIGN)
+   ========================================================================== */
+.timeline-layout-wrapper {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem 5%;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --- KIRI: VIDEO SECTION --- */
+.video-main-section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Mencegah flex child overflow */
+}
+
+.video-header {
+  margin-bottom: 1.5rem;
+}
+
+.glitch-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  margin-bottom: 5px;
+  text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.subtitle-tech {
+  font-family: monospace;
+  color: #00d2ff;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+}
+
+/* Cyber Video Frame */
+.cyber-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(0, 210, 255, 0.1);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.main-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Video memenuhi layar secara proporsional */
+  position: relative;
+  z-index: 1;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(0, 210, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
+  animation: scan 4s linear infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.video-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* SVG Corners (Bentuk L teknis) */
+.frame-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.8;
+}
+.frame-corner.tl {
+  top: 10px;
+  left: 10px;
+}
+.frame-corner.tr {
+  top: 10px;
+  right: 10px;
+}
+.frame-corner.bl {
+  bottom: 10px;
+  left: 10px;
+}
+.frame-corner.br {
+  bottom: 10px;
+  right: 10px;
+}
+
+/* --- KANAN: TELEMETRY PANEL --- */
+.video-telemetry-section {
+  flex: 1;
+  max-width: 400px;
+}
+
+.telemetry-panel {
+  background: rgba(10, 15, 25, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  padding: 2rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.panel-header {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+  padding-bottom: 1rem;
+}
+
+.panel-header h3 {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.file-id {
+  font-family: monospace;
+  color: #00d2ff;
+  font-size: 0.85rem;
+}
+
+.telemetry-data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.telemetry-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.t-label {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #8fa3b0;
+  letter-spacing: 1px;
+}
+
+.t-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Audio Visualizer Effect */
+.audio-visualizer-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cyber-equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.cyber-equalizer span {
+  flex: 1;
+  background: #00d2ff;
+  animation: eq 0.6s infinite alternate;
+}
+
+.cyber-equalizer span:nth-child(even) {
+  background: #00ff88;
+  animation-delay: 0.2s;
+}
+.cyber-equalizer span:nth-child(3n) {
+  animation-delay: 0.4s;
+}
+
+/* System Warning Box */
+.system-warning {
+  display: flex;
+  gap: 15px;
+  background: rgba(255, 210, 0, 0.1);
+  border-left: 4px solid #ffd200;
+  padding: 1rem;
+}
+
+.warn-icon {
+  font-size: 1.5rem;
+  color: #ffd200;
+}
+
+.system-warning p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================================================
+   UTILITIES & KEYFRAMES
+   ========================================================================== */
+@keyframes scan {
+  from {
+    top: 0;
   }
-  
-  /* TOMBOL KEMBALI */
-  .video-back-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-size: 0.75rem;
-    z-index: 50;
-    border-radius: 4px;
+  to {
+    top: 100%;
   }
-  
-  /* WRAPPER KONTEN */
-  .timeline-wrapper {
-    width: 100%;
-    max-width: 1000px; /* Batas lebar di Desktop */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+}
+@keyframes eq {
+  0% {
+    height: 10%;
   }
-  
-  /* HEADER */
-  .video-header {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .video-header h1 {
-    font-size: 1.4rem; /* Ukuran pas di HP */
-    line-height: 1.2;
-    margin-bottom: 5px;
-    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
-  }
-  
-  .video-header p {
-    font-size: 0.65rem;
-    color: #00d2ff;
-    letter-spacing: 2px;
-  }
-  
-  /* FRAME VIDEO */
-  .video-frame {
-    position: relative;
-    width: 100%; /* Mengikuti lebar wrapper */
-    aspect-ratio: 16 / 9; /* Menjaga bentuk persegi panjang */
-    background: black;
-    border: 1px solid rgba(0, 210, 255, 0.3);
-    box-shadow: 0 0 15px rgba(0, 210, 255, 0.1);
-    margin-bottom: 10px;
-  }
-  
-  .main-video {
-    width: 100%;
+  100% {
     height: 100%;
-    object-fit: contain;
   }
-  
-  /* Scan Line Effect */
-  .scan-line {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 2px;
-    background: #00d2ff; opacity: 0.3;
-    animation: scan 4s linear infinite;
-    pointer-events: none;
+}
+.blink-text {
+  animation: blinkWarn 1.5s infinite;
+}
+@keyframes blinkWarn {
+  0%,
+  100% {
+    opacity: 1;
   }
-  @keyframes scan { from { top: 0; } to { top: 100%; } }
-  
-  /* FOOTER INFO (Di Bawah Video) */
-  .video-footer {
-    width: 100%;
-    display: flex;
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media screen and (max-width: 1024px) {
+  .timeline-layout-wrapper {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 5px;
-    margin-top: 10px;
-    font-family: monospace;
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.5);
+    padding: 2rem 5%;
   }
-  
-  /* Hiasan Siku (Kecil di HP) */
+
+  .video-telemetry-section {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .telemetry-data-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .video-nav {
+    padding: 1rem;
+  }
+
+  .glitch-title {
+    font-size: 1.8rem;
+  }
+
+  .telemetry-data-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .frame-corner {
-    position: absolute; width: 10px; height: 10px;
-    border: 2px solid #00d2ff; pointer-events: none;
+    width: 25px;
+    height: 25px;
   }
-  .top-left { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
-  .top-right { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
-  .bottom-left { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
-  .bottom-right { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
-  
-  
-  /* ==========================================================================
-     KHUSUS DESKTOP / LAPTOP (Layar > 768px)
-     Baru kita aktifkan layout tengah (Center)
-     ========================================================================== */
-  @media screen and (min-width: 768px) {
-    
-    .video-page-container {
-      justify-content: center; /* Kembali ke tengah layar */
-      height: 100vh;
-      padding: 0;
-      overflow: hidden; /* Desktop tidak perlu scroll */
-    }
-  
-    .timeline-wrapper {
-      width: 80%;
-    }
-  
-    .video-header h1 {
-      font-size: 2.5rem;
-    }
-    
-    .video-back-btn {
-      top: 30px; left: 30px;
-      padding: 10px 20px;
-      font-size: 0.8rem;
-    }
-  
-    /* Footer pindah ke dalam video (Pojok Kanan) */
-    .video-footer {
-      position: absolute;
-      bottom: 10px; right: 20px;
-      width: auto;
-      align-items: flex-end;
-      margin-top: 0;
-      pointer-events: none; /* Agar tidak halangi klik */
-    }
-  
-    .frame-corner {
-      width: 30px; height: 30px;
-    }
-  }
+}

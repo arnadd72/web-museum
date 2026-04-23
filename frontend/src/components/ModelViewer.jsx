@@ -98,10 +98,7 @@ const ModelViewer = ({ userData }) => {
 
   // === 2. SIBLING ITEMS UNTUK CAROUSEL BAWAH ===
   useEffect(() => {
-    if (
-      returnContext &&
-      encyclopediaData[returnContext.targetCategory]
-    ) {
+    if (returnContext && encyclopediaData[returnContext.targetCategory]) {
       const sub = encyclopediaData[
         returnContext.targetCategory
       ].subCategories.find((s) => s.title === returnContext.targetSubCategory);
@@ -119,10 +116,16 @@ const ModelViewer = ({ userData }) => {
     }
   };
 
+  // === DATA EKSPANSI (MENAMBAH DETAIL PALSU/FALLBACK JIKA DI DB KOSONG) ===
   const extendedData = useMemo(() => {
     if (!activeItem) return {};
     const dbDesc = activeItem.description || {};
     const customInfo = activeItem.customInfo || {};
+
+    // Generate fallback data based on type if missing in DB
+    const isCarnivore =
+      activeItem.desc?.toLowerCase().includes("predator") ||
+      activeItem.name?.toLowerCase().includes("rex");
 
     return {
       scientificName:
@@ -137,12 +140,43 @@ const ModelViewer = ({ userData }) => {
         "Prasejarah",
       funFact:
         dbDesc.key ||
-        "Spesies ini memiliki peran penting dalam rantai makanan purba.",
-      discoveryYear: customInfo.discoveryYear || "Abad ke-19",
-      stats: customInfo.stats || { completeness: 85, rarity: 70, value: 90 },
+        "Spesimen ini memiliki jejak genetik yang mempengaruhi rantai evolusi modern.",
+      discoveryYear:
+        customInfo.discoveryYear ||
+        (Math.floor(Math.random() * (2020 - 1850 + 1)) + 1850).toString(),
+      stats: customInfo.stats || {
+        completeness: Math.floor(Math.random() * 40) + 60, // 60-99
+        rarity: Math.floor(Math.random() * 30) + 70, // 70-99
+        value: Math.floor(Math.random() * 20) + 80, // 80-99
+      },
       desc: activeItem.description
         ? activeItem.description.full || activeItem.description.short
         : activeItem.desc,
+
+      // BIO STATS BARU
+      height:
+        customInfo.height ||
+        (activeItem.type === "INVERTEBRATA" ? "0.5 Meter" : "4.2 Meter"),
+      weight:
+        customInfo.weight ||
+        (activeItem.type === "INVERTEBRATA" ? "12 Kg" : "6.5 Ton"),
+      diet:
+        customInfo.diet ||
+        (isCarnivore ? "Karnivora (Daging)" : "Herbivora / Omnivora"),
+      threatLevel:
+        customInfo.threatLevel ||
+        (isCarnivore ? "CLASS A - APEX" : "CLASS C - DOCILE"),
+
+      // WAWASAN BARU
+      habitat:
+        customInfo.habitat ||
+        "Rawa Prasejarah, Hutan Konifer Kuno, Dataran Pesisir.",
+      behavior:
+        customInfo.behavior ||
+        "Analisis tengkorak menunjukkan sifat teritorial yang kuat dan kemampuan sensorik adaptif.",
+      extinction:
+        customInfo.extinction ||
+        "Peristiwa Kepunahan Massal (K-Pg / Permian-Triassic). Perubahan iklim drastis.",
     };
   }, [activeItem]);
 
@@ -183,33 +217,40 @@ const ModelViewer = ({ userData }) => {
         <Canvas
           shadows
           camera={{ position: cameraPosition, fov: 45 }}
-          gl={{ antialias: true, preserveDrawingBuffer: true }}
+          gl={{ antialias: true, preserveDrawingBuffer: true, toneMapping: 1 }}
         >
           <color attach="background" args={["#030508"]} />
           <fog attach="fog" args={["#030508", 5, 25]} />
-
           <Suspense fallback={<Loader />}>
-            <Environment files="/textures/lighting.hdr" />
-            <ambientLight intensity={0.5} />
+            <Environment files="/textures/lighting.hdr" intensity={1.5} />
+            <ambientLight intensity={1.2} />
             <spotLight
               position={[10, 15, 10]}
               angle={0.3}
               penumbra={1}
-              intensity={2}
+              intensity={3}
               castShadow
             />
-            <pointLight position={[-10, -10, -10]} intensity={1} />
-
+            {/* Fill light to reduce harsh dark shadows */}
+            <pointLight
+              position={[-10, 5, -10]}
+              intensity={2}
+              color="#ffffff"
+            />
+            <pointLight position={[0, 0, 10]} intensity={1.5} color="#ffffff" />
             <Resize scale={modelScale}>
               <Center>
                 <ModelErrorBoundary color={themeColor}>
-                  <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
+                  <Float
+                    speed={1.5}
+                    rotationIntensity={0.5}
+                    floatIntensity={0.5}
+                  >
                     <Model3D path={activeItem.modelPath || activeItem.model} />
                   </Float>
                 </ModelErrorBoundary>
               </Center>
             </Resize>
-
             <Sparkles
               count={60}
               scale={10}
@@ -227,7 +268,6 @@ const ModelViewer = ({ userData }) => {
               color="#000000"
             />
           </Suspense>
-
           <OrbitControls
             enablePan={true}
             autoRotate
@@ -248,15 +288,13 @@ const ModelViewer = ({ userData }) => {
           </button>
           <div className="hud-nav-status">
             <div className="blink-dot"></div>
-            <span>LIVE TELEMETRY // 3D RENDER</span>
+            <span>LIVE TELEMETRY 3D RENDER</span>
           </div>
         </div>
 
         {userData?.rank && (
           <div className="nav-profile-stack gallery-profile">
-            <div className="nav-rank-badge-modern">
-              {userData.rank}
-            </div>
+            <div className="nav-rank-badge-modern">{userData.rank}</div>
             {userData?.name && (
               <div className="nav-user-id-modern">
                 <span className="status-dot-blink"></span>
@@ -319,7 +357,11 @@ const ModelViewer = ({ userData }) => {
           </div>
         </div>
 
-        <div className="hud-desc-box mt-3">
+        {/* BUNGKUSAN DESKRIPSI YANG LEBIH MENARIK */}
+        <div className="hud-desc-box mt-3 scrollable-desc">
+          <div className="desc-header" style={{ color: themeColor }}>
+            HASIL PENELITIAN
+          </div>
           <p>{extendedData.desc}</p>
         </div>
       </motion.aside>
@@ -360,7 +402,7 @@ const ModelViewer = ({ userData }) => {
           </button>
         </div>
 
-        <div className="hud-tab-content">
+        <div className="hud-tab-content scrollable-tab">
           <AnimatePresence mode="wait">
             {activeTab === "ANATOMY" ? (
               <motion.div
@@ -370,6 +412,40 @@ const ModelViewer = ({ userData }) => {
                 exit={{ opacity: 0, scale: 1.05 }}
                 className="hud-metrics-container"
               >
+                {/* NEW: PHYSICAL STATS GRID */}
+                <div className="bio-grid">
+                  <div className="bio-box">
+                    <span className="bio-lbl">EST. TINGGI</span>
+                    <span className="bio-val" style={{ color: themeColor }}>
+                      {extendedData.height}
+                    </span>
+                  </div>
+                  <div className="bio-box">
+                    <span className="bio-lbl">EST. BERAT</span>
+                    <span className="bio-val" style={{ color: themeColor }}>
+                      {extendedData.weight}
+                    </span>
+                  </div>
+                  <div className="bio-box">
+                    <span className="bio-lbl">DIET TYPE</span>
+                    <span className="bio-val" style={{ color: themeColor }}>
+                      {extendedData.diet}
+                    </span>
+                  </div>
+                  <div className="bio-box">
+                    <span className="bio-lbl">THREAT LVL</span>
+                    <span
+                      className="bio-val blink-text"
+                      style={{ color: themeColor }}
+                    >
+                      {extendedData.threatLevel}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="hud-divider" style={{ margin: "10px 0" }}></div>
+
+                {/* EXISTING PROGRESS BARS */}
                 <div className="metric-bar-group">
                   <div className="metric-info">
                     <span>STRUKTUR TULANG</span>
@@ -418,13 +494,6 @@ const ModelViewer = ({ userData }) => {
                     ></div>
                   </div>
                 </div>
-
-                <div className="hud-wireframe-decor">
-                  <div className="wf-line" style={{ color: themeColor }}></div>
-                  <div className="wf-line" style={{ color: themeColor }}></div>
-                  <div className="wf-line" style={{ color: themeColor }}></div>
-                  <div className="wf-line" style={{ color: themeColor }}></div>
-                </div>
               </motion.div>
             ) : (
               <motion.div
@@ -432,16 +501,57 @@ const ModelViewer = ({ userData }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="hud-lore-box"
-                style={{ borderColor: themeColor }}
+                className="hud-lore-container"
               >
-                <div className="lore-title">CATATAN PALEONTOLOGI</div>
-                <p>{extendedData.funFact}</p>
-                <div className="hud-desc-box mt-3">
-                  <span className="lbl" style={{ fontSize: "0.7rem" }}>
-                    DITEMUKAN SEKITAR:
+                {/* NEW: EXPANDED LORE SECTIONS */}
+                <div
+                  className="lore-section"
+                  style={{ borderLeftColor: themeColor }}
+                >
+                  <div className="lore-label" style={{ color: themeColor }}>
+                    CATATAN PALEONTOLOGI
+                  </div>
+                  <p className="lore-text">{extendedData.funFact}</p>
+                </div>
+
+                <div
+                  className="lore-section"
+                  style={{ borderLeftColor: themeColor }}
+                >
+                  <div className="lore-label" style={{ color: themeColor }}>
+                    HABITAT & EKOLOGI
+                  </div>
+                  <p className="lore-text">{extendedData.habitat}</p>
+                </div>
+
+                <div
+                  className="lore-section"
+                  style={{ borderLeftColor: themeColor }}
+                >
+                  <div className="lore-label" style={{ color: themeColor }}>
+                    POLA PERILAKU
+                  </div>
+                  <p className="lore-text">{extendedData.behavior}</p>
+                </div>
+
+                <div
+                  className="lore-section"
+                  style={{ borderLeftColor: "var(--neon-red)" }}
+                >
+                  <div
+                    className="lore-label"
+                    style={{ color: "var(--neon-red)" }}
+                  >
+                    STATUS KEPUNAHAN
+                  </div>
+                  <p className="lore-text">{extendedData.extinction}</p>
+                </div>
+
+                <div className="discovery-badge">
+                  <span>TAHUN DITEMUKAN:</span>
+                  <span className="disc-year" style={{ color: themeColor }}>
+                    {extendedData.discoveryYear}
                   </span>
-                  <div className="val">{extendedData.discoveryYear}</div>
                 </div>
               </motion.div>
             )}
@@ -456,9 +566,7 @@ const ModelViewer = ({ userData }) => {
             {siblingItems.map((sibling, idx) => (
               <div
                 key={idx}
-                className={`carousel-thumb ${
-                  activeItem.name === sibling.name ? "active" : ""
-                }`}
+                className={`carousel-thumb ${activeItem.name === sibling.name ? "active" : ""}`}
                 style={{ "--accent": themeColor }}
                 onClick={() => setActiveItem(sibling)}
               >
@@ -470,13 +578,6 @@ const ModelViewer = ({ userData }) => {
           </div>
         </div>
       )}
-
-      {/* --- CENTER RETICLE DECOR --- */}
-      <div className="hud-center-reticle" style={{ color: themeColor }}>
-        <div className="reticle-line h"></div>
-        <div className="reticle-line v"></div>
-        <div className="reticle-circle" style={{ borderColor: themeColor }}></div>
-      </div>
     </div>
   );
 };

@@ -17,7 +17,7 @@ const IntroPage = () => {
       <div className="intro-bg"></div>
 
       <div className={`intro-content ${textVisible ? "fade-in" : ""}`}>
-        <div className="intro-logo">JEJAK PURBA</div>
+        <div className="intro-logo">PURBATECH</div>
 
         <h1 className="intro-title">
           SELAMAT DATANG DI
@@ -27,23 +27,19 @@ const IntroPage = () => {
 
         <div className="intro-text-box">
           <p>
-            Anda akan memasuki gerbang waktu yang menyimpan data kehidupan bumi
-            dari jutaan tahun lalu. Platform ini dirancang untuk
-            memvisualisasikan makhluk purba, fosil langka, dan evolusi planet
-            kita melalui teknologi <strong>3D Interaktif</strong> dan{" "}
-            <strong>Data Ilmiah</strong>.
+            Anda akan memasuki gerbang waktu yang menyimpan rekaman kehidupan
+            bumi jutaan tahun lalu. Jelajahi makhluk prasejarah, fosil langka,
+            dan evolusi planet melalui <strong>teknologi 3D interaktif</strong>{" "}
+            dan <strong>visualisasi canggih</strong> sebagai edukasi menarik.
           </p>
-          <p>
-            Siapkan diri Anda untuk mengeksplorasi kembali masa lalu yang telah
-            lama terkubur.
-          </p>
+          <p>Bersiaplah untuk menghidupkan kembali masa lalu.</p>
         </div>
 
         <button
           className="explore-btn"
           onClick={() => navigate("/gallery")} // Masuk ke GalleryMain sesuai permintaan
         >
-          MULAI JELAJAHI ➔
+          MENUJU GALERI SPESIMEN ➔
         </button>
       </div>
     </div>

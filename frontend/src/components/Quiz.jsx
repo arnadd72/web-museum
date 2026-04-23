@@ -138,12 +138,20 @@ const Quiz = ({ userData, onComplete }) => {
       <div className="quiz-scanner-line"></div>
 
       <nav className="quiz-nav">
-        <Link to="/" className="back-link">
-          <span>⟵</span> TERMINAL UTAMA
+        <Link
+          to="/"
+          className="back-link"
+          style={{
+            padding: "8px 16px",
+            border: "1px solid rgba(0, 210, 255, 0.3)",
+            borderRadius: "4px",
+            backgroundColor: "rgba(0, 210, 255, 0.05)",
+          }}
+        >
+          <span>⟵</span> KEMBALI
         </Link>
         <div className="logo-section">
-          <div className="logo-symbol">JP</div>
-          <div className="logo-main-brand">JEJAKPURBA</div>
+          <div className="logo-main-brand">PURBATECH</div>
 
           {userRank && (
             <div className="nav-profile-stack">
@@ -428,7 +436,7 @@ const Quiz = ({ userData, onComplete }) => {
                       GANTI IDENTITAS / ULANGI
                     </button>
                     <Link to="/" className="home-btn-tech">
-                      TERMINAL UTAMA
+                      KEMBALI
                     </Link>
                   </div>
                 </div>

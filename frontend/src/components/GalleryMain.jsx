@@ -111,16 +111,17 @@ const GalleryMain = ({ userData }) => {
 
   useEffect(() => {
     if (sliderThumbnailsRef.current) {
-      const activeThumb = sliderThumbnailsRef.current.querySelector(".thumb-card.active");
+      const activeThumb =
+        sliderThumbnailsRef.current.querySelector(".thumb-card.active");
       const container = sliderThumbnailsRef.current;
       if (activeThumb && container) {
         const thumbPosition = activeThumb.offsetLeft;
         const thumbWidth = activeThumb.offsetWidth;
         const containerCenter = container.offsetWidth / 2;
-        
+
         container.scrollTo({
-          left: thumbPosition - containerCenter + (thumbWidth / 2),
-          behavior: "smooth"
+          left: thumbPosition - containerCenter + thumbWidth / 2,
+          behavior: "smooth",
         });
       }
     }
@@ -175,7 +176,7 @@ const GalleryMain = ({ userData }) => {
           <Link to="/" className="btn-sys-back">
             <span className="arr">←</span> KELUAR ARSIP
           </Link>
-          
+
           <div className="nav-sys-title">
             <span>
               {selectedSubCategory
@@ -190,9 +191,7 @@ const GalleryMain = ({ userData }) => {
 
         {userData?.rank && (
           <div className="nav-profile-stack gallery-profile">
-            <div className="nav-rank-badge-modern">
-              {userData.rank}
-            </div>
+            <div className="nav-rank-badge-modern">{userData.rank}</div>
             {userData?.name && (
               <div className="nav-user-id-modern">
                 <span className="status-dot-blink"></span>
@@ -276,7 +275,7 @@ const GalleryMain = ({ userData }) => {
                       <div className="movie-content">
                         <div className="movie-info">
                           <span className="movie-idx">
-                            0{idx + 1} // KLASIFIKASI UTAMA
+                            0{idx + 1} KLASIFIKASI UTAMA
                           </span>
                           <h2>{data.title}</h2>
                           <p className="movie-desc">{data.desc}</p>

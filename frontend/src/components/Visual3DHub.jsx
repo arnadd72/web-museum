@@ -2,12 +2,15 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import "./Visual3DHub.css";
-import { encyclopediaData } from "../data/encyclopediaData";
 
 const Visual3DHub = ({ userData }) => {
   const navigate = useNavigate();
-  const [filter, setFilter] = useState(() => sessionStorage.getItem("visual3d_filter") || "ALL");
-  const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem("visual3d_search") || "");
+  const [filter, setFilter] = useState(
+    () => sessionStorage.getItem("visual3d_filter") || "ALL",
+  );
+  const [searchQuery, setSearchQuery] = useState(
+    () => sessionStorage.getItem("visual3d_search") || "",
+  );
   const [selectedItem, setSelectedItem] = useState(null);
 
   const [dbData, setDbData] = useState(null);
@@ -16,12 +19,12 @@ const Visual3DHub = ({ userData }) => {
   // FETCH DATA DARI DATABASE
   useEffect(() => {
     fetch("http://127.0.0.1:5000/api/encyclopedia")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setDbData(data);
         setIsLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Gagal mengambil data dari database:", err);
         setIsLoading(false);
       });
@@ -88,38 +91,41 @@ const Visual3DHub = ({ userData }) => {
       sessionStorage.setItem("visual3d_search", searchQuery);
       const container = document.querySelector(".hub-content");
       if (container) {
-        sessionStorage.setItem("visual3d_scroll", container.scrollTop.toString());
+        sessionStorage.setItem(
+          "visual3d_scroll",
+          container.scrollTop.toString(),
+        );
       }
-      
-      navigate("/model-viewer", { 
-        state: { 
+
+      navigate("/model-viewer", {
+        state: {
           itemData: selectedItem,
-          returnPath: "/visual-3d" 
-        } 
+          returnPath: "/visual-3d",
+        },
       });
     }
   };
 
   return (
     <div className="hub-container">
+      {/* Background Ornaments */}
       <div className="hub-grid-bg"></div>
-      
+      <div className="radial-glow-center"></div>
+
       <nav className="hub-nav">
         <div className="nav-left-group">
           <Link to="/" className="hub-back-btn">
-            ← KEMBALI KE BERANDA
+            <span className="back-arrow">←</span> KEMBALI KE BERANDA
           </Link>
           <div className="hub-status">
             <div className="status-dot"></div>
-            SYSTEM ONLINE // VISUAL_DATABASE
+            <span>GALERI VISUAL 3D</span>
           </div>
         </div>
 
         {userData?.rank && (
           <div className="nav-profile-stack gallery-profile">
-            <div className="nav-rank-badge-modern">
-              {userData.rank}
-            </div>
+            <div className="nav-rank-badge-modern">{userData.rank}</div>
             {userData?.name && (
               <div className="nav-user-id-modern">
                 <span className="status-dot-blink"></span>
@@ -131,65 +137,98 @@ const Visual3DHub = ({ userData }) => {
       </nav>
 
       <main className="hub-content">
-        <div className="hub-header">
-          <h1>PILIH SPESIMEN</h1>
-          <div className="search-wrapper">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="KETIK NAMA SPESIES..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <div className="search-icon">🔍</div>
+        {/* HEADER & CONTROL PANEL */}
+        <div className="hub-header-container">
+          <div className="header-title-box">
+            <h1 className="glitch-title" data-text="ARSIP SPESIMEN">
+              ARSIP SPESIMEN
+            </h1>
+            <p className="header-subtitle">
+              Pilih entitas biologis untuk mengekstrak model 3D dan simulasi
+              struktural.
+            </p>
           </div>
-          <div className="filter-bar">
-            {["ALL", "BIO", "FOSSIL", "ERA"].map((f) => (
-              <button
-                key={f}
-                className={`filter-btn ${filter === f ? "active" : ""}`}
-                onClick={() => setFilter(f)}
-              >
-                {f === "BIO"
-                  ? "MAKHLUK HIDUP"
-                  : f === "ERA"
-                  ? "ERA ZAMAN"
-                  : f === "FOSSIL"
-                  ? "JENIS FOSIL"
-                  : "SEMUA DATA"}
-              </button>
-            ))}
+
+          <div className="hud-control-panel">
+            <div className="hud-corner-tl"></div>
+            <div className="hud-corner-br"></div>
+
+            <div className="search-wrapper">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="[ KETIK NAMA SPESIES ]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <div className="search-icon">⌕</div>
+            </div>
+
+            <div className="filter-bar">
+              {["ALL", "BIO", "FOSSIL", "ERA"].map((f) => (
+                <button
+                  key={f}
+                  className={`filter-btn ${filter === f ? "active" : ""}`}
+                  onClick={() => setFilter(f)}
+                >
+                  <span className="btn-decor-left"></span>
+                  {f === "BIO"
+                    ? "MAKHLUK HIDUP"
+                    : f === "ERA"
+                      ? "ERA ZAMAN"
+                      : f === "FOSSIL"
+                        ? "JENIS FOSIL"
+                        : "SEMUA DATA"}
+                  <span className="btn-decor-right"></span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
+        {/* HOLOGRAPHIC GRID & CARDS */}
         {filteredItems.length > 0 ? (
           <div className="hub-grid">
             {filteredItems.map((item, idx) => (
               <div
                 key={idx}
-                className="data-chip fade-in-up"
+                className="holo-card fade-in-up"
                 onClick={() => setSelectedItem(item)}
                 style={{
                   "--accent": item.color,
                   animationDelay: `${idx * 0.05}s`,
                 }}
               >
-                <div className="chip-img-box">
-                  <img src={item.image} alt={item.name} loading="lazy" />
-                  <div className="chip-overlay"></div>
+                <div className="holo-card-inner">
+                  <div className="holo-img-box">
+                    <img src={item.image} alt={item.name} loading="lazy" />
+                    <div className="holo-overlay"></div>
+                    <div className="card-scanline"></div>
+                  </div>
+
+                  <div className="holo-info">
+                    <div className="holo-cat" style={{ color: item.color }}>
+                      {item.subCategory}
+                    </div>
+                    <h3 className="holo-title">{item.name}</h3>
+                    <div className="holo-meta">
+                      <span>SYS_ID: 0{idx + 1}</span>
+                      <span className="blink-text">READY</span>
+                    </div>
+                  </div>
+
+                  <div className="holo-border-top"></div>
+                  <div className="holo-border-bottom"></div>
+                  <div className="holo-action-hint">RENDER 3D ➔</div>
                 </div>
-                <div className="chip-info">
-                  <div className="chip-cat">{item.subCategory}</div>
-                  <h3>{item.name}</h3>
-                  <div className="chip-decor-line"></div>
-                </div>
-                <div className="corner-decor"></div>
               </div>
             ))}
           </div>
         ) : (
           <div className="no-results fade-in-up">
+            <div className="error-icon blink-text">⚠</div>
             <h2>DATA TIDAK DITEMUKAN</h2>
+            <p>Anomali pencarian. Spesimen tidak terdaftar di database.</p>
             <button
               className="reset-search-btn"
               onClick={() => {
@@ -197,65 +236,103 @@ const Visual3DHub = ({ userData }) => {
                 setFilter("ALL");
               }}
             >
-              RESET PENCARIAN
+              [ RESET PARAMETER ]
             </button>
           </div>
         )}
       </main>
 
-      {/* MODAL */}
+      {/* CYBER-MODAL POPUP */}
       {selectedItem && (
-        <div className="modal-overlay">
-          <div className="modal-box slide-up">
+        <div className="cyber-modal-overlay">
+          <div className="cyber-modal slide-up">
+            <div className="cyber-modal-corner-tl"></div>
+            <div className="cyber-modal-corner-br"></div>
+
             <div
-              className="modal-header"
-              style={{ background: selectedItem.color }}
+              className="cyber-modal-header"
+              style={{ borderBottomColor: selectedItem.color }}
             >
-              KONFIRMASI VISUALISASI 3D
+              <span
+                className="header-text"
+                style={{ color: selectedItem.color }}
+              >
+                // KONFIRMASI EKSTRAKSI 3D
+              </span>
+              <button
+                className="close-modal-btn"
+                onClick={() => setSelectedItem(null)}
+              >
+                ✕
+              </button>
             </div>
-            <div className="modal-body">
-              <div className="modal-img">
+
+            <div className="cyber-modal-body">
+              <div
+                className="cyber-modal-visual"
+                style={{ borderColor: selectedItem.color }}
+              >
                 <img src={selectedItem.image} alt={selectedItem.name} />
                 <div
-                  className="scan-anim"
+                  className="visual-scan-laser"
                   style={{
-                    boxShadow: `0 0 10px ${selectedItem.color}`,
                     background: selectedItem.color,
+                    boxShadow: `0 0 15px ${selectedItem.color}`,
                   }}
                 ></div>
+                <div className="visual-hud-overlay"></div>
               </div>
-              <div className="modal-text">
-                <h2>BUKA SIMULASI?</h2>
-                <h4 style={{ color: selectedItem.color }}>
-                  OBJEK: {selectedItem.name}
-                </h4>
-                <p>
-                  {selectedItem.description
-                    ? selectedItem.description.key
-                    : selectedItem.desc}
-                </p>
-                <div className="modal-stats">
-                  <span>Status: Siap</span>
-                  <span>Tipe: Model Digital</span>
+
+              <div className="cyber-modal-data">
+                <div
+                  className="data-tag"
+                  style={{
+                    background: `${selectedItem.color}22`,
+                    color: selectedItem.color,
+                  }}
+                >
+                  {selectedItem.category} // {selectedItem.subCategory}
+                </div>
+                <h2 className="data-title">{selectedItem.name}</h2>
+                <div className="data-desc-box">
+                  <p>
+                    {selectedItem.description
+                      ? selectedItem.description.key
+                      : selectedItem.desc}
+                  </p>
+                </div>
+
+                <div className="data-metrics">
+                  <div className="metric-item">
+                    <span className="metric-label">INTEGRITAS</span>
+                    <span
+                      className="metric-value"
+                      style={{ color: selectedItem.color }}
+                    >
+                      100%
+                    </span>
+                  </div>
+                  <div className="metric-item">
+                    <span className="metric-label">STATUS</span>
+                    <span className="metric-value blink-text">STANDBY</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="modal-actions">
+
+            <div className="cyber-modal-footer">
               <button
-                className="cancel-btn"
+                className="cyber-btn cancel"
                 onClick={() => setSelectedItem(null)}
               >
-                BATAL
+                BATALKAN
               </button>
               <button
-                className="launch-btn"
-                style={{
-                  border: `1px solid ${selectedItem.color}`,
-                  color: selectedItem.color,
-                }}
+                className="cyber-btn launch"
+                style={{ "--btn-color": selectedItem.color }}
                 onClick={handleProceed}
               >
-                MULAI SIMULASI
+                INISIASI RENDER 3D ⌬
               </button>
             </div>
           </div>
