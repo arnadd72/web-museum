@@ -109,13 +109,15 @@ const ModelViewer = ({ userData }) => {
 
   const handleBack = () => {
     setIsLoading(true);
-    if (returnPath) {
-      navigate(returnPath);
-    } else if (returnContext) {
-      navigate("/gallery", { state: returnContext });
-    } else {
-      navigate("/gallery");
-    }
+    setTimeout(() => {
+      if (returnPath) {
+        navigate(returnPath);
+      } else if (returnContext) {
+        navigate("/gallery", { state: returnContext });
+      } else {
+        navigate("/gallery");
+      }
+    }, 500); // Jeda 500ms agar animasi loader terlihat
   };
 
   // === DATA EKSPANSI (MENAMBAH DETAIL PALSU/FALLBACK JIKA DI DB KOSONG) ===
