@@ -6,6 +6,7 @@ import "./EraGeologi.css";
 
 const EraGeologi = ({ userData }) => {
   const [activeEra, setActiveEra] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const eras = [
@@ -113,7 +114,29 @@ const EraGeologi = ({ userData }) => {
           <Link to="/gallery">ENSIKLOPEDIA</Link>
           <Link to="/visual-3d">VISUAL 3D</Link>
         </div>
+
+        <button
+          className={`hamburger-btn ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </nav>
+
+      {menuOpen && (
+        <div className="mobile-nav-overlay" onClick={() => setMenuOpen(false)}>
+          <nav className="mobile-nav-menu" onClick={(e) => e.stopPropagation()}>
+            <Link to="/" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>BERANDA</Link>
+            <Link to="/era-geologi" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ERA ZAMAN</Link>
+            <Link to="/gallery" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ENSIKLOPEDIA</Link>
+            <Link to="/visual-3d" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>VISUAL 3D</Link>
+            <Link to="/quiz" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>KUIS</Link>
+          </nav>
+        </div>
+      )}
 
       {/* 3. MAIN CONTENT SPLIT */}
       <main className="showcase-main">
