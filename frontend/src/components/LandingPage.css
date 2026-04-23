@@ -153,6 +153,73 @@ body {
   text-shadow: 0 0 10px var(--neon-blue);
 }
 
+/* HAMBURGER BUTTON */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+  z-index: 200;
+}
+.hamburger-btn span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  transition: all 0.3s;
+}
+.hamburger-btn.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-btn.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* MOBILE NAV OVERLAY */
+.mobile-nav-overlay {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .hamburger-btn {
+    display: flex;
+  }
+  .mobile-nav-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 150;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+  }
+  .mobile-nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .mobile-nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    transition: color 0.3s;
+    font-family: "Rajdhani", sans-serif;
+  }
+  .mobile-nav-link:hover {
+    color: var(--neon-blue);
+    text-shadow: 0 0 15px var(--neon-blue);
+  }
+}
 /* ==========================================================================
    HERO SECTION (CENTERED)
    ========================================================================== */

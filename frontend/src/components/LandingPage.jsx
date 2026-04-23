@@ -174,6 +174,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // DATA FOSIL
   const dinoImageLink =
@@ -340,7 +341,31 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             VISUAL 3D
           </Link>
         </div>
+
+        {/* HAMBURGER BUTTON (MOBILE) */}
+        <button
+          className={`hamburger-btn ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </nav>
+
+      {/* MOBILE NAV OVERLAY */}
+      {menuOpen && (
+        <div className="mobile-nav-overlay" onClick={() => setMenuOpen(false)}>
+          <nav className="mobile-nav-menu" onClick={(e) => e.stopPropagation()}>
+            <a href="#home" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>BERANDA</a>
+            <Link to="/era-geologi" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ERA ZAMAN</Link>
+            <Link to="/gallery" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ENSIKLOPEDIA</Link>
+            <Link to="/visual-3d" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>VISUAL 3D</Link>
+            <Link to="/quiz" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>KUIS</Link>
+          </nav>
+        </div>
+      )}
 
       {/* SECTION 1: HERO CENTERED */}
       <main id="home" className="hero-section">

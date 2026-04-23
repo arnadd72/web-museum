@@ -370,6 +370,8 @@
 /* ==========================================================================
    RESPONSIVE DESIGN
    ========================================================================== */
+
+/* --- TABLET (max-width: 1200px) --- */
 @media screen and (max-width: 1200px) {
   .showcase-nav {
     padding: 2rem 3rem;
@@ -393,6 +395,9 @@
   .info-title {
     font-size: 4rem;
   }
+  .info-desc {
+    max-width: 500px;
+  }
   .showcase-cards {
     justify-content: center;
     width: 100%;
@@ -406,59 +411,188 @@
   }
 }
 
+/* --- MOBILE (max-width: 768px) --- */
 @media screen and (max-width: 768px) {
+  .showcase-container {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* NAVBAR */
   .showcase-nav {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .nav-brand-group {
+    width: 100%;
+    justify-content: space-between;
   }
   .nav-links {
     display: none;
-  } /* Sembunyikan link di mobile untuk layout bersih */
+  }
+  .nav-brand span {
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
 
+  /* MAIN CONTENT */
   .showcase-main {
     padding: 0 1.5rem;
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    flex-direction: column;
+  }
+
+  .showcase-info {
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .info-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    justify-content: center;
+  }
+  .info-subtitle::before {
+    display: none;
   }
   .info-title {
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
     margin-bottom: 1rem;
   }
   .info-desc {
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
+    max-width: 100%;
+    line-height: 1.6;
+  }
+  .info-actions {
+    justify-content: center;
+    width: 100%;
+  }
+  .btn-outline {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.85rem;
   }
 
+  /* ERA CARDS */
   .showcase-cards {
-    width: 100vw;
+    width: 100%;
     overflow-x: auto;
     justify-content: flex-start;
     padding: 0 1.5rem;
     gap: 1rem;
     scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Hide scrollbar */
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
   .showcase-cards::-webkit-scrollbar {
     display: none;
   }
-
   .era-card {
     flex-shrink: 0;
     width: 200px;
     height: 280px;
     scroll-snap-align: center;
+    transform: translateY(0) !important;
+    opacity: 0.7;
+  }
+  .era-card.active {
+    transform: scale(1.02) !important;
+    opacity: 1;
+  }
+  .card-title {
+    font-size: 1.2rem;
   }
 
+  /* BOTTOM CONTROLS */
   .showcase-bottom {
     padding: 1.5rem;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+  .controls-left {
+    width: 100%;
+    justify-content: center;
   }
   .progress-container {
-    width: 150px;
+    width: 120px;
     margin-left: 1rem;
   }
   .large-number {
     display: none;
-  } /* Hilangkan nomor raksasa di HP */
+  }
+  .control-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+/* --- SMALL MOBILE (max-width: 480px) --- */
+@media screen and (max-width: 480px) {
+  .showcase-nav {
+    padding: 0.8rem 1rem;
+  }
+  .nav-brand span {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+  .logo-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+  .gallery-profile .nav-rank-badge-modern {
+    font-size: 0.55rem;
+  }
+  .gallery-profile .nav-user-id-modern {
+    font-size: 0.55rem;
+  }
+
+  .info-title {
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+  .info-subtitle {
+    font-size: 0.7rem;
+  }
+  .info-desc {
+    font-size: 0.85rem;
+  }
+  .btn-outline {
+    font-size: 0.8rem;
+    padding: 10px 15px;
+  }
+
+  .era-card {
+    width: 170px;
+    height: 240px;
+  }
+  .card-subtitle {
+    font-size: 0.55rem;
+  }
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .control-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+  .progress-container {
+    width: 100px;
+  }
 }
