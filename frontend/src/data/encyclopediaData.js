@@ -1380,7 +1380,7 @@ export const encyclopediaData = {
             modelPath:
               "/models/geologi/era_kenozoikum/dinorauls_paraceratherium.glb",
             image:
-              "https://static.wikia.nocookie.net/pkgame/images/3/37/Paraceratherium_bugtiense.jpg/revision/latest?cb=20230321211751",
+              "/ImageModels/EraGeologi/Paraceratherium.webp",
             period: "Kenozoikum (Oligosen)",
             status: "PUNAH",
             description: {
