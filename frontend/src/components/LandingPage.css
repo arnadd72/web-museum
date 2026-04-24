@@ -41,7 +41,7 @@ body {
   border-bottom: 1px solid rgba(0, 210, 255, 0.1);
   display: flex;
   justify-content: space-between;
-  z-index: 100;
+  z-index: 200;
   box-sizing: border-box;
 }
 .logo-section {
@@ -162,7 +162,8 @@ body {
   flex-direction: column;
   gap: 5px;
   padding: 5px;
-  z-index: 200;
+  z-index: 300;
+  position: relative;
 }
 .hamburger-btn span {
   display: block;
@@ -170,15 +171,17 @@ body {
   height: 2px;
   background: #fff;
   transition: all 0.3s;
+  transform-origin: center;
 }
 .hamburger-btn.open span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: translateY(7px) rotate(45deg);
 }
 .hamburger-btn.open span:nth-child(2) {
   opacity: 0;
+  transform: translateX(-20px);
 }
 .hamburger-btn.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* MOBILE NAV OVERLAY */
@@ -556,7 +559,8 @@ body {
 }
 .bento-content {
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  transform: translateZ(20px); /* Ensure it's above bg during 3D hover effects */
 }
 .bento-tag {
   background: rgba(0, 210, 255, 0.2);
@@ -568,6 +572,9 @@ body {
   border: 1px solid var(--neon-blue);
   display: inline-block;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 11;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
 }
 .bento-item h3 {
   font-size: 1.8rem;
@@ -670,6 +677,15 @@ body {
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   margin-top: 4rem;
+}
+
+.mobile-model-nav-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.mobile-model-nav {
+  display: none;
 }
 
 /* ==========================================================================
@@ -957,9 +973,25 @@ body {
     font-size: 3rem;
   }
   .quiz-stats-mini {
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
+    flex-direction: row; /* Change from column to row */
+    justify-content: center;
+    gap: 1.5rem; /* Reduced gap */
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+  }
+  .stat-mini-item {
+    gap: 0.8rem;
+  }
+  .stat-icon-tech {
+    width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
+  .stat-value {
+    font-size: 0.9rem;
+  }
+  .stat-label {
+    font-size: 0.6rem;
   }
 }
 
@@ -1574,16 +1606,18 @@ body {
   /* TELEMETRY */
   .telemetry-inner {
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    justify-content: space-between;
   }
   .telemetry-divider {
-    display: none;
+    display: block;
+    height: 30px;
   }
   .telemetry-item {
-    width: 45%;
-    margin-bottom: 1rem;
+    width: auto;
+    flex: 1;
+    margin-bottom: 0;
   }
 
   /* BENTO GRID */
@@ -1741,20 +1775,31 @@ body {
 
   /* TELEMETRY */
   .telemetry-banner {
-    padding: 1.5rem 0;
+    padding: 1rem 0;
   }
   .telemetry-inner {
-    flex-direction: column;
-    gap: 1.5rem;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0.5rem;
+    padding: 0 2%;
   }
   .telemetry-item {
-    width: 100%;
+    width: auto;
+    flex: 1;
   }
   .telemetry-value {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
   .telemetry-label {
-    font-size: 0.75rem;
+    font-size: 0.5rem;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+  .telemetry-divider {
+    display: block;
+    width: 1px;
+    height: 25px;
+    background: rgba(0, 210, 255, 0.2);
   }
 
   /* BENTO GRID */
@@ -1769,41 +1814,99 @@ body {
   }
   .bento-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
   .bento-large,
   .bento-ai,
   .bento-3d,
   .bento-era {
     grid-column: 1 / -1;
-    min-height: 250px;
+    min-height: 180px; /* Reduced from 250px */
   }
   .bento-large {
-    min-height: 300px;
+    min-height: 240px; /* Reduced from 300px */
   }
   .bento-large h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   .bento-item h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+  .bento-item p {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
   }
 
   /* MODEL SHOWCASE */
   .model-showcase-section {
-    padding: 4rem 5%;
+    padding: 4rem 0; /* Remove side padding for full-width scroll */
+  }
+  .section-header {
+    padding: 0 5%;
   }
   .model-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: hidden; /* Disable manual swipe */
+    touch-action: none; /* Disable touch gestures */
+    gap: 1.5rem;
     margin-top: 2rem;
+    padding: 1rem 5% 3rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    pointer-events: none; /* Block direct interaction with cards to prevent swipe */
+  }
+  .model-grid .model-preview-card {
+    pointer-events: auto; /* Re-enable pointer events for buttons inside cards */
+  }
+  .model-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .mobile-model-nav {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .mobile-model-nav.prev {
+    left: 10px;
+  }
+  .mobile-model-nav.next {
+    right: 10px;
   }
   .model-preview-card {
-    height: 400px;
+    flex: 0 0 75vw; /* Each card takes 75% of view width */
+    height: 350px;
+    scroll-snap-align: center;
   }
   .model-title {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   .preview-desc {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+  }
+  .model-stats {
+    font-size: 0.7rem;
+    margin: 10px 0;
+  }
+  .render-btn {
+    padding: 8px;
+    font-size: 0.7rem;
+  }
+  .card-top-header {
+    font-size: 0.6rem;
   }
 
   /* QUIZ */
@@ -1817,9 +1920,31 @@ body {
     font-size: 1rem;
   }
   .quiz-stats-mini {
-    flex-direction: column;
-    gap: 2rem;
+    flex-direction: row !important; /* Force horizontal alignment */
+    justify-content: center;
+    gap: 1rem;
     align-items: center;
+    width: 100%;
+    margin-bottom: 2.5rem;
+  }
+  .stat-mini-item {
+    flex: 1;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  .stat-icon-tech {
+    width: 30px;
+    height: 30px;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+  .stat-value {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .stat-label {
+    font-size: 0.55rem;
   }
   .quiz-image-wrapper {
     padding: 10px;
@@ -1917,18 +2042,22 @@ body {
   }
 
   .model-preview-card {
-    height: 380px;
+    height: 300px; /* Consistently small */
   }
   .model-card-frame {
-    padding: 1rem;
+    padding: 0.8rem;
   }
   .model-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     letter-spacing: 1px;
   }
+  .model-visual-container {
+    margin-bottom: 0.8rem;
+  }
   .render-btn {
-    font-size: 0.75rem;
-    padding: 0.6rem;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
   }
 
   .glitch-text {

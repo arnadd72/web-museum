@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import "./EraGeologi.css";
@@ -8,6 +8,7 @@ const EraGeologi = ({ userData }) => {
   const [activeEra, setActiveEra] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const cardsContainerRef = useRef(null);
 
   const eras = [
     {
@@ -46,6 +47,23 @@ const EraGeologi = ({ userData }) => {
   ];
 
   const currentData = eras[activeEra];
+
+  // Auto scroll to active card on mobile
+  useEffect(() => {
+    if (cardsContainerRef.current) {
+      const activeCard = cardsContainerRef.current.children[activeEra];
+      if (activeCard) {
+        const containerWidth = cardsContainerRef.current.offsetWidth;
+        const cardOffset = activeCard.offsetLeft;
+        const cardWidth = activeCard.offsetWidth;
+
+        cardsContainerRef.current.scrollTo({
+          left: cardOffset - containerWidth / 2 + cardWidth / 2,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [activeEra]);
 
   const handleNext = () => {
     setActiveEra((prev) => (prev === eras.length - 1 ? 0 : prev + 1));
@@ -92,8 +110,7 @@ const EraGeologi = ({ userData }) => {
             className="nav-brand"
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <div className="logo-icon">JP</div>
-            <span>JEJAK PURBA</span>
+            <span>PURBATECH</span>
           </Link>
 
           {userData?.rank && (
@@ -129,18 +146,118 @@ const EraGeologi = ({ userData }) => {
       {menuOpen && (
         <div className="mobile-nav-overlay" onClick={() => setMenuOpen(false)}>
           <nav className="mobile-nav-menu" onClick={(e) => e.stopPropagation()}>
-            <Link to="/" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>BERANDA</Link>
-            <Link to="/era-geologi" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ERA ZAMAN</Link>
-            <Link to="/gallery" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ENSIKLOPEDIA</Link>
-            <Link to="/visual-3d" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>VISUAL 3D</Link>
-            <Link to="/quiz" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>KUIS</Link>
+            <Link
+              to="/"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              BERANDA
+            </Link>
+            <Link
+              to="/era-geologi"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              ERA ZAMAN
+            </Link>
+            <Link
+              to="/gallery"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              ENSIKLOPEDIA
+            </Link>
+            <Link
+              to="/visual-3d"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              VISUAL 3D
+            </Link>
+            <Link
+              to="/quiz"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              KUIS
+            </Link>
           </nav>
         </div>
       )}
 
       {/* 3. MAIN CONTENT SPLIT */}
       <main className="showcase-main">
-        {/* KIRI: INFORMASI ERA */}
+        {/* KANAN (DIATAS PADA MOBILE): KARTU PILIHAN ERA */}
+        <div className="mobile-cards-view">
+          <button className="mobile-side-nav prev" onClick={handlePrev}>
+            &lt;
+          </button>
+          <motion.div
+            className="showcase-cards"
+            ref={cardsContainerRef}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={(e, { offset }) => {
+              const swipeThreshold = 50;
+              if (offset.x < -swipeThreshold) {
+                handleNext();
+              } else if (offset.x > swipeThreshold) {
+                handlePrev();
+              }
+            }}
+          >
+            {eras.map((era, index) => (
+              <div
+                key={era.id}
+                className={`era-card ${activeEra === index ? "active" : ""}`}
+                onClick={() => setActiveEra(index)}
+              >
+                <div
+                  className="card-bg"
+                  style={{
+                    backgroundImage: `url(${era.cardImg || era.image})`,
+                  }}
+                ></div>
+                <div className="card-overlay"></div>
+                <div className="card-content">
+                  <span className="card-subtitle">{era.location}</span>
+                  <h3 className="card-title">{era.name}</h3>
+                </div>
+                {/* Garis aksen neon di atas kartu aktif */}
+                {activeEra === index && (
+                  <motion.div
+                    layoutId="activeCardAccent"
+                    className="card-active-accent"
+                    style={{
+                      backgroundColor: era.color,
+                      boxShadow: `0 0 15px ${era.color}`,
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </motion.div>
+          <button className="mobile-side-nav next" onClick={handleNext}>
+            &gt;
+          </button>
+        </div>
+
+        {/* Tombol Jelajahi (DIBAWAH CARD) */}
+        <div className="mobile-explore-btn-container">
+          <button
+            className="btn-outline mobile-only"
+            onClick={handleWatchVideo}
+            style={{ 
+              borderColor: currentData.color,
+              color: "#fff",
+              textShadow: `0 0 10px ${currentData.color}`
+            }}
+          >
+            ▶ JELAJAHI ERA INI
+          </button>
+        </div>
+
+        {/* KIRI (DIBAWAH PADA MOBILE): INFORMASI ERA */}
         <div className="showcase-info">
           <AnimatePresence mode="wait">
             <motion.div
@@ -171,38 +288,6 @@ const EraGeologi = ({ userData }) => {
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
-
-        {/* KANAN: KARTU PILIHAN ERA */}
-        <div className="showcase-cards">
-          {eras.map((era, index) => (
-            <div
-              key={era.id}
-              className={`era-card ${activeEra === index ? "active" : ""}`}
-              onClick={() => setActiveEra(index)}
-            >
-              <div
-                className="card-bg"
-                style={{ backgroundImage: `url(${era.cardImg || era.image})` }}
-              ></div>
-              <div className="card-overlay"></div>
-              <div className="card-content">
-                <span className="card-subtitle">{era.location}</span>
-                <h3 className="card-title">{era.name}</h3>
-              </div>
-              {/* Garis aksen neon di atas kartu aktif */}
-              {activeEra === index && (
-                <motion.div
-                  layoutId="activeCardAccent"
-                  className="card-active-accent"
-                  style={{
-                    backgroundColor: era.color,
-                    boxShadow: `0 0 15px ${era.color}`,
-                  }}
-                />
-              )}
-            </div>
-          ))}
         </div>
       </main>
 

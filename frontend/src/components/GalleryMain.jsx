@@ -11,7 +11,6 @@ const GalleryMain = ({ userData }) => {
   const [activeItem, setActiveItem] = useState(null);
   const [hoveredCategory, setHoveredCategory] = useState(null);
 
-  // State untuk navigasi antar sub-kategori (Sekarang untuk Cover Flow)
   const [activeSubIndex, setActiveSubIndex] = useState(0);
 
   const location = useLocation();
@@ -87,7 +86,7 @@ const GalleryMain = ({ userData }) => {
     });
   };
 
-  // === NAVIGASI VIEW 2 (COVER FLOW) ===
+  // === NAVIGASI VIEW 2 ===
   const handleNextSub = () => {
     if (!selectedCategory) return;
     setActiveSubIndex((prev) =>
@@ -101,7 +100,7 @@ const GalleryMain = ({ userData }) => {
     );
   };
 
-  // === NAVIGASI VIEW 3 (MAGIC SLIDER) ===
+  // === NAVIGASI VIEW 3 ===
   const activeItemIdx =
     selectedSubCategory && activeItem
       ? selectedSubCategory.items.findIndex((i) => i.name === activeItem.name)
@@ -141,7 +140,7 @@ const GalleryMain = ({ userData }) => {
     setActiveItem(selectedSubCategory.items[prevIdx]);
   };
 
-  // === FRAMER MOTION VARIANTS ===
+  // === VARIANTS ===
   const pageVariants = {
     initial: { opacity: 0, y: 40 },
     in: {
@@ -170,7 +169,6 @@ const GalleryMain = ({ userData }) => {
       <div className="gallery-bg-glow"></div>
       <div className="gallery-grid-pattern"></div>
 
-      {/* TOP NAVIGATION */}
       <nav className="gallery-top-nav">
         <div className="nav-left-group">
           <Link to="/" className="btn-sys-back">
@@ -204,9 +202,6 @@ const GalleryMain = ({ userData }) => {
 
       <main className="gallery-main-area">
         <AnimatePresence mode="wait">
-          {/* =========================================
-              VIEW 1: KATEGORI (CINEMATIC MOVIE PICKER)
-              ========================================= */}
           {!selectedCategory && (
             <motion.div
               key="view1"
@@ -216,7 +211,6 @@ const GalleryMain = ({ userData }) => {
               exit="out"
               className="view-layer"
             >
-              {/* DYNAMIC BACKGROUND FOR VIEW 1 */}
               <div className="view1-dynamic-bg">
                 <AnimatePresence>
                   {hoveredCategory && (
@@ -293,9 +287,6 @@ const GalleryMain = ({ userData }) => {
             </motion.div>
           )}
 
-          {/* =========================================
-              VIEW 2: SUB-KATEGORI (3D COVER FLOW)
-              ========================================= */}
           {selectedCategory && !selectedSubCategory && activeSubData && (
             <motion.div
               key="view2"
@@ -304,7 +295,6 @@ const GalleryMain = ({ userData }) => {
               exit={{ opacity: 0 }}
               className="coverflow-view"
             >
-              {/* Blurred Dynamic Background */}
               <div className="coverflow-bg-wrapper">
                 <motion.img
                   key={`bg-${activeSubData.title}`}
@@ -317,7 +307,6 @@ const GalleryMain = ({ userData }) => {
                 <div className="coverflow-bg-overlay"></div>
               </div>
 
-              {/* Header / Back Button */}
               <div className="coverflow-header">
                 <button onClick={handleBack} className="btn-text-back">
                   ← KEMBALI KE DIREKTORI UTAMA
@@ -331,7 +320,6 @@ const GalleryMain = ({ userData }) => {
                 </div>
               </div>
 
-              {/* Carousel Center Area */}
               <motion.div
                 className="coverflow-slider-container"
                 drag="x"
@@ -414,7 +402,6 @@ const GalleryMain = ({ userData }) => {
                 </button>
               </motion.div>
 
-              {/* Bottom Info Panel */}
               <motion.div
                 key={`info-${activeSubData.title}`}
                 className="coverflow-info-panel"
@@ -457,9 +444,6 @@ const GalleryMain = ({ userData }) => {
             </motion.div>
           )}
 
-          {/* =========================================
-              VIEW 3: SPESIMEN DETAIL (MAGIC SLIDER LUNDEV)
-              ========================================= */}
           {selectedSubCategory && activeItem && (
             <motion.div
               key="view3"
@@ -468,7 +452,6 @@ const GalleryMain = ({ userData }) => {
               exit={{ opacity: 0 }}
               className="magic-slider-view"
             >
-              {/* Gambar Background Slider */}
               <div className="slider-bg-container">
                 <motion.img
                   key={activeItemIdx}
@@ -482,7 +465,72 @@ const GalleryMain = ({ userData }) => {
                 <div className="slider-overlay"></div>
               </div>
 
-              {/* Konten Slider (Teks Kiri) */}
+              {/* THUMBNAILS & MOBILE NAVIGATION WRAPPER */}
+              <div className="thumb-nav-wrapper">
+                <button
+                  className="mobile-thumb-btn left"
+                  onClick={() => {
+                    if (sliderThumbnailsRef.current) {
+                      sliderThumbnailsRef.current.scrollBy({
+                        left: -180,
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                >
+                  &#10094;
+                </button>
+
+                <div className="slider-thumbnails" ref={sliderThumbnailsRef}>
+                  {selectedSubCategory.items.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className={`thumb-card ${
+                        idx === activeItemIdx ? "active" : ""
+                      }`}
+                      onClick={() => {
+                        setActiveItem(item);
+                        // Scroll otomatis ke tengah
+                        const thumbElement = sliderThumbnailsRef.current.children[idx];
+                        if (thumbElement) {
+                          thumbElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                            inline: "center",
+                          });
+                        }
+                      }}
+                      style={{ "--accent": selectedCategory.color }}
+                    >                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="thumb-img"
+                      />
+                      <div className="thumb-content">
+                        <div className="thumb-title">{item.name}</div>
+                        <div className="thumb-desc">
+                          {item.status || "Punah"}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  className="mobile-thumb-btn right"
+                  onClick={() => {
+                    if (sliderThumbnailsRef.current) {
+                      sliderThumbnailsRef.current.scrollBy({
+                        left: 180,
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                >
+                  &#10095;
+                </button>
+              </div>
+
               <div className="slider-content">
                 <motion.div
                   key={`text-${activeItemIdx}`}
@@ -505,7 +553,6 @@ const GalleryMain = ({ userData }) => {
                     {activeItem.name}
                   </h1>
 
-                  {/* Status Eksistensi Spesimen */}
                   <div
                     className="item-status-glow"
                     style={{
@@ -547,35 +594,12 @@ const GalleryMain = ({ userData }) => {
                     </button>
                   </div>
 
+                  {/* Desktop Arrows */}
                   <div className="slider-arrows">
                     <button onClick={handlePrevItem}>&lt;</button>
                     <button onClick={handleNextItem}>&gt;</button>
                   </div>
                 </motion.div>
-              </div>
-
-              {/* Thumbnails Kanan Bawah */}
-              <div className="slider-thumbnails" ref={sliderThumbnailsRef}>
-                {selectedSubCategory.items.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className={`thumb-card ${
-                      idx === activeItemIdx ? "active" : ""
-                    }`}
-                    onClick={() => setActiveItem(item)}
-                    style={{ "--accent": selectedCategory.color }}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="thumb-img"
-                    />
-                    <div className="thumb-content">
-                      <div className="thumb-title">{item.name}</div>
-                      <div className="thumb-desc">{item.status || "Punah"}</div>
-                    </div>
-                  </div>
-                ))}
               </div>
             </motion.div>
           )}

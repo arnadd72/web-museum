@@ -140,17 +140,8 @@ const Quiz = ({ userData, onComplete }) => {
       <div className="quiz-scanner-line"></div>
 
       <nav className="quiz-nav">
-        <Link
-          to="/"
-          className="back-link"
-          style={{
-            padding: "8px 16px",
-            border: "1px solid rgba(0, 210, 255, 0.3)",
-            borderRadius: "4px",
-            backgroundColor: "rgba(0, 210, 255, 0.05)",
-          }}
-        >
-          <span>⟵</span> KEMBALI
+        <Link to="/" className="btn-sys-back">
+          <span className="arr">←</span> KELUAR
         </Link>
         <div className="logo-section">
           <div className="logo-main-brand">PURBATECH</div>

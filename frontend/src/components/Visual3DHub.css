@@ -868,22 +868,16 @@
     right: 1rem;
   }
   .filter-bar {
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0.8rem;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .filter-bar::-webkit-scrollbar {
-    display: none;
+    width: 100%;
   }
   .filter-btn {
     flex-shrink: 0;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+    padding: 0.6rem 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
   }
 
   /* CARD GRID */

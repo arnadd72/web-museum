@@ -175,6 +175,36 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeModelIndex, setActiveModelIndex] = useState(0);
+  const modelGridRef = useRef(null);
+
+  const scrollToIndex = (index) => {
+    if (modelGridRef.current) {
+      const card = modelGridRef.current.children[index];
+      if (card) {
+        const containerWidth = modelGridRef.current.offsetWidth;
+        const cardOffset = card.offsetLeft;
+        const cardWidth = card.offsetWidth;
+
+        modelGridRef.current.scrollTo({
+          left: cardOffset - containerWidth / 2 + cardWidth / 2,
+          behavior: "smooth",
+        });
+        setActiveModelIndex(index);
+      }
+    }
+  };
+
+  const nextModel = () => {
+    const nextIdx = (activeModelIndex + 1) % featuredFossils.length;
+    scrollToIndex(nextIdx);
+  };
+
+  const prevModel = () => {
+    const prevIdx =
+      (activeModelIndex - 1 + featuredFossils.length) % featuredFossils.length;
+    scrollToIndex(prevIdx);
+  };
 
   // DATA FOSIL
   const dinoImageLink =
@@ -358,11 +388,41 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
       {menuOpen && (
         <div className="mobile-nav-overlay" onClick={() => setMenuOpen(false)}>
           <nav className="mobile-nav-menu" onClick={(e) => e.stopPropagation()}>
-            <a href="#home" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>BERANDA</a>
-            <Link to="/era-geologi" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ERA ZAMAN</Link>
-            <Link to="/gallery" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>ENSIKLOPEDIA</Link>
-            <Link to="/visual-3d" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>VISUAL 3D</Link>
-            <Link to="/quiz" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>KUIS</Link>
+            <a
+              href="#home"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              BERANDA
+            </a>
+            <Link
+              to="/era-geologi"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              ERA ZAMAN
+            </Link>
+            <Link
+              to="/gallery"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              ENSIKLOPEDIA
+            </Link>
+            <Link
+              to="/visual-3d"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              VISUAL 3D
+            </Link>
+            <Link
+              to="/quiz"
+              className="mobile-nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              KUIS
+            </Link>
           </nav>
         </div>
       )}
@@ -469,14 +529,12 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             whileHover={{ scale: 1.02, rotateX: 2, rotateY: -2 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <div className="system-status-bar">STATUS: OPTIMAL</div>
             <div
               className="bento-bg"
               style={{ backgroundImage: `url(${dinoImageLink})` }}
             ></div>
             <div className="bento-overlay"></div>
             <div className="bento-content">
-              <span className="bento-tag">DATA BIOLOGIS</span>
               <h3>Klasifikasi Makhluk Purba</h3>
               <p>
                 Pelajari ekosistem yang hilang. Platform ini membagi fosil
@@ -493,7 +551,6 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             className="bento-item bento-ai"
             whileHover={{ scale: 1.05 }}
           >
-            <div className="system-status-bar">MODUL: 01</div>
             <div
               className="bento-bg"
               style={{
@@ -502,7 +559,6 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             ></div>
             <div className="bento-overlay"></div>
             <div className="bento-content">
-              <span className="bento-tag">BIOLOGI</span>
               <h3>KELOMPOK HEWAN</h3>
               <p>Vertebrata, Invertebrata, dan Mikrofosil.</p>
               <Link to="/gallery" className="bento-btn-simple">
@@ -516,7 +572,6 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             className="bento-item bento-3d"
             whileHover={{ scale: 1.05 }}
           >
-            <div className="system-status-bar">MODUL: 02</div>
             <div
               className="bento-bg"
               style={{
@@ -525,7 +580,6 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             ></div>
             <div className="bento-overlay"></div>
             <div className="bento-content">
-              <span className="bento-tag">TAKSONOMI</span>
               <h3>JENIS FOSIL</h3>
               <p>Fosil Tubuh, Jejak, dan Terawetkan.</p>
               <Link to="/gallery" className="bento-btn-simple">
@@ -535,7 +589,6 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
           </motion.div>
 
           <motion.div variants={itemVariants} className="bento-item bento-era">
-            <div className="system-status-bar">MODUL: 03</div>
             <div
               className="bento-bg"
               style={{
@@ -544,7 +597,6 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             ></div>
             <div className="bento-overlay"></div>
             <div className="bento-content">
-              <span className="bento-tag">TIMELINE</span>
               <h3>ERA GEOLOGI</h3>
               <p>Paleozoikum hingga Kenozoikum.</p>
               <Link to="/era-geologi" className="bento-btn-simple">
@@ -656,21 +708,30 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
           </p>
         </motion.div>
 
-        <motion.div
-          className="model-grid"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          {featuredFossils.map((fossil) => (
-            <ModelTiltCard
-              key={fossil.id}
-              fossil={fossil}
-              variants={itemVariants}
-            />
-          ))}
-        </motion.div>
+        <div className="mobile-model-nav-wrapper">
+          <button className="mobile-model-nav prev" onClick={prevModel}>
+            &lt;
+          </button>
+          <motion.div
+            className="model-grid"
+            ref={modelGridRef}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            {featuredFossils.map((fossil) => (
+              <ModelTiltCard
+                key={fossil.id}
+                fossil={fossil}
+                variants={itemVariants}
+              />
+            ))}
+          </motion.div>
+          <button className="mobile-model-nav next" onClick={nextModel}>
+            &gt;
+          </button>
+        </div>
       </section>
 
       {/* SECTION 5: TECH STACK SHOWCASE */}
@@ -697,7 +758,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
             </div>
             <div className="link-group">
               <h4>TIM PENGEMBANG</h4>
-              <span>Yesika Widiyanii</span>
+              <span>Yesika Widiyani</span>
               <span>Arvan Murbiyanto</span>
               <span>Arnanda Setya Nosa</span>
             </div>
@@ -705,7 +766,7 @@ const LandingPage = ({ onStart, onTimeline, userData }) => {
         </div>
         <div className="footer-bottom">
           <p>
-            &copy; 2026 Jejak Purba. Dirancang khusus untuk Eksibisi Edukasi
+            &copy; 2026 PURBATECH. Dirancang khusus untuk Eksibisi Edukasi
             Digital.
           </p>
         </div>

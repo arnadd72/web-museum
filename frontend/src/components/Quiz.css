@@ -70,6 +70,34 @@
   letter-spacing: 1px;
 }
 
+.btn-sys-back {
+  padding: 8px 16px;
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  border-radius: 4px;
+  background-color: rgba(0, 210, 255, 0.05);
+  text-decoration: none;
+  color: #a0aab5;
+  font-family: monospace;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.btn-sys-back:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #fff;
+  border-color: rgba(0, 210, 255, 0.6);
+  background-color: rgba(0, 210, 255, 0.1);
+}
+
+.arr {
+  color: var(--neon-blue);
+}
+
 /* SELECTION SCREEN REVAMP */
 .selection-screen {
   width: 100%;

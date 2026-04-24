@@ -93,19 +93,8 @@ const ModelViewer = ({ userData }) => {
   const { itemData, returnContext, returnPath } = location.state || {};
 
   const [activeItem, setActiveItem] = useState(itemData);
-  const [siblingItems, setSiblingItems] = useState([]);
   const [activeTab, setActiveTab] = useState("ANATOMY");
   const [isLoading, setIsLoading] = useState(false);
-
-  // === 2. SIBLING ITEMS UNTUK CAROUSEL BAWAH ===
-  useEffect(() => {
-    if (returnContext && encyclopediaData[returnContext.targetCategory]) {
-      const sub = encyclopediaData[
-        returnContext.targetCategory
-      ].subCategories.find((s) => s.title === returnContext.targetSubCategory);
-      if (sub) setSiblingItems(sub.items);
-    }
-  }, [returnContext]);
 
   const handleBack = () => {
     setIsLoading(true);
@@ -244,10 +233,7 @@ const ModelViewer = ({ userData }) => {
               shadow-mapSize={[1024, 1024]}
             />
             {/* Fill light to prevent completely dark shadows */}
-            <directionalLight
-              position={[-5, 5, -5]}
-              intensity={0.5}
-            />
+            <directionalLight position={[-5, 5, -5]} intensity={0.5} />
             <Resize scale={modelScale}>
               <Center>
                 <ModelErrorBoundary color={themeColor}>
@@ -570,7 +556,7 @@ const ModelViewer = ({ userData }) => {
                 </div>
 
                 <div className="discovery-badge">
-                  <span>TAHUN DITEMUKAN:</span>
+                  <span>Pertama kali diidentifikasi:</span>
                   <span className="disc-year" style={{ color: themeColor }}>
                     {extendedData.discoveryYear}
                   </span>
@@ -580,26 +566,6 @@ const ModelViewer = ({ userData }) => {
           </AnimatePresence>
         </div>
       </motion.aside>
-
-      {/* === 5. BOTTOM CAROUSEL (SIBLING ITEMS) === */}
-      {siblingItems.length > 0 && (
-        <div className="hud-bottom-carousel">
-          <div className="carousel-track">
-            {siblingItems.map((sibling, idx) => (
-              <div
-                key={idx}
-                className={`carousel-thumb ${activeItem.name === sibling.name ? "active" : ""}`}
-                style={{ "--accent": themeColor }}
-                onClick={() => setActiveItem(sibling)}
-              >
-                <img src={sibling.image} alt={sibling.name} />
-                <div className="thumb-overlay"></div>
-                <div className="thumb-name">{sibling.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

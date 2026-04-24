@@ -424,7 +424,7 @@
 }
 
 /* ==========================================================================
-   VIEW 2: 3D COVER FLOW SLIDER (ARCHIVE CAROUSEL - DIPINDAH KE SINI)
+   VIEW 2: 3D COVER FLOW SLIDER
    ========================================================================== */
 .coverflow-view {
   position: absolute;
@@ -478,7 +478,6 @@
   letter-spacing: 2px;
 }
 
-/* The 3D Slider Area */
 .coverflow-slider-container {
   position: relative;
   flex: 1;
@@ -525,7 +524,6 @@
   align-items: center;
 }
 
-/* Card States for Cover Flow */
 .cf-card {
   position: absolute;
   width: 320px;
@@ -605,7 +603,6 @@
   animation: scanImage 2s linear infinite;
 }
 
-/* Panel Info di Bawah */
 .coverflow-info-panel {
   position: relative;
   z-index: 10;
@@ -657,20 +654,42 @@
   align-items: center;
 }
 
-/* Responsivitas Tinggi Layar (Mencegah Terpotong di Zoom 100%) */
 @media screen and (max-height: 800px) {
-  .coverflow-header { margin-top: 40px; padding: 1rem 5%; }
-  .coverflow-track { height: 360px; }
-  .cf-card { width: 280px; height: 360px; }
-  .coverflow-info-panel { margin-bottom: 2%; padding: 1.5rem 2rem; }
+  .coverflow-header {
+    margin-top: 40px;
+    padding: 1rem 5%;
+  }
+  .coverflow-track {
+    height: 360px;
+  }
+  .cf-card {
+    width: 280px;
+    height: 360px;
+  }
+  .coverflow-info-panel {
+    margin-bottom: 2%;
+    padding: 1.5rem 2rem;
+  }
 }
 
 @media screen and (max-height: 650px) {
-  .coverflow-header { margin-top: 15px; }
-  .coverflow-track { height: 280px; }
-  .cf-card { width: 220px; height: 280px; }
-  .cf-title { font-size: 2rem; }
-  .coverflow-info-panel { padding: 1rem 1.5rem; margin-bottom: 10px; }
+  .coverflow-header {
+    margin-top: 15px;
+  }
+  .coverflow-track {
+    height: 280px;
+  }
+  .cf-card {
+    width: 220px;
+    height: 280px;
+  }
+  .cf-title {
+    font-size: 2rem;
+  }
+  .coverflow-info-panel {
+    padding: 1rem 1.5rem;
+    margin-bottom: 10px;
+  }
 }
 .btn-render-3d {
   padding: 15px 35px;
@@ -693,7 +712,7 @@
 }
 
 /* ==========================================================================
-   VIEW 3: MAGIC SLIDER (LUNDEV STYLE - DIPINDAH KE SINI UNTUK ITEM)
+   VIEW 3: MAGIC SLIDER
    ========================================================================== */
 .magic-slider-view {
   position: absolute;
@@ -786,10 +805,8 @@
   line-height: 1.6;
   color: #e0e0e0;
   margin-bottom: 2rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
+  overflow: visible;
 }
 
 .slider-buttons {
@@ -849,17 +866,25 @@
   color: #000;
 }
 
-.slider-thumbnails {
+.thumb-nav-wrapper {
   position: absolute;
   bottom: 50px;
   right: 5%;
   z-index: 10;
+  max-width: 50vw;
+}
+
+.mobile-thumb-btn {
+  display: none;
+}
+
+.slider-thumbnails {
   display: flex;
   gap: 20px;
-  max-width: 50vw;
   overflow-x: auto;
   padding-bottom: 10px;
   scrollbar-width: none;
+  width: 100%;
 }
 .slider-thumbnails::-webkit-scrollbar {
   display: none;
@@ -876,8 +901,13 @@
   border: 2px solid transparent;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
-.thumb-card.active {
+.thumb-card:hover {
+  transform: translateY(-5px);
   border-color: var(--accent);
+}
+.thumb-card:active {
+  transform: scale(0.95);
+}
   transform: translateY(-10px);
   box-shadow:
     0 15px 30px rgba(0, 0, 0, 0.8),
@@ -925,11 +955,11 @@
 
 /* --- TABLET (max-width: 1024px) --- */
 @media screen and (max-width: 1024px) {
-  /* VIEW 1: Categories */
   .cinematic-roster {
     flex-direction: column;
     height: auto;
     min-height: auto;
+    gap: 0.8rem;
   }
   .movie-card {
     height: 250px;
@@ -946,13 +976,24 @@
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-    padding: 2rem;
+    padding: 1.5rem;
+  }
+  .movie-idx {
+    font-size: 0.65rem;
+    margin-bottom: 5px;
+  }
+  .movie-info h2 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+  .btn-movie-play {
+    font-size: 0.75rem;
+    padding: 8px 16px;
   }
   .movie-bg {
     filter: grayscale(0%) brightness(0.5);
   }
 
-  /* VIEW 2: Cover Flow */
   .cf-prev {
     transform: translateX(-80%) scale(0.8) translateZ(-50px) rotateY(10deg);
   }
@@ -965,14 +1006,13 @@
     align-items: flex-start;
   }
 
-  /* VIEW 3: Slider */
   .slider-title-main {
     font-size: 3.5rem;
   }
   .slider-title-accent {
     font-size: 3rem;
   }
-  .slider-thumbnails {
+  .thumb-nav-wrapper {
     max-width: 80vw;
     right: auto;
     left: 5%;
@@ -1019,7 +1059,7 @@
     padding: 1.5rem 4% 3rem;
   }
 
-  /* VIEW 1: Categories */
+  /* VIEW 1 */
   .cyber-heading {
     font-size: 2rem;
   }
@@ -1043,11 +1083,11 @@
     padding: 1.5rem;
   }
   .btn-movie-play {
-    font-size: 0.85rem;
-    padding: 10px 20px;
+    font-size: 0.75rem;
+    padding: 8px 16px;
   }
 
-  /* VIEW 2: Cover Flow */
+  /* VIEW 2 */
   .coverflow-header {
     margin-top: 80px;
     flex-direction: column;
@@ -1096,176 +1136,208 @@
     font-size: 0.65rem;
   }
 
-  /* VIEW 3: Specimen Slider — Full vertical scroll layout */
+  /* =====================================================================
+     VIEW 3: SPECIMEN SLIDER FIX MOBILE (LEBAR PENUH & ANTI GENCET)
+     ===================================================================== */
   .magic-slider-view {
     position: absolute;
-    overflow-y: auto;
+    inset: 0;
+    overflow-y: auto !important;
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+    background: var(--bg-dark);
+    display: flex !important;
+    flex-direction: column !important;
   }
+
+  /* 1. GAMBAR DI ATAS */
   .slider-bg-container {
-    position: fixed;
-    height: 100vh;
+    position: relative !important;
+    width: 100% !important;
+    height: 35vh !important;
+    min-height: 250px !important;
+    flex-shrink: 0 !important;
+    z-index: 1 !important;
+    order: 1 !important;
+    overflow: hidden !important;
+  }
+  .slider-main-img {
+    position: absolute !important;
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    filter: brightness(0.8) !important;
   }
   .slider-overlay {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.88) 0%,
-        rgba(0, 0, 0, 0.7) 40%,
-        rgba(0, 0, 0, 0.88) 100%
-      );
+    position: absolute !important;
+    inset: 0 !important;
   }
+
+  /* 2. WRAPPER THUMBNAIL DENGAN TOMBOL NAVIGASI MOBILE */
+  .thumb-nav-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important; /* KUNCI PERBAIKAN: Menimpa batas 50vw dari desktop */
+    order: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--bg-dark) 40%
+    ) !important;
+    padding: 0 5px !important; /* Padding diminimalkan agar ruang card lebih besar */
+    margin-top: -30px !important;
+    z-index: 10 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobile-thumb-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 45px !important;
+    height: 45px !important;
+    flex-shrink: 0 !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 50% !important;
+    color: #fff !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    margin: 0 8px !important;
+    z-index: 20 !important;
+    backdrop-filter: blur(5px);
+  }
+  .mobile-thumb-btn:active {
+    background: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  .slider-thumbnails {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important; /* KUNCI PERBAIKAN: Melebar penuh */
+    min-height: auto !important;
+    padding: 30px 5px !important;
+    margin: 0 !important;
+    flex: 1 !important; /* Mengisi seluruh ruang kosong di antara tombol panah */
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 12px !important; /* Gap dikurangi agar muat banyak */
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .thumb-card {
+    width: 90px !important; /* KUNCI PERBAIKAN: Lebar diatur 90px agar pas untuk 3-4 card */
+    height: 130px !important;
+    flex-shrink: 0 !important; /* Sangat penting agar tidak tergencet */
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: block !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    transition:
+      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      border-color 0.3s ease !important;
+  }
+  .thumb-img {
+    filter: brightness(0.6) !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    top: 0 !important;
+    left: 0 !important;
+    border-radius: 8px !important;
+  }
+  .thumb-card.active {
+    border-color: var(--accent) !important;
+    transform: translateY(-8px) scale(1.05) !important;
+    border-width: 2px !important;
+    background: transparent !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
+  }
+  .thumb-card.active .thumb-img {
+    filter: brightness(1) !important;
+  }
+
+  /* 3. TEKS & TOMBOL DI BAWAH THUMBNAIL */
   .slider-content {
-    position: relative;
-    height: auto;
-    padding: 70px 5% 1rem;
-    align-items: flex-start;
-    display: flex;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    flex-shrink: 0 !important;
+    padding: 0.5rem 5% 3rem 5% !important;
+    order: 3 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    z-index: 5 !important;
+    background: var(--bg-dark) !important;
   }
+
   .slider-text-wrapper {
-    max-width: 100%;
+    max-width: 100% !important;
   }
   .slider-tag {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
+    font-size: 0.75rem !important;
+    letter-spacing: 2px !important;
   }
   .slider-title-main {
-    font-size: 1.8rem;
-    margin-bottom: 2px;
+    font-size: 1.8rem !important;
   }
   .slider-title-accent {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 1.5rem !important;
   }
-  .item-status-glow {
-    font-size: 0.75rem;
-    margin-bottom: 10px;
-  }
-  .slider-desc {
-    font-size: 0.85rem;
-    display: block;
-    -webkit-line-clamp: unset;
-    -webkit-box-orient: unset;
-    overflow: visible;
-    margin-bottom: 1.2rem;
-    line-height: 1.5;
-  }
+
   .slider-buttons {
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-  .slider-buttons button {
-    width: 100%;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-top: 1.5rem !important;
+    display: flex !important;
+    width: 100% !important;
   }
   .btn-slider-primary,
   .btn-slider-secondary {
-    font-size: 0.8rem;
-    padding: 10px 16px;
-    text-align: center;
+    font-size: 0.9rem !important;
+    padding: 12px 16px !important;
+    border-radius: 4px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    justify-content: center !important;
   }
+
   .slider-arrows {
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
-  .slider-arrows button {
-    width: 38px;
-    height: 38px;
-    font-size: 1rem;
-  }
-  .slider-thumbnails {
-    position: relative;
-    bottom: auto;
-    right: auto;
-    left: auto;
-    max-width: 100%;
-    padding: 0 5% 2rem;
-    gap: 10px;
-    z-index: 10;
-  }
-  .thumb-card {
-    width: 100px;
-    height: 140px;
-    border-radius: 10px;
-  }
-  .thumb-title {
-    font-size: 0.7rem;
-  }
-  .thumb-desc {
-    font-size: 0.55rem;
-  }
-  .thumb-content {
-    padding: 8px;
+    display: none !important;
   }
 }
 
 /* --- SMALL MOBILE (max-width: 480px) --- */
 @media screen and (max-width: 480px) {
-  .gallery-top-nav {
-    padding: 0.6rem 0.8rem;
+  .thumb-card {
+    width: 80px !important; /* Disesuaikan untuk HP layar kecil */
+    height: 115px !important;
   }
-  .btn-sys-back {
-    font-size: 0.6rem;
-    letter-spacing: 0.5px;
-  }
-  .nav-sys-title {
-    display: none;
-  }
-  .gallery-profile {
-    display: none;
-  }
-
-  .cyber-heading {
-    font-size: 1.6rem;
-  }
-  .cyber-subheading {
-    font-size: 0.75rem;
-  }
-  .movie-card {
-    height: 180px;
-  }
-  .movie-info h2 {
-    font-size: 1.6rem;
-  }
-
-  .coverflow-header {
-    margin-top: 60px;
-  }
-  .cf-card {
-    width: 180px;
-    height: 250px;
-  }
-  .cf-title {
-    font-size: 1.5rem;
-  }
-  .coverflow-info-panel {
-    padding: 1rem;
-  }
-
-  .slider-content {
-    padding: 55px 5% 1rem;
+  .slider-thumbnails {
+    padding: 25px 5px !important;
   }
   .slider-title-main {
-    font-size: 1.6rem;
+    font-size: 1.5rem !important;
   }
   .slider-title-accent {
-    font-size: 1.3rem;
-  }
-  .slider-desc {
-    font-size: 0.78rem;
-  }
-  .thumb-card {
-    width: 80px;
-    height: 110px;
-    border-radius: 8px;
-  }
-  .thumb-title {
-    font-size: 0.6rem;
-  }
-  .thumb-desc {
-    display: none;
+    font-size: 1.3rem !important;
   }
 }
