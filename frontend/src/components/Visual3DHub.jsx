@@ -1,5 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 import "../App.css";
 import "./Visual3DHub.css";
 
@@ -16,18 +18,23 @@ const Visual3DHub = ({ userData }) => {
   const [dbData, setDbData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // FETCH DATA DARI DATABASE
+  // FETCH DATA DARI FIREBASE FIRESTORE
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/api/encyclopedia")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchFromFirestore = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "encyclopedia"));
+        const data = {};
+        querySnapshot.forEach((docSnap) => {
+          data[docSnap.id] = docSnap.data();
+        });
         setDbData(data);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Gagal mengambil data dari database:", err);
+      } catch (err) {
+        console.error("Gagal mengambil data dari Firestore:", err);
         setIsLoading(false);
-      });
+      }
+    };
+    fetchFromFirestore();
   }, []);
 
   useEffect(() => {
