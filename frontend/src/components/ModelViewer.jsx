@@ -21,7 +21,6 @@ import React, {
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
-import { encyclopediaData } from "../data/encyclopediaData";
 import "./ModelViewer.css";
 
 // --- ERROR BOUNDARY ---
@@ -109,67 +108,32 @@ const ModelViewer = ({ userData }) => {
     }, 500); // Jeda 500ms agar animasi loader terlihat
   };
 
-  // === DATA EKSPANSI (MENAMBAH DETAIL PALSU/FALLBACK JIKA DI DB KOSONG) ===
+  // === DATA EKSPANSI DARI FIREBASE ===
   const extendedData = useMemo(() => {
     if (!activeItem) return {};
-    const dbDesc = activeItem.description || {};
-    const customInfo = activeItem.customInfo || {};
-
-    // Generate fallback data based on type if missing in DB
-    const isCarnivore =
-      activeItem.desc?.toLowerCase().includes("predator") ||
-      activeItem.name?.toLowerCase().includes("rex");
-
+    
+    // Semua field ini sekarang sudah ditarik dan disimpan di Firebase
     return {
-      scientificName:
-        activeItem.scientificName ||
-        customInfo.scientificName ||
-        "Specimen Unknown",
-      category: activeItem.category || customInfo.category || "Unclassified",
-      period:
-        activeItem.period ||
-        customInfo.period ||
-        activeItem.era ||
-        "Prasejarah",
-      funFact:
-        dbDesc.key ||
-        "Spesimen ini memiliki jejak genetik yang mempengaruhi rantai evolusi modern.",
-      discoveryYear:
-        customInfo.discoveryYear ||
-        (Math.floor(Math.random() * (2020 - 1850 + 1)) + 1850).toString(),
-      stats: customInfo.stats || {
-        completeness: Math.floor(Math.random() * 40) + 60, // 60-99
-        rarity: Math.floor(Math.random() * 30) + 70, // 70-99
-        value: Math.floor(Math.random() * 20) + 80, // 80-99
+      scientificName: activeItem.scientificName || "Specimen Unknown",
+      category: activeItem.category || "Unclassified",
+      period: activeItem.period || activeItem.era || "Prasejarah",
+      funFact: activeItem.funFact || "Tidak ada catatan.",
+      discoveryYear: activeItem.discoveryYear || "-",
+      stats: activeItem.stats || {
+        completeness: 0,
+        rarity: 0,
+        value: 0,
       },
       desc: activeItem.description
         ? activeItem.description.full || activeItem.description.short
         : activeItem.desc,
-
-      // BIO STATS BARU
-      height:
-        customInfo.height ||
-        (activeItem.type === "INVERTEBRATA" ? "0.5 Meter" : "4.2 Meter"),
-      weight:
-        customInfo.weight ||
-        (activeItem.type === "INVERTEBRATA" ? "12 Kg" : "6.5 Ton"),
-      diet:
-        customInfo.diet ||
-        (isCarnivore ? "Karnivora (Daging)" : "Herbivora / Omnivora"),
-      threatLevel:
-        customInfo.threatLevel ||
-        (isCarnivore ? "CLASS A - APEX" : "CLASS C - DOCILE"),
-
-      // WAWASAN BARU
-      habitat:
-        customInfo.habitat ||
-        "Rawa Prasejarah, Hutan Konifer Kuno, Dataran Pesisir.",
-      behavior:
-        customInfo.behavior ||
-        "Analisis tengkorak menunjukkan sifat teritorial yang kuat dan kemampuan sensorik adaptif.",
-      extinction:
-        customInfo.extinction ||
-        "Peristiwa Kepunahan Massal (K-Pg / Permian-Triassic). Perubahan iklim drastis.",
+      height: activeItem.height || "-",
+      weight: activeItem.weight || "-",
+      diet: activeItem.diet || "-",
+      threatLevel: activeItem.threatLevel || "-",
+      habitat: activeItem.habitat || "-",
+      behavior: activeItem.behavior || "-",
+      extinction: activeItem.extinction || "-",
     };
   }, [activeItem]);
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { quizData } from "../data/quizData";
 import html2canvas from "html2canvas";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import "./Quiz.css";
 
 const Quiz = ({ userData, onComplete }) => {
@@ -15,6 +16,24 @@ const Quiz = ({ userData, onComplete }) => {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedOpt] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
+  const [dbQuizData, setDbQuizData] = useState([]);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
+  useEffect(() => {
+    const fetchQuizData = async () => {
+      try {
+        const docSnap = await getDoc(doc(db, "quizzes", "main"));
+        if (docSnap.exists()) {
+          setDbQuizData(docSnap.data().questions || []);
+        }
+      } catch (err) {
+        console.error("Gagal mengambil data kuis dari Firebase:", err);
+      } finally {
+        setIsLoadingData(false);
+      }
+    };
+    fetchQuizData();
+  }, []);
 
   const categories = [
     {
@@ -56,17 +75,22 @@ const Quiz = ({ userData, onComplete }) => {
   };
 
   const startQuiz = (catId) => {
+    if (isLoadingData) {
+      alert("Sedang memuat data dari Firebase, mohon tunggu sebentar.");
+      return;
+    }
+
     let filtered = [];
     if (catId === "Gabungan Keseluruhan") {
-      filtered = [...quizData].sort(() => 0.5 - Math.random()).slice(0, 15);
+      filtered = [...dbQuizData].sort(() => 0.5 - Math.random()).slice(0, 15);
     } else {
-      filtered = quizData
+      filtered = dbQuizData
         .filter((q) => q.kategori === catId)
         .sort(() => 0.5 - Math.random());
     }
 
     if (filtered.length === 0) {
-      alert("Database soal belum tersedia untuk kategori ini.");
+      alert("Database soal belum tersedia untuk kategori ini (Kosong di Firebase).");
       return;
     }
 

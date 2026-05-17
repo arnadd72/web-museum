@@ -2,10 +2,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
-import { encyclopediaData } from "../data/encyclopediaData";
 import "./GalleryMain.css";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 
 const GalleryMain = ({ userData }) => {
+  const [encyclopediaData, setEncyclopediaData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
@@ -16,9 +21,34 @@ const GalleryMain = ({ userData }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // === FETCH DARI FIREBASE ===
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "encyclopedia"));
+        const data = {};
+        querySnapshot.forEach((docSnap) => {
+          data[docSnap.id] = docSnap.data();
+        });
+        
+        if (Object.keys(data).length === 0) {
+          setFetchError("Database kosong. Migrasi data belum dilakukan.");
+        } else {
+          setEncyclopediaData(data);
+        }
+      } catch (err) {
+        console.error("Gagal ambil data Firebase:", err);
+        setFetchError("Akses database diblokir (kemungkinan oleh AdBlocker/Brave Shields). Mohon matikan AdBlock untuk domain ini.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   // === LOGIC PEMULIHAN STATUS ===
   useEffect(() => {
-    if (location.state) {
+    if (location.state && !isLoading && Object.keys(encyclopediaData).length > 0) {
       const { targetCategory, targetSubCategory, targetItem } = location.state;
 
       if (targetCategory && encyclopediaData[targetCategory]) {
@@ -46,7 +76,8 @@ const GalleryMain = ({ userData }) => {
         }
       }
     }
-  }, [location]);
+  }, [location, encyclopediaData, isLoading]);
+
 
   // === HANDLERS ===
   const handleSelect = (key) => {
@@ -163,6 +194,24 @@ const GalleryMain = ({ userData }) => {
   const activeSubData = selectedCategory
     ? selectedCategory.subCategories[activeSubIndex]
     : null;
+
+  if (isLoading) {
+    return (
+      <div className="gallery-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#020305', color: '#00d2ff' }}>
+        <h2>LOADING ARCHIVES...</h2>
+      </div>
+    );
+  }
+
+  if (fetchError) {
+    return (
+      <div className="gallery-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#020305', color: '#ff3333', textAlign: 'center', padding: '2rem' }}>
+        <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚠ ERROR SISTEM</h2>
+        <p style={{ fontSize: '1.2rem', maxWidth: '600px', lineHeight: '1.5' }}>{fetchError}</p>
+        <button onClick={() => window.location.reload()} style={{ marginTop: '2rem', padding: '10px 20px', background: '#ff3333', color: '#000', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>COBA LAGI</button>
+      </div>
+    );
+  }
 
   return (
     <div className="gallery-container">
@@ -491,12 +540,12 @@ const GalleryMain = ({ userData }) => {
                       onClick={() => {
                         setActiveItem(item);
                         // Scroll otomatis ke tengah
-                        const thumbElement = sliderThumbnailsRef.current.children[idx];
-                        if (thumbElement) {
-                          thumbElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "nearest",
-                            inline: "center",
+                        const container = sliderThumbnailsRef.current;
+                        const thumbElement = container.children[idx];
+                        if (thumbElement && container) {
+                          container.scrollTo({
+                            left: thumbElement.offsetLeft - container.offsetWidth / 2 + thumbElement.offsetWidth / 2,
+                            behavior: "smooth"
                           });
                         }
                       }}

@@ -732,11 +732,11 @@
 }
 .slider-main-img {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
   width: 100%;
-  height: auto;
-  transform: translateY(-50%);
+  height: 100%;
+  object-fit: cover;
   filter: brightness(0.75);
 }
 .slider-overlay {
@@ -764,7 +764,7 @@
   z-index: 10;
 }
 .slider-text-wrapper {
-  max-width: 700px;
+  max-width: 45vw;
 }
 
 .slider-tag {
@@ -776,7 +776,7 @@
   text-transform: uppercase;
 }
 .slider-title-main {
-  font-size: 5rem;
+  font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 900;
   color: #fff;
   margin: 0;
@@ -784,7 +784,7 @@
   letter-spacing: 2px;
 }
 .slider-title-accent {
-  font-size: 4rem;
+  font-size: clamp(1.5rem, 4vw, 4rem);
   font-weight: 900;
   margin: 0 0 15px 0;
   line-height: 1;
@@ -806,7 +806,23 @@
   color: #e0e0e0;
   margin-bottom: 2rem;
   display: block;
-  overflow: visible;
+  max-height: 40vh;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+.slider-desc::-webkit-scrollbar {
+  width: 6px;
+}
+.slider-desc::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+.slider-desc::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+.slider-desc::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .slider-buttons {
@@ -870,7 +886,7 @@
   position: absolute;
   bottom: 50px;
   right: 5%;
-  z-index: 10;
+  z-index: 20;
   max-width: 50vw;
 }
 
@@ -908,6 +924,7 @@
 .thumb-card:active {
   transform: scale(0.95);
 }
+.thumb-card.active {
   transform: translateY(-10px);
   box-shadow:
     0 15px 30px rgba(0, 0, 0, 0.8),
@@ -948,6 +965,29 @@
   margin-top: 5px;
   font-family: monospace;
 }
+
+/* ==========================================================================
+   HEIGHT RESPONSIVE (Mencegah Tabrakan Vertikal)
+   ========================================================================== */
+@media screen and (max-height: 850px) {
+  .slider-content {
+    align-items: flex-start;
+    padding-top: 15vh;
+  }
+  .slider-desc {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    max-height: 30vh;
+  }
+  .thumb-nav-wrapper {
+    bottom: 20px;
+  }
+  .thumb-card {
+    height: 180px;
+    width: 120px;
+  }
+}
+
 
 /* ==========================================================================
    RESPONSIVE
