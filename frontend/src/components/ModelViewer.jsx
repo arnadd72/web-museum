@@ -137,23 +137,35 @@ const ModelViewer = ({ userData }) => {
     };
   }, [activeItem]);
 
-  const { cameraPosition, maxZoomDistance, modelScale } = useMemo(() => {
+  const { cameraPosition, maxZoomDistance, modelScale, autoRotate, isFloating } = useMemo(() => {
     if (!activeItem)
-      return { cameraPosition: [0, 2, 8], maxZoomDistance: 15, modelScale: 3 };
+      return { cameraPosition: [0, 2, 8], maxZoomDistance: 15, modelScale: 3, autoRotate: true, isFloating: true };
     const name = activeItem.name.toUpperCase();
+    if (name.includes("ANKYLOSAURUS"))
+      return {
+        cameraPosition: [0, 1.5, 10],
+        maxZoomDistance: 20,
+        modelScale: 2.5,
+        autoRotate: false,
+        isFloating: false,
+      };
     if (name.includes("BRACHIOSAURUS") || name.includes("SAUROPOD"))
       return {
         cameraPosition: [0, 4, 18],
         maxZoomDistance: 40,
         modelScale: 1.5,
+        autoRotate: true,
+        isFloating: true,
       };
     if (name.includes("REX") || name.includes("SPINOSAURUS"))
       return {
         cameraPosition: [0, 2, 12],
         maxZoomDistance: 25,
         modelScale: 2.2,
+        autoRotate: true,
+        isFloating: true,
       };
-    return { cameraPosition: [0, 1, 8], maxZoomDistance: 15, modelScale: 3 };
+    return { cameraPosition: [0, 1, 8], maxZoomDistance: 15, modelScale: 3, autoRotate: true, isFloating: true };
   }, [activeItem]);
 
   if (!activeItem) {
@@ -202,9 +214,9 @@ const ModelViewer = ({ userData }) => {
               <Center>
                 <ModelErrorBoundary color={themeColor}>
                   <Float
-                    speed={1.5}
-                    rotationIntensity={0.5}
-                    floatIntensity={0.5}
+                    speed={isFloating ? 1.5 : 0}
+                    rotationIntensity={isFloating ? 0.5 : 0}
+                    floatIntensity={isFloating ? 0.5 : 0}
                   >
                     <Model3D path={activeItem.modelPath || activeItem.model} />
                   </Float>
@@ -230,7 +242,7 @@ const ModelViewer = ({ userData }) => {
           </Suspense>
           <OrbitControls
             enablePan={true}
-            autoRotate
+            autoRotate={autoRotate}
             autoRotateSpeed={1}
             makeDefault
             minDistance={2}
